@@ -40,6 +40,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        @yield('links')
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('auth.Login') }}</a>
@@ -56,6 +57,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/account/settings" >
+                                     Ustawienia konta
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -74,6 +79,12 @@
         </nav>
 
         <main class="py-4">
+
+            @if(session("message"))
+                <div class="w3-container py-3 mx-3  w3-panel w3-blue ">
+                    {{session("message")}}
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>

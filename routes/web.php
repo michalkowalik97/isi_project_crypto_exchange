@@ -17,6 +17,21 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/', function () {
         return view('dashboard.index');
     });
+
+    //account
+    Route::prefix('/account/settings')->group(function (){
+
+        Route::get('/', 'AccountController@index');
+
+        Route::resource('f2a', 'GaController');
+
+        Route::resource('integration', 'IntegrationController');
+
+    });
+
+
+
+
 });
 
 
