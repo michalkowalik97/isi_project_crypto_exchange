@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth']], function(){
         Route::resource('f2a', 'GaController');
 
         Route::resource('integration', 'IntegrationController');
+        Route::delete('integration', 'IntegrationController@destroy' );
 
     });
 

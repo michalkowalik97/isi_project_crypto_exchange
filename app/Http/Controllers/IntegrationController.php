@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BitBay\PublicRest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Compound;
@@ -15,6 +16,9 @@ class IntegrationController extends Controller
      */
     public function index()
     {
+        $bb = new PublicRest();
+        echo($bb->marketStats());
+        exit();
         $token = Auth::user()->public_token;
 
         if ($token)
@@ -53,8 +57,7 @@ class IntegrationController extends Controller
         $user->private_token = $request->klucz_prywatny;
         $user->save();
 
-        echo "zapisano";
-
+       return redirect('/account/settings/integration')->with('message', "Klucze zostały zapisane pomyślnie.");
     }
 
     /**
@@ -97,8 +100,14 @@ class IntegrationController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $user = Auth::user();
+        $user->public_token = null;
+        $user->private_token = null;
+        $user->save();
+
+        return redirect('/account/settings/integration')->with('message', "Klucze zostały usunięte pomyślnie.");
+
     }
 }
