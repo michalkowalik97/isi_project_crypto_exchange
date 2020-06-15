@@ -3,7 +3,7 @@
     [
 
     "Dashboard"=>'/',
-    "Giełda"=>'#',
+    "Giełda"=>'/exchange',
     /*""=>'#',*/
      ];
 @endphp

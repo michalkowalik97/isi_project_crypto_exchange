@@ -28,10 +28,12 @@ Route::group(['middleware' => ['auth']], function(){
         Route::resource('integration', 'IntegrationController');
         Route::delete('integration', 'IntegrationController@destroy' );
 
+
+
     });
 
-
-
+    Route::post('/select/market', 'ExchangeController@selectMarket');
+    Route::resource('exchange', 'ExchangeController');
 
 });
 

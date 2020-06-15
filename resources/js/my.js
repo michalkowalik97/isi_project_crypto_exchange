@@ -22,4 +22,11 @@ $("#uploadImage").on("change", function (e) {
     };
 });
 
+
+$(".form-autosubmit").on("change", function (e) {
+e.preventDefault();
+this.submit();
+
+})
+
 });

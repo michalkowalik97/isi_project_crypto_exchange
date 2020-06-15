@@ -16,9 +16,7 @@ class IntegrationController extends Controller
      */
     public function index()
     {
-        $bb = new PublicRest();
-        echo($bb->marketStats());
-        exit();
+
         $token = Auth::user()->public_token;
 
         if ($token)

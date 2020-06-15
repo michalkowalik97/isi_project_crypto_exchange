@@ -10,7 +10,7 @@
     <div class="row pl-4 flex-row">
         <div class="col-2 mr-3 ">
 
-            <a href="#g" class="">
+            <a href="/exchange" class="">
                 <div class="py-3 border-bottom">Giełda</div>
             </a>
 

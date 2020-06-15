@@ -15,7 +15,7 @@
 
 
             <a href="/account/settings/integration" class="">
-                <div class="py-3 border-bottom">Integracje</div>
+                <div class="py-3 border-bottom">Integracja</div>
             </a>
 
             <a href="/account/settings/f2a" class="">

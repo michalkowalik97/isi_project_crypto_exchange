@@ -49947,6 +49947,10 @@ $(document).ready(function () {
       document.getElementById("uploadPreview").src = oFREvent.target.result;
     };
   });
+  $(".form-autosubmit").on("change", function (e) {
+    e.preventDefault();
+    this.submit();
+  });
 });
 
 /***/ }),
