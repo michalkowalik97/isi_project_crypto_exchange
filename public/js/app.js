@@ -49951,6 +49951,7 @@ $(document).ready(function () {
     e.preventDefault();
     this.submit();
   });
+  $('.select2').select2();
 });
 
 /***/ }),

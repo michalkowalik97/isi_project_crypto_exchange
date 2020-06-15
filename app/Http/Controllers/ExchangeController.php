@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BitBay\PublicRest;
+use App\Market;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class ExchangeController extends Controller
 {
@@ -15,8 +17,8 @@ class ExchangeController extends Controller
      */
     public function index()
     {
-
-       return view('exchange.index');
+        $markets = Market::all();
+        return view('exchange.index', compact('markets'));
     }
 
     /**
@@ -32,7 +34,7 @@ class ExchangeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +45,7 @@ class ExchangeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -54,7 +56,7 @@ class ExchangeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -65,8 +67,8 @@ class ExchangeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,7 +79,7 @@ class ExchangeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -85,8 +87,39 @@ class ExchangeController extends Controller
         //
     }
 
-    public function selectMarket(Request $request){
+    public function selectMarket(Request $request)
+    {
         dump($request->all());
-        dd(\GuzzleHttp\json_decode((new PublicRest())->ticker()));
+     //   dd(\GuzzleHttp\json_decode((new PublicRest())->ticker()));
+    }
+
+    public function updateAvailableMarkets()
+    {
+        $skipCurrencies = ["USD", "EUR"];
+
+        $markets = (new PublicRest())->ticker();
+        $markets = json_decode($markets);
+        if (strtolower($markets->status) == 'ok') {
+            $markets = collect($markets->items);
+
+            $query = [];
+            foreach ($markets as $key => $market) {
+
+                if (in_array(strtoupper($market->market->first->currency), $skipCurrencies) || in_array(strtoupper($market->market->second->currency), $skipCurrencies))
+                    continue;
+
+                $query[] = ["market_code" => $key, "first_currency" => $market->market->first->currency, "second_currency" => $market->market->second->currency, "time" => $market->time, "active" => true];
+
+            }
+
+            DB::table('markets')->update(['active' => false]);
+            foreach ($query as $q) {
+                DB::table('markets')->updateOrInsert($q);
+            }
+
+            return true;
+        }
+        return false;
+
     }
 }

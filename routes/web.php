@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('/', function () {
-        return view('dashboard.index');
-    });
+
+    Route::resource('/','DashboardController');
+
 
     //account
     Route::prefix('/account/settings')->group(function (){
@@ -33,7 +33,18 @@ Route::group(['middleware' => ['auth']], function(){
     });
 
     Route::post('/select/market', 'ExchangeController@selectMarket');
-    Route::resource('exchange', 'ExchangeController');
+    Route::prefix('/exchange')->group(function (){
+
+        Route::get('/update/markets','ExchangeController@updateAvailableMarkets');
+        Route::resource('/', 'ExchangeController');
+
+    });
+
+    Route::prefix('/wallets')->group(function (){
+
+        Route::resource('/', 'WalletController');
+    });
+
 
 });
 

@@ -28,13 +28,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->call(function () {
+/*        $schedule->call(function () {
             //$cytat = Artisan::call("inspire");
        DB::table('tab1')->insert(['rand'=>'teaaaaaaast']);
 
         })
             ->everyMinute()
-      ;
+      ;*/
 
 
 

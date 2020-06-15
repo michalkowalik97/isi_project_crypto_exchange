@@ -19,6 +19,7 @@ class CreateMarketsTable extends Migration
             $table->string('first_currency');
             $table->string('second_currency');
             $table->bigInteger('time');
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

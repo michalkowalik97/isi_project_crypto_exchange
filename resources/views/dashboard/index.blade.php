@@ -15,7 +15,7 @@
             </a>
 
 
-            <a href="#p" class="">
+            <a href="/wallets" class="">
                 <div class="py-3 border-bottom">Portfele</div>
             </a>
 
@@ -32,53 +32,70 @@
             <h3>Podsumowanie:</h3>
 
             <div class="row">
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
 
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
+                @forelse($wallets as $wallet)
+                    <div class="col-3 m-1 border">
+                       <b><a href="wallets/{{$wallet->currency}}" class="stretched-link text-decoration-none">{{$wallet->name}}</a></b>
+                        <hr>
+                        Środki:
+                        <b>  {{$wallet->all_founds}}  {{$wallet->currency}}</b> <br />
 
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
+                        Dostępne środki:
+                      <b>  {{$wallet->available_founds}}  {{$wallet->currency}}</b> <br />
+                        Zablokowane środki:
+                      <b>  {{$wallet->locked_founds}}  {{$wallet->currency}}</b> <br />
 
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
+                    </div>
+                @empty
 
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
+                @endforelse
+                {{--      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>
 
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
+                      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>
 
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
+                      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>
 
-                <div class="col-2 m-1 border">
-                    BTC
-                    <hr>
-                    0.32131241 BTC
-                </div>
+                      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>
+
+                      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>
+
+                      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>
+
+                      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>
+
+                      <div class="col-2 m-1 border">
+                          BTC
+                          <hr>
+                          0.32131241 BTC
+                      </div>--}}
             </div>
 
         </div>
