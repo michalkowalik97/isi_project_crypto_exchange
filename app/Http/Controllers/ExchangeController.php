@@ -15,10 +15,18 @@ class ExchangeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($selected = "BTC-PLN")
     {
+
         $markets = Market::all();
-        return view('exchange.index', compact('markets'));
+        $selected = $markets->where('market_code', $selected)->first();
+        $api = new PublicRest();
+        $orderbook = $api->getOrderbook($selected->market_code);
+        $orderbook = json_decode($orderbook);
+        //dd($orderbook);
+         //   dd(json_decode($orderbook));
+        // dd($selected);
+        return view('exchange.index', compact('markets', 'selected','orderbook'));
     }
 
     /**
@@ -89,8 +97,7 @@ class ExchangeController extends Controller
 
     public function selectMarket(Request $request)
     {
-        dump($request->all());
-     //   dd(\GuzzleHttp\json_decode((new PublicRest())->ticker()));
+        return redirect('/exchange/' . $request->market);
     }
 
     public function updateAvailableMarkets()

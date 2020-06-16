@@ -33,12 +33,17 @@ Route::group(['middleware' => ['auth']], function(){
     });
 
     Route::post('/select/market', 'ExchangeController@selectMarket');
+
+
     Route::prefix('/exchange')->group(function (){
 
         Route::get('/update/markets','ExchangeController@updateAvailableMarkets');
-        Route::resource('/', 'ExchangeController');
+
+        Route::get('/{selected?}', 'ExchangeController@index');
+      //  Route::resource('/', 'ExchangeController');
 
     });
+
 
     Route::prefix('/wallets')->group(function (){
 

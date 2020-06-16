@@ -49952,6 +49952,10 @@ $(document).ready(function () {
     this.submit();
   });
   $('.select2').select2();
+  $('.toggleHiddenRow').on("click", function () {
+    $('.toggleHiddenRow').toggleClass('hidden');
+    $('tr').toggleClass('hidden');
+  });
 });
 
 /***/ }),
