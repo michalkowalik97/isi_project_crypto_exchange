@@ -21,9 +21,17 @@ class ExchangeController extends Controller
         $markets = Market::all();
         $selected = $markets->where('market_code', $selected)->first();
         $api = new PublicRest();
-        $orderbook = $api->getOrderbook($selected->market_code);
-        $orderbook = json_decode($orderbook);
+        //$orderbook =[];
+        //$orderbook = collect(['buy'=>[], 'sell'=>[]]);
         //dd($orderbook);
+        try{
+            $orderbook = $api->getOrderbook($selected->market_code);
+            $orderbook = json_decode($orderbook);
+        }catch (\Exception $e){
+            $orderbook = collect(['buy'=>'', 'sell'=>'']);
+        }
+
+     //   dd($orderbook);
          //   dd(json_decode($orderbook));
         // dd($selected);
         return view('exchange.index', compact('markets', 'selected','orderbook'));

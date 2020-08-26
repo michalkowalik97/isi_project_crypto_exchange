@@ -13,6 +13,11 @@
         .hidden {
             display: none;
         }
+
+        .pointer{
+            cursor: pointer;
+        }
+
     </style>
 @endsection
 
@@ -41,20 +46,20 @@
         <div class="row my-3">
             <div class="col-12 mb-3 mb-md-0 col-md-6  border-right ">
                 <h6>Kupno</h6>
-                <form action="/exchange/buy/{{$selected}}">
+                <form action="/exchange/buy/{{$selected->market_code}}">
                     @csrf
                     <div class="row">
 
                         <div class="col-5">
-                            <label>Kurs {{$selected->second_currency}}</label>
-                            <input type="text" class="form-control">
+                            <label>Kurs {{$selected->second_currency}} <i class="pointer fa fa-lock-open" aria-hidden="true"></i></label>
+                            <input type="text" class="form-control buy-ra">
                         </div>
 
                         <div class="col-1 mb-2 align-self-end"><i class="fa fa-times" aria-hidden="true"></i></div>
 
                         <div class="col-5">
-                            <label>Kurs {{$selected->first_currency}}</label>
-                            <input type="text" class="form-control">
+                            <label>Ilość {{$selected->first_currency}} <i class="pointer fa fa-lock-open" aria-hidden="true"></i></label>
+                            <input type="text" class="form-control buy-ca">
                         </div>
 
                     </div>
@@ -66,14 +71,15 @@
                     <div class="row">
                         <div class="col-11">
                             <label>Wartość {{$selected->second_currency}}</label>
-                            <input type="text" class="form-control">
+                            <i class="pointer fa fa-lock" aria-hidden="true"></i>
+                            <input type="text" class="form-control buy-res" disabled>
                         </div>
                     </div>
 
                     <div class="row my-2">
                         <div class="col-12">
                             Otrzymasz: <br>
-                            <span class="font-weight-bold">0.00000000</span>&nbsp;{{$selected->first_currency}}
+                            <span class="font-weight-bold buy-prov">0.00000000</span>&nbsp;{{$selected->first_currency}}
                         </div>
                         <div class="col-12 my-2">
                             <input type="submit" class="form-control btn btn-info" value="Kup">
@@ -86,21 +92,21 @@
 
             <div class="col-12 col-md-6 ">
                 <h6>Sprzedaż</h6>
-                <form action="/exchange/sell/{{$selected}}">
+                <form action="/exchange/sell/{{$selected->market_code}}">
                     @csrf
 
                     <div class="row">
 
                         <div class="col-5">
                             <label>Kurs {{$selected->second_currency}}</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control sell-ra">
                         </div>
 
                         <div class="col-1 mb-2 align-self-end"><i class="fa fa-times" aria-hidden="true"></i></div>
 
                         <div class="col-5">
-                            <label>Kurs {{$selected->first_currency}}</label>
-                            <input type="text" class="form-control">
+                            <label>Ilość {{$selected->first_currency}}</label>
+                            <input type="text" class="form-control sell-ca">
                         </div>
 
                     </div>
@@ -112,14 +118,14 @@
                     <div class="row">
                         <div class="col-11">
                             <label>Wartość {{$selected->second_currency}}</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control sell-res">
                         </div>
                     </div>
 
                     <div class="row my-2">
                         <div class="col-12">
                             Otrzymasz: <br>
-                            <span class="font-weight-bold">0.00000000</span>&nbsp;{{$selected->second_currency}}
+                            <span class="font-weight-bold sell-prov">0.00000000</span>&nbsp;{{$selected->second_currency}}
                         </div>
                         <div class="col-12 my-2">
                             <input type="submit" class="form-control btn btn-success" value="Sprzedaj">

@@ -23,13 +23,13 @@ Route::group(['middleware' => ['auth']], function(){
 
         Route::get('/', 'AccountController@index');
 
-        Route::resource('f2a', 'GaController');
+        Route::get('/change/password','AccountController@editPassword');
+        Route::post('/change/password','AccountController@updatePassword');
 
-        Route::resource('integration', 'IntegrationController');
         Route::delete('integration', 'IntegrationController@destroy' );
 
-
-
+        Route::resource('f2a', 'GaController');
+        Route::resource('integration', 'IntegrationController');
     });
 
     Route::post('/select/market', 'ExchangeController@selectMarket');

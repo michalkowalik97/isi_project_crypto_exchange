@@ -99,7 +99,8 @@ class PublicRest
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+           return collect(['buy'=>[], 'sell'=>[]]);
+            /* echo "cURL Error #:" . $err;*/
         } else {
             return $response;
         }
