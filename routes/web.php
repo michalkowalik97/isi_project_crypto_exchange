@@ -41,15 +41,16 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/{selected?}', 'ExchangeController@index');
         Route::get('get/orderbook/{market}/{visible?}', 'ExchangeController@getOrderbook');
-        //  Route::resource('/', 'ExchangeController');
+
 
         Route::post('/offer/{market}/{type}', 'ExchangeController@buy');
 
+        Route::get('/offers/active', 'OffersController@getActiveList');
+        Route::get('/offers/history', 'OffersController@getHistoryList');
     });
 
 
     Route::resource('wallets', 'WalletController');
-
 
 });
 

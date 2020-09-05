@@ -49940,14 +49940,15 @@ function exchange(select) {
     $('.' + select + '-res').val(res);
     $('.' + select + '-prov').html($('.' + select + '-ca').val() * 0.9957);
   });
-  $('.fa-lock').on('click', function () {
-    $(this).removeClass('fa-lock');
-    $(this).addClass('fa-lock-open');
-  });
-  $('.fa-lock-open').on('click', function () {
-    $(this).removeClass('fa-lock-open');
-    $(this).addClass('fa-lock');
-  });
+  /*    $('.fa-lock').on('click', function () {
+          $(this).removeClass('fa-lock');
+          $(this).addClass('fa-lock-open');
+      });
+  
+      $('.fa-lock-open').on('click', function () {
+          $(this).removeClass('fa-lock-open');
+          $(this).addClass('fa-lock');
+      });*/
 }
 
 $(document).ready(function () {
@@ -49991,14 +49992,6 @@ $(document).ready(function () {
 
   exchange('buy');
   exchange('sell');
-  $('.fa-lock').on('click', function () {
-    $(this).removeClass('fa-lock');
-    $(this).addClass('fa-lock-open');
-  });
-  $('.fa-lock-open').on('click', function () {
-    $(this).removeClass('fa-lock-open');
-    $(this).addClass('fa-lock');
-  });
 });
 
 /***/ }),

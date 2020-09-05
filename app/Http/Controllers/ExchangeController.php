@@ -172,6 +172,8 @@ class ExchangeController extends Controller
 
 
 
+
+
     /**
      * @param $selected
      * @return bool|\Illuminate\Support\Collection|mixed|string|void

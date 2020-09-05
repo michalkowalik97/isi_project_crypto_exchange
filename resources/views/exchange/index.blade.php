@@ -23,8 +23,8 @@
 
         <div class="row py-5">
             <div class="col-12">
-                <a href="" class="mx-2 btn btn-success">Moje oferty</a>
-                <a href="" class="mx-2 btn btn-success">Historia</a>
+                <a href="/exchange/offers/active" class="mx-2 btn btn-success">Moje oferty</a>
+                <a href="/exchange/offers/history" class="mx-2 btn btn-success">Historia</a>
 
             </div>
         </div>
@@ -51,16 +51,18 @@
                     <div class="row">
 
                         <div class="col-5">
-                            <label>Kurs {{$selected->second_currency}} <i class="pointer fa fa-lock-open"
-                                                                          aria-hidden="true"></i></label>
+                            <label>Kurs {{$selected->second_currency}}
+                                <i class=" fa fa-lock-open" aria-hidden="true"></i>
+                            </label>
                             <input type="text" name="ra" class="form-control buy-ra">
                         </div>
 
                         <div class="col-1 mb-2 align-self-end"><i class="fa fa-times" aria-hidden="true"></i></div>
 
                         <div class="col-5">
-                            <label>Ilość {{$selected->first_currency}} <i class="pointer fa fa-lock-open"
-                                                                          aria-hidden="true"></i></label>
+                            <label>Ilość {{$selected->first_currency}}
+                                <i class=" fa fa-lock-open" aria-hidden="true"></i>
+                            </label>
                             <input type="text" name="ca" class="form-control buy-ca">
                         </div>
 
@@ -72,8 +74,10 @@
 
                     <div class="row">
                         <div class="col-11">
-                            <label>Wartość {{$selected->second_currency}}</label>
-                            <i class="pointer fa fa-lock" aria-hidden="true"></i>
+                            <label>Wartość {{$selected->second_currency}}
+                                <i class=" fa fa-lock" aria-hidden="true"></i>
+                            </label>
+
                             <input type="text" name="res" class="form-control buy-res" disabled>
                         </div>
                     </div>
@@ -101,14 +105,18 @@
                     <div class="row">
 
                         <div class="col-5">
-                            <label>Kurs {{$selected->second_currency}}</label>
+                            <label>Kurs {{$selected->second_currency}}
+                                <i class="fa fa-lock-open" aria-hidden="true"></i>
+                            </label>
                             <input type="text" name="ra" class="form-control sell-ra">
                         </div>
 
                         <div class="col-1 mb-2 align-self-end"><i class="fa fa-times" aria-hidden="true"></i></div>
 
                         <div class="col-5">
-                            <label>Ilość {{$selected->first_currency}}</label>
+                            <label>Ilość {{$selected->first_currency}}
+                                <i class="fa fa-lock-open" aria-hidden="true"></i>
+                            </label>
                             <input type="text" name="ca" class="form-control sell-ca">
                         </div>
 
@@ -120,14 +128,17 @@
 
                     <div class="row">
                         <div class="col-11">
-                            <label>Wartość {{$selected->second_currency}}</label>
-                            <input type="text" name="res" class="form-control sell-res">
+                            <label>Wartość {{$selected->second_currency}}
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                            </label>
+                            <input type="text" name="res" class="form-control sell-res" disabled>
                         </div>
                     </div>
 
                     <div class="row my-2">
                         <div class="col-12">
                             Otrzymasz: <br>
+
                             <span class="font-weight-bold sell-prov">0.00000000</span>&nbsp;{{$selected->second_currency}}
                         </div>
                         <div class="col-12 my-2">

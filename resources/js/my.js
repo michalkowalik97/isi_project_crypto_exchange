@@ -12,7 +12,7 @@ function exchange(select) {
 
     });
 
-    $('.fa-lock').on('click', function () {
+/*    $('.fa-lock').on('click', function () {
         $(this).removeClass('fa-lock');
         $(this).addClass('fa-lock-open');
     });
@@ -20,7 +20,7 @@ function exchange(select) {
     $('.fa-lock-open').on('click', function () {
         $(this).removeClass('fa-lock-open');
         $(this).addClass('fa-lock');
-    });
+    });*/
 }
 
 
@@ -75,16 +75,6 @@ $(document).ready(function () {
     //exchange fields
     exchange('buy');
     exchange('sell');
-
-    $('.fa-lock').on('click', function () {
-        $(this).removeClass('fa-lock');
-        $(this).addClass('fa-lock-open');
-    });
-
-    $('.fa-lock-open').on('click', function () {
-        $(this).removeClass('fa-lock-open');
-        $(this).addClass('fa-lock');
-    });
 
 
 });
