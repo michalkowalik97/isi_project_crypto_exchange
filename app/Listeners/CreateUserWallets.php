@@ -22,7 +22,7 @@ class CreateUserWallets
     {
         $currencies = Market::select('first_currency')->get();
         if ($currencies && count($currencies) > 0) {
-            $this->wallets = $currencies->unique();
+            $this->wallets = $currencies->pluck('first_currency')->unique()->toArray();
         } else {
             $this->wallets = array(
                 "NEU", "BSV", "FTO", "EXY", "LML", "LTC", "ZRX", "BTC", "AMLT", "ETH", "BOB", "GGC", "XRP", "DASH",
@@ -42,7 +42,8 @@ class CreateUserWallets
     public function handle(UserRegistered $event)
     {
 
-        $insert = ["currency" => "PLN", "all_founds" => 0.0, "locked_founds" => 0.0, "available_founds" => 0.0, "user_id" => $event->user->id, "name" => "PLN", "type" => "cash"];
+        $insert = [];
+        $insert[] = ["currency" => "PLN", "all_founds" => 0.0, "locked_founds" => 0.0, "available_founds" => 0.0, "user_id" => $event->user->id, "name" => "PLN", "type" => "cash"];
         foreach ($this->wallets as $wallet) {
             $insert[] = ["currency" => "$wallet", "all_founds" => 0.0, "locked_founds" => 0.0, "available_founds" => 0.0, "user_id" => $event->user->id, "name" => $wallet, "type" => "crypto"];
         }

@@ -1,3 +1,29 @@
+function exchange(select) {
+    $('.' + select + '-ra').on('change', function (e) {
+        let res = ($('.' + select + '-ra').val()) * ($('.' + select + '-ca').val());
+        $('.' + select + '-res').val(res);
+        $('.' + select + '-prov').html((($('.' + select + '-ca').val() * 0.9957)));
+    });
+
+    $('.' + select + '-ca').on('change', function (e) {
+        let res = ($('.' + select + '-ra').val()) * ($('.' + select + '-ca').val());
+        $('.' + select + '-res').val(res);
+        $('.' + select + '-prov').html((($('.' + select + '-ca').val() * 0.9957)));
+
+    });
+
+    $('.fa-lock').on('click', function () {
+        $(this).removeClass('fa-lock');
+        $(this).addClass('fa-lock-open');
+    });
+
+    $('.fa-lock-open').on('click', function () {
+        $(this).removeClass('fa-lock-open');
+        $(this).addClass('fa-lock');
+    });
+}
+
+
 $(document).ready(function () {
     $(".confirm").click(function (e) {
         var txt = $(this).data("txt");
@@ -28,11 +54,21 @@ $(document).ready(function () {
         this.submit();
     });
 
-    $('.select2').select2();
+    if ($('.select2').length > 0) {
+        $('.select2').select2();
+    }
 
     $('.toggleHiddenRow').on("click", function () {
-        $('.toggleHiddenRow').toggleClass('hidden');
-        $('tr').toggleClass('hidden');
+        if ($('#offers-wrapper').hasClass('all-offers-visible')){
+            $('.toggleHiddenRow').toggleClass('hidden');
+            $('.more-results').addClass('hidden');
+            $('#offers-wrapper').removeClass('all-offers-visible');
+        } else{
+            $('.toggleHiddenRow').toggleClass('hidden');
+            $('.more-results').removeClass('hidden');
+            $('#offers-wrapper').addClass('all-offers-visible');
+        }
+
     });
 
 
@@ -52,28 +88,3 @@ $(document).ready(function () {
 
 
 });
-
-function exchange(select) {
-    $('.' + select + '-ra').on('change', function (e) {
-        let res = ($('.' + select + '-ra').val()) * ($('.' + select + '-ca').val());
-        $('.' + select + '-res').val(res);
-        $('.' + select + '-prov').html((($('.' + select + '-ca').val() * 0.9957)));
-    });
-
-    $('.' + select + '-ca').on('change', function (e) {
-        let res = ($('.' + select + '-ra').val()) * ($('.' + select + '-ca').val());
-        $('.' + select + '-res').val(res);
-        $('.' + select + '-prov').html((($('.' + select + '-ca').val() * 0.9957)));
-
-    });
-
-    $('.fa-lock').on('click', function () {
-        $(this).removeClass('fa-lock');
-        $(this).addClass('fa-lock-open');
-    });
-
-    $('.fa-lock-open').on('click', function () {
-        $(this).removeClass('fa-lock-open');
-        $(this).addClass('fa-lock');
-    });
-}

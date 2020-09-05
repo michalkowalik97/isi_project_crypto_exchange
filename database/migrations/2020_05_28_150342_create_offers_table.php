@@ -15,7 +15,7 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->string('external_id');
+            $table->string('external_id')->nullable();
             $table->double('amount',10,10);
             $table->double('rate',10,10);
             $table->boolean('completed')->default(false);

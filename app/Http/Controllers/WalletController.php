@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Wallet;
 use Illuminate\Http\Request;
 
 class WalletController extends Controller
@@ -45,7 +46,8 @@ class WalletController extends Controller
      */
     public function show($id)
     {
-        //
+        $wallet = Wallet::find($id);
+        return view('wallet.show',compact('wallet'));
     }
 
     /**

@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Helpers\BitBay\PublicRest;
 use App\Market;
+use App\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ExchangeController extends Controller
@@ -17,24 +21,14 @@ class ExchangeController extends Controller
      */
     public function index($selected = "BTC-PLN")
     {
-
         $markets = Market::all();
         $selected = $markets->where('market_code', $selected)->first();
-        $api = new PublicRest();
-        //$orderbook =[];
-        //$orderbook = collect(['buy'=>[], 'sell'=>[]]);
-        //dd($orderbook);
-        try{
-            $orderbook = $api->getOrderbook($selected->market_code);
-            $orderbook = json_decode($orderbook);
-        }catch (\Exception $e){
-            $orderbook = collect(['buy'=>'', 'sell'=>'']);
-        }
 
-     //   dd($orderbook);
-         //   dd(json_decode($orderbook));
-        // dd($selected);
-        return view('exchange.index', compact('markets', 'selected','orderbook'));
+        $orderbook = $this->getParsedOrderbook($selected);
+
+        $disabled = !Auth::user()->public_token;
+
+        return view('exchange.index', compact('markets', 'selected', 'orderbook', 'disabled'));
     }
 
     /**
@@ -137,4 +131,108 @@ class ExchangeController extends Controller
         return false;
 
     }
+
+    public function buy(Request $request, $market, $type)
+    {
+        $market = Market::where('market_code', $market)->first();
+        if (!$market) {
+            return response()->json(['success' => false]);
+        }
+        try {
+            $offer = new Offer();
+            $offer->amount = $request->ca;
+            $offer->rate = $request->ra;
+            $offer->completed = false;
+            $offer->type = $type;
+            $offer->active = true;
+            $offer->user_id = Auth::user()->id;
+            $offer->market_id = $market->id;
+            $offer->save();
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function getOrderbook($market,$visible=false)
+    {
+        $selected = Market::where('market_code',$market)->first();
+        if (!$selected){
+            return response()->json(['success'=>false,'data'=>[]],500);
+        }
+        //$selected = $markets->where('market_code', $selected)->first();
+
+        $orderbook = $this->getParsedOrderbook($selected);
+        $visible = ($visible == "true") ? true : false;
+        $view = view('exchange.offers',compact('orderbook','visible'))->render();
+
+        return response()->json(['success'=>true,'data'=>$view]);
+    }
+
+
+
+    /**
+     * @param $selected
+     * @return bool|\Illuminate\Support\Collection|mixed|string|void
+     */
+    private function getOrderbookFromApi($selected)
+    {
+        $api = new PublicRest();
+        try {
+            $orderbook = $api->getOrderbook($selected->market_code);
+            $orderbook = json_decode($orderbook);
+        } catch (\Exception $e) {
+            $orderbook = collect(['buy' => [], 'sell' => []]);
+        }
+        return $orderbook;
+    }
+
+    private function addDbOffersToOrderbook($offers, $orderbook)
+    {
+        if (!isset($orderbook->sell) && !isset($orderbook->buy)) {
+            $orderbook = collect(['buy' => [], 'sell' => []]);
+        }
+
+        if ($offers && count($offers) > 0) {
+
+            foreach ($offers as $offer) {
+                $offerTmp = new \stdClass();
+                $offerTmp->ra = $offer->rate;
+                $offerTmp->ca = $offer->amount;
+                $offerTmp->sa = $offer->amount;
+                $offerTmp->pa = $offer->amount;
+                $offerTmp->co = 1;
+                if ($offer->type == 'buy') {
+                    $orderbook->buy[] = $offerTmp;
+                } elseif ($offer->type == 'sell') {
+                    $orderbook->sell[] = $offerTmp;
+                }
+            }
+        }
+        //dd($orderbook->sell);
+        $sell = Arr::sort($orderbook->sell, function ($value) {
+            return $value->ra;
+        });
+        $buy = array_reverse(Arr::sort($orderbook->buy, function ($value) {
+            return $value->ra;
+        }));
+        $orderbook->sell = $sell;
+        $orderbook->buy = $buy;
+        return $orderbook;
+    }
+
+    /**
+     * @param $selected
+     * @return bool|\Illuminate\Support\Collection|mixed|string|void
+     */
+    private function getParsedOrderbook($selected)
+    {
+        $orderbook = $this->getOrderbookFromApi($selected);
+        $offers = Offer::where(['market_id' => $selected->id, 'completed' => false])->get();
+        $orderbook = $this->addDbOffersToOrderbook($offers, $orderbook);
+        return $orderbook;
+    }
+
+
 }
