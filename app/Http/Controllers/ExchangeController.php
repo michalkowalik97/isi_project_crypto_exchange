@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\BitBay\PublicRest;
 use App\Market;
 use App\Offer;
+use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
@@ -22,13 +23,17 @@ class ExchangeController extends Controller
     public function index($selected = "BTC-PLN")
     {
         $markets = Market::all();
+        $currencies = explode('-', $selected);
+
+        $wallets = Wallet::where('user_id', Auth::user()->id)->whereIn('currency', $currencies)->get();
+
         $selected = $markets->where('market_code', $selected)->first();
 
         $orderbook = $this->getParsedOrderbook($selected);
 
         $disabled = !Auth::user()->public_token;
 
-        return view('exchange.index', compact('markets', 'selected', 'orderbook', 'disabled'));
+        return view('exchange.index', compact('markets', 'selected', 'orderbook', 'disabled', 'wallets'));
     }
 
     /**
@@ -132,46 +137,108 @@ class ExchangeController extends Controller
 
     }
 
-    public function buy(Request $request, $market, $type)
+    public function buy(Request $request, $market)
     {
+        $ca = (float)str_ireplace(',', '.', $request->ca);
+        $ra = (float)str_ireplace(',', '.', $request->ra);
+
         $market = Market::where('market_code', $market)->first();
         if (!$market) {
-            return response()->json(['success' => false]);
+            return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
+        $wallet = Wallet::where(['user_id' => Auth::user()->id, 'currency' => $market->second_currency])->first();
+
+        if (!$wallet) {
+            return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
+        }
+        $sum = $ca * $ra;
+        if ($sum > $wallet->available_founds) {
+            return response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
+        }
+
         try {
+            DB::beginTransaction();
             $offer = new Offer();
-            $offer->amount = $request->ca;
-            $offer->rate = $request->ra;
+            $offer->amount = $ca;
+            $offer->rate = $ra;
             $offer->completed = false;
-            $offer->type = $type;
+            $offer->type = 'buy';
             $offer->active = true;
             $offer->user_id = Auth::user()->id;
             $offer->market_id = $market->id;
             $offer->save();
+
+            $wallet->locked_founds = ($wallet->locked_founds + $sum);
+            $wallet->available_founds = ($wallet->available_founds - $sum);
+            $wallet->save();
+
+            DB::commit();
         } catch (\Exception $e) {
-            return response()->json(['success' => false]);
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'message' => 'Oferta złożona pomyślnie.']);
     }
 
-    public function getOrderbook($market,$visible=false)
+    public function sell(Request $request, $market)
     {
-        $selected = Market::where('market_code',$market)->first();
-        if (!$selected){
-            return response()->json(['success'=>false,'data'=>[]],500);
+        $ca = (float)str_ireplace(',', '.', $request->ca);
+        $ra = (float)str_ireplace(',', '.', $request->ra);
+
+        $market = Market::where('market_code', $market)->first();
+        if (!$market) {
+            return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
+        }
+        $wallet = Wallet::where(['user_id' => Auth::user()->id, 'currency' => $market->first_currency])->first();
+
+        if (!$wallet) {
+            return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
+        }
+        $sum = $ca * $ra;
+        if ($ca > $wallet->available_founds) {
+            return response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
+        }
+
+        try {
+            DB::beginTransaction();
+            $offer = new Offer();
+            $offer->amount = $ca;
+            $offer->rate = $ra;
+            $offer->completed = false;
+            $offer->type = 'buy';
+            $offer->active = true;
+            $offer->user_id = Auth::user()->id;
+            $offer->market_id = $market->id;
+            $offer->save();
+
+            $wallet->locked_founds = ($wallet->locked_founds + $ca);
+            $wallet->available_founds = ($wallet->available_founds - $ca);
+            $wallet->save();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Oferta złożona pomyślnie.']);
+    }
+
+    public function getOrderbook($market, $visible = false)
+    {
+        $selected = Market::where('market_code', $market)->first();
+        if (!$selected) {
+            return response()->json(['success' => false, 'data' => []], 500);
         }
         //$selected = $markets->where('market_code', $selected)->first();
 
         $orderbook = $this->getParsedOrderbook($selected);
         $visible = ($visible == "true") ? true : false;
-        $view = view('exchange.offers',compact('orderbook','visible'))->render();
+        $view = view('exchange.offers', compact('orderbook', 'visible'))->render();
 
-        return response()->json(['success'=>true,'data'=>$view]);
+        return response()->json(['success' => true, 'data' => $view]);
     }
-
-
-
 
 
     /**

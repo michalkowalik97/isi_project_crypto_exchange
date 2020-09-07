@@ -43,7 +43,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('get/orderbook/{market}/{visible?}', 'ExchangeController@getOrderbook');
 
 
-        Route::post('/offer/{market}/{type}', 'ExchangeController@buy');
+        Route::post('/offer/{market}/buy', 'ExchangeController@buy');
+        Route::post('/offer/{market}/sell', 'ExchangeController@sell');
 
         Route::get('/offers/active', 'OffersController@getActiveList');
         Route::get('/offers/history', 'OffersController@getHistoryList');

@@ -22,12 +22,15 @@
         </div>
 
         <div class="row py-5">
-            <div class="col-12">
+            <div class="col-6">
                 <a href="/exchange/offers/active" class="mx-2 btn btn-success">Moje oferty</a>
                 <a href="/exchange/offers/history" class="mx-2 btn btn-success">Historia</a>
 
             </div>
-        </div>
+            <div class="col-5">
+                Twoje saldo: @foreach($wallets as $wallet) {{($wallet->available_founds + 0)}} {{$wallet->currency}} @endforeach
+            </div>
+            </div>
         <div class="row">
 
             <form action="/select/market" method="post" class="form-autosubmit ml-2">
@@ -54,6 +57,7 @@
                             <label>Kurs {{$selected->second_currency}}
                                 <i class=" fa fa-lock-open" aria-hidden="true"></i>
                             </label>
+
                             <input type="text" name="ra" class="form-control buy-ra">
                         </div>
 
@@ -191,10 +195,10 @@
 
                 $.post(form.attr('action'), form.serialize(), function (response) {
                     if (response.success) {
-                        document.getElementById('notification-message').innerText = "Oferta złożona pomyślnie.";
+                        document.getElementById('notification-message').innerText = response.message;
                         refreshOrderbook(market);
                     } else {
-                        document.getElementById('notification-message').innerText = "Wystąpił błąd przy składaniu oferty.";
+                        document.getElementById('notification-message').innerText = response.message;
 
                     }
 
