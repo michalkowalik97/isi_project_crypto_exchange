@@ -87,9 +87,6 @@ class WalletController extends Controller
     public function paypal($id)
     {
 
- /*       setcookie('SameSite',"None",3600, '/wallets/paypal/'.$id, env('APP_URL'),true);/*;
-        setcookie('cross-site','None',3600,'path','domain','secure')*/
-        header('Set-Cookie: cross-site=true; SameSite=None; Secure',true);
         return view('wallet.paypal', compact('id'));
     }
 

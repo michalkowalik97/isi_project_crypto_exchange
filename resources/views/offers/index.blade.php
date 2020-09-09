@@ -51,7 +51,7 @@
                         @foreach($offers as $key => $offer)
                             <tr>
                                 <th>{{++$key}}</th>
-                                    <th>{{$offer->market->market_code b }}</th>
+                                    <th>{{$offer->market->market_code }}</th>
                                 <th>{{($offer->rate + 0)}}</th>
                                 <th>{{($offer->amount + 0)}}</th>
                                 <th>{{$offer->getTypeTranslation()}}</th>
