@@ -50,7 +50,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/offers/history', 'OffersController@getHistoryList');
     });
 
-
+    Route::prefix('/wallets')->group(function () {
+        Route::get('/paypal/{id}','WalletController@paypal');
+        Route::post('/paypal','WalletController@paypalStore');
+    });
     Route::resource('wallets', 'WalletController');
 
 });

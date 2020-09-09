@@ -1,3 +1,10 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
 function exchange(select) {
     $('.' + select + '-ra').on('change', function (e) {
         let res = ($('.' + select + '-ra').val()) * ($('.' + select + '-ca').val());

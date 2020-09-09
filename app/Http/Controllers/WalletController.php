@@ -30,7 +30,7 @@ class WalletController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,19 +41,19 @@ class WalletController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $wallet = Wallet::find($id);
-        return view('wallet.show',compact('wallet'));
+        return view('wallet.show', compact('wallet'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -64,8 +64,8 @@ class WalletController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -76,11 +76,35 @@ class WalletController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    public function paypal($id)
+    {
+
+ /*       setcookie('SameSite',"None",3600, '/wallets/paypal/'.$id, env('APP_URL'),true);/*;
+        setcookie('cross-site','None',3600,'path','domain','secure')*/
+        header('Set-Cookie: cross-site=true; SameSite=None; Secure',true);
+        return view('wallet.paypal', compact('id'));
+    }
+
+    public function paypalStore(Request $request)
+    {
+        $wallet = Wallet::find($request->wallet);
+        if ($wallet) {
+            $amount = str_ireplace(',', '.', $request->amount);
+            $wallet->available_founds = ($wallet->available_founds + $amount);
+            $wallet->all_founds = ($wallet->all_founds + $amount);
+            $wallet->save();
+            return response()->json(['success' => true, 'message' => 'Płatność zakończona sukcesem.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj ponownie.']);
+
     }
 }
