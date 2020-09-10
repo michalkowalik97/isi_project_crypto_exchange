@@ -47,15 +47,17 @@
                             <th>Ilość</th>
                             <th>Typ oferty</th>
                             <th>Data złożenia</th>
+                            <th>Akcje</th>
                         </tr>
                         @foreach($offers as $key => $offer)
                             <tr>
-                                <th>{{++$key}}</th>
-                                    <th>{{$offer->market->market_code }}</th>
-                                <th>{{($offer->rate + 0)}}</th>
-                                <th>{{($offer->amount + 0)}}</th>
-                                <th>{{$offer->getTypeTranslation()}}</th>
-                                <th>{{$offer->created_at->format('d.m.Y H:i')}}</th>
+                                <td>{{++$key}}</td>
+                                <td>{{$offer->market->market_code }}</td>
+                                <td>{{($offer->rate + 0)}}</td>
+                                <td>{!! $offer->displayAmount()!!}</td>
+                                <td>{{$offer->getTypeTranslation()}}</td>
+                                <td>{{$offer->created_at->format('d.m.Y H:i')}}</td>
+                                <td><a href="/exchange/offers/cancel/{{$offer->id}}" class="btn btn-danger confirm" data-txt="Czy na pewno chcesz anulować ofertę?">Anuluj</a></td>
                             </tr>
                         @endforeach
                     </table>

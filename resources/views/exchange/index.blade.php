@@ -27,8 +27,8 @@
                 <a href="/exchange/offers/history" class="mx-2 btn btn-success">Historia</a>
 
             </div>
-            <div class="col-5">
-                Twoje saldo: @foreach($wallets as $wallet) {{($wallet->available_founds + 0)}} {{$wallet->currency}} @endforeach
+            <div class="col-5" id="balance-wrapper">
+                @include('exchange.balance')
             </div>
             </div>
         <div class="row">
@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="row my-2">
-                        <div class="col-12">
+                        <div class="col-12 hidden">
                             Otrzymasz: <br>
                             <span class="font-weight-bold buy-prov">0.00000000</span>&nbsp;{{$selected->first_currency}}
                         </div>
@@ -140,7 +140,7 @@
                     </div>
 
                     <div class="row my-2">
-                        <div class="col-12">
+                        <div class="col-12 hidden" >
                             Otrzymasz: <br>
 
                             <span class="font-weight-bold sell-prov">0.00000000</span>&nbsp;{{$selected->second_currency}}
@@ -184,6 +184,8 @@
                 if (response.success) {
                     document.getElementById('offers-list').remove();
                     document.getElementById('offers-wrapper').innerHTML = response.data;
+                    document.getElementById('balance').remove();
+                    document.getElementById('balance-wrapper').innerHTML = response.balance;
                 }
             });
         }
@@ -217,7 +219,7 @@
 
             setInterval(function () {
                 refreshOrderbook(market);
-            }, 3000)
+            }, 3000);
         });
 
     </script>

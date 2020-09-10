@@ -46,8 +46,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/offer/{market}/buy', 'ExchangeController@buy');
         Route::post('/offer/{market}/sell', 'ExchangeController@sell');
 
+        Route::get('/offers/check','ExchangeController@checkOffers');
+
         Route::get('/offers/active', 'OffersController@getActiveList');
         Route::get('/offers/history', 'OffersController@getHistoryList');
+        Route::get('/offers/cancel/{id}', 'OffersController@destroy');
     });
 
     Route::prefix('/wallets')->group(function () {

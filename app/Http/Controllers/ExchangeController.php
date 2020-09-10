@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\BitBay\PublicRest;
 use App\Market;
 use App\Offer;
+use App\Transaction;
 use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -237,7 +238,11 @@ class ExchangeController extends Controller
         $visible = ($visible == "true") ? true : false;
         $view = view('exchange.offers', compact('orderbook', 'visible'))->render();
 
-        return response()->json(['success' => true, 'data' => $view]);
+        $currencies = explode('-', $market);
+        $wallets = Wallet::where('user_id', Auth::user()->id)->whereIn('currency', $currencies)->get();
+        $balance = view('exchange.balance', compact('wallets'))->render();
+
+        return response()->json(['success' => true, 'data' => $view, 'balance' => $balance]);
     }
 
 
@@ -272,6 +277,7 @@ class ExchangeController extends Controller
                 $offerTmp->sa = $offer->amount;
                 $offerTmp->pa = $offer->amount;
                 $offerTmp->co = 1;
+                $offerTmp->id = $offer->id;
                 if ($offer->type == 'buy') {
                     $orderbook->buy[] = $offerTmp;
                 } elseif ($offer->type == 'sell') {
@@ -279,15 +285,24 @@ class ExchangeController extends Controller
                 }
             }
         }
-        //dd($orderbook->sell);
-        $sell = Arr::sort($orderbook->sell, function ($value) {
-            return $value->ra;
-        });
-        $buy = array_reverse(Arr::sort($orderbook->buy, function ($value) {
-            return $value->ra;
-        }));
+        if (($orderbook->sell[0])) {
+            $sell = Arr::sort($orderbook->sell, function ($value) {
+                return $value->ra;
+            });
+        } else {
+            $sell = [];
+        }
+        if (($orderbook->buy[0])) {
+            $buy = array_reverse(Arr::sort($orderbook->buy, function ($value) {
+                return $value->ra;
+            }));
+        } else {
+            $buy = [];
+        }
+
         $orderbook->sell = $sell;
         $orderbook->buy = $buy;
+
         return $orderbook;
     }
 
@@ -303,5 +318,104 @@ class ExchangeController extends Controller
         return $orderbook;
     }
 
+    public function checkOffers()
+    {
 
+        $offers = Offer::where('completed', false)->with('market')->get();
+        if (count($offers) > 0) {
+            $offers = $offers->groupBy('market.market_code');
+            foreach ($offers as $key => $market) {
+                $selected = Market::where('market_code', $key)->first();
+                $orderbook = $this->getParsedOrderbook($selected);
+                foreach ($market as $offer) {
+
+                    if ($offer->type == 'buy') {
+                        foreach ($orderbook->sell as $apiOffer) {
+                            if (floatval($offer->rate) == floatval($apiOffer->ra)) {
+                                if (floatval($offer->amount) <= floatval($apiOffer->ca)) {
+                                    $this->realiseOfferBuy($offer, $apiOffer);
+                                }
+                            }
+                        }
+                    } elseif ($offer->type == 'sell') {
+                        foreach ($orderbook->buy as $apiOffer) {
+                            if (floatval($offer->rate) == floatval($apiOffer->ra)) {
+                                if (floatval($offer->amount) <= floatval($apiOffer->ca)) {
+                                    $this->realiseOfferBuy($offer, $apiOffer);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private function realiseOfferBuy($offer, $apiOffer)
+    {
+        if (isset($apiOffer->id)) {
+            $sellOffer = Offer::findOrFail($apiOffer->id);
+            if ($sellOffer->user_id != $offer->user_id) {
+                $this->closeOfferAndAddCashSell($sellOffer);
+                $this->closeOfferAndAddCashBuy($offer);
+            }
+        } else {
+            $this->closeOfferAndAddCashBuy($offer);
+        }
+    }
+
+    private function realiseOfferSell($offer, $apiOffer)
+    {
+        if (isset($apiOffer->id)) {
+            $buyOffer = Offer::findOrFail($apiOffer->id);
+            if ($buyOffer->user_id != $offer->user_id) {
+                $this->closeOfferAndAddCashBuy($buyOffer);
+                $this->closeOfferAndAddCashSell($offer);
+            }
+        } else {
+            $this->closeOfferAndAddCashSell($offer);
+        }
+    }
+
+    private function closeOfferAndAddCashBuy($offer)
+    {
+        $firstWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->first_currency])->first();
+        $secondWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->second_currency])->first();
+        $firstWallet->all_founds = $firstWallet->all_founds + $offer->amount;
+        $firstWallet->available_founds = $firstWallet->available_founds + $offer->amount;
+        $firstWallet->save();
+        $sum = $offer->amount * $offer->rate;
+        $secondWallet->all_founds = ($secondWallet->all_founds - $sum);
+        $secondWallet->available_founds = ($secondWallet->available_founds - $sum);
+        $secondWallet->locked_founds = ($secondWallet->locked_founds - $sum);
+        $secondWallet->save();
+        $offer->completed = true;
+        $offer->save();
+        $this->newTransaction($offer);
+
+    }
+
+    private function closeOfferAndAddCashSell($offer)
+    {
+        $firstWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->second_currency])->first();
+        $secondWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->first_currency])->first();
+        $firstWallet->all_founds = $firstWallet->all_founds + $offer->amount;
+        $firstWallet->available_founds = $firstWallet->available_founds + $offer->amount;
+        $firstWallet->save();
+        $sum = $offer->amount * $offer->rate;
+        $secondWallet->all_founds = ($secondWallet->all_founds - $sum);
+        $secondWallet->available_founds = ($secondWallet->available_founds - $sum);
+        $secondWallet->locked_founds = ($secondWallet->locked_founds - $sum);
+        $secondWallet->save();
+        $offer->completed = true;
+        $offer->save();
+        $this->newTransaction($offer);
+    }
+
+    private function newTransaction(Offer $offer)
+    {
+        $transaction = new Transaction();
+        $transaction->offer_id = $offer->id;
+        $transaction->save();
+    }
 }

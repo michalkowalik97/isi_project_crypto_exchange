@@ -15,7 +15,7 @@ $visible=false;
             @foreach($orderbook->buy as $key => $buy)
                 <tr class="@if($key > 10 ) @if(!$visible) hidden @endif more-results @endif">
                     <td>{{($buy->ra + 0)}}</td>
-                    <td>{{($buy->ca + 0)}}</td>
+                    <td>{{App\Helpers\Helper::displayFloats ($buy->ca )}}</td>
                 </tr>
             @endforeach
         </table>
@@ -34,7 +34,7 @@ $visible=false;
             @foreach($orderbook->sell as $key => $sell)
                 <tr class="@if($key > 10 )@if(!$visible) hidden @endif more-results @endif">
                     <td>{{($sell->ra + 0)}}</td>
-                    <td>{{($sell->ca + 0)}}</td>
+                    <td>{{App\Helpers\Helper::displayFloats ($sell->ca )}}</td>
                 </tr>
             @endforeach
         </table>

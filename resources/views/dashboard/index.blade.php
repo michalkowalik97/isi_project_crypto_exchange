@@ -25,64 +25,18 @@
                               class="stretched-link text-decoration-none">{{$wallet->name}}</a></b>
                         <hr>
                         Środki:
-                        <b>  {{$wallet->all_founds}}  {{$wallet->currency}}</b> <br/>
+                        <b>  {{App\Helpers\Helper::displayFloats ($wallet->all_founds ,$wallet->type) }}  {{$wallet->currency}}</b> <br/>
 
                         Dostępne środki:
-                        <b>  {{$wallet->available_founds}}  {{$wallet->currency}}</b> <br/>
+                        <b>  {{App\Helpers\Helper::displayFloats ($wallet->available_founds ,$wallet->type) }}  {{$wallet->currency}}</b> <br/>
                         Zablokowane środki:
-                        <b>  {{$wallet->locked_founds}}  {{$wallet->currency}}</b> <br/>
+                        <b>  {{App\Helpers\Helper::displayFloats ($wallet->locked_founds ,$wallet->type) }}  {{$wallet->currency}}</b> <br/>
 
                     </div>
                 @empty
 
                 @endforelse
-                {{--      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>
 
-                      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>
-
-                      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>
-
-                      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>
-
-                      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>
-
-                      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>
-
-                      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>
-
-                      <div class="col-2 m-1 border">
-                          BTC
-                          <hr>
-                          0.32131241 BTC
-                      </div>--}}
             </div>
 
         </div>

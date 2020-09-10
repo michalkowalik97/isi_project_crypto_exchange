@@ -84,4 +84,9 @@ $(document).ready(function () {
     exchange('sell');
 
 
+    ///exchange/offers/check
+    setInterval(function () {
+        $.get('/exchange/offers/check');
+    }, 5000);
+
 });

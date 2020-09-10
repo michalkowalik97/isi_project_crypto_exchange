@@ -18,9 +18,9 @@
                 <div class="py-3 border-bottom">Integracja</div>
             </a>
 
-            <a href="/account/settings/f2a" class="">
+        {{--    <a href="/account/settings/f2a" class="">
                 <div class="py-3 border-bottom">2FA</div>
-            </a>
+            </a>--}}
 
 
         </div>
