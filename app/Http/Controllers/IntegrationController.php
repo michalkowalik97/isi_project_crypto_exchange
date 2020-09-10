@@ -16,7 +16,6 @@ class IntegrationController extends Controller
      */
     public function index()
     {
-
         $token = Auth::user()->public_token;
 
         if ($token)
