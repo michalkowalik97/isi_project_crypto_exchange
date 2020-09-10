@@ -52,7 +52,6 @@
 
                 // This function captures the funds from the transaction.
                 return actions.order.capture().then(function (details) {
-                    console.log(details);
                     if (details.status === "COMPLETED") {
                         $.post('/wallets/paypal', {
                             wallet: document.getElementById('wallet').value,

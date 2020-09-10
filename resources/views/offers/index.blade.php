@@ -36,6 +36,7 @@
         </div>
         <div class="row">
             <div class="col-12">
+                <h4>Oferty</h4>
                 @if(count($offers) <=0)
                     @component('components.alertInfo',['message'=>'Nie znaleziono żadnej oferty.'])@endcomponent
                 @else
