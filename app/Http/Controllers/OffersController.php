@@ -77,7 +77,7 @@ class OffersController extends Controller
         $offers = $offers->paginate(50);
 
 
-        return view('offers.index', compact('markets', 'offers'));
+        return view('offers.history', compact('markets', 'offers'));
     }
 
 }

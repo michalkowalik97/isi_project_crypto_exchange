@@ -14,7 +14,15 @@
 
 @section('content')
     <div class="container">
+        <div class="row py-5">
+            <div class="col-12">
+                <a href="/exchange/offers/active" class="mx-2 btn btn-success">Moje oferty</a>
+                <a href="/exchange/offers/history" class="mx-2 btn btn-success">Historia</a>
+
+            </div>
+        </div>
         <div class="row">
+
             <form action="" method="get" class="form-autosubmit ml-2">
 
                 <select name="market" class="select2" id="select-market">
@@ -28,6 +36,7 @@
         </div>
         <div class="row">
             <div class="col-12">
+                <h4>Oferty</h4>
                 @if(count($offers) <=0)
                     @component('components.alertInfo',['message'=>'Nie znaleziono żadnej oferty.'])@endcomponent
                 @else
@@ -36,18 +45,22 @@
                             <th>L.p.</th>
                             <th>Rynek</th>
                             <th>Kurs</th>
+                            <th>Kurs transakcji</th>
                             <th>Ilość</th>
                             <th>Typ oferty</th>
                             <th>Data złożenia</th>
+
                         </tr>
                         @foreach($offers as $key => $offer)
                             <tr>
-                                <th>{{++$key}}</th>
-                                <th>{{$offer->market->market_code}}</th>
-                                <th>{{($offer->rate + 0)}}</th>
-                                <th>{{($offer->amount + 0)}}</th>
-                                <th>{{$offer->getTypeTranslation()}}</th>
-                                <th>{{$offer->created_at->format('d.m.Y H:i')}}</th>
+                                <td>{{++$key}}</td>
+                                <td>{{$offer->market->market_code }}</td>
+                                <td>{{($offer->rate + 0)}}</td>
+                                <td>{{($offer->realise_rate + 0)}}</td>
+                                <td>{!! $offer->displayAmount()!!}</td>
+                                <td>{{$offer->getTypeTranslation()}}</td>
+                                <td>{{$offer->created_at->format('d.m.Y H:i')}}</td>
+
                             </tr>
                         @endforeach
                     </table>
