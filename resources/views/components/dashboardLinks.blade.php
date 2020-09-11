@@ -5,7 +5,7 @@
     </a>
 
 
-    <a href="/wallets" class="">
+    <a href="/" class="">
         <div class="py-3 border-bottom">Portfele</div>
     </a>
 

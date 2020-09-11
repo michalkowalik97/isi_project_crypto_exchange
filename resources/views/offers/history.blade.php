@@ -66,7 +66,7 @@
                             </tr>
                         @endforeach
                     </table>
-                    {{--{{$offers->links()}}--}}
+                    {{$offers->links()}}
                 @endif
             </div>
         </div>

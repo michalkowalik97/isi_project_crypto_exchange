@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\DB;
 class OffersController extends Controller
 {
 
+    /**
+     * Metoda służąca do anulowania oferty w giełdzie
+     *
+     * @param $id id oferty która ma zostać anulowana
+     * @return \Illuminate\Http\RedirectResponse przekierowanie
+     */
     public function destroy($id)
     {
         $offer = Offer::with('market')->find($id);
@@ -52,6 +58,12 @@ class OffersController extends Controller
 
     }
 
+    /**
+     * Metoda zwracająca listę aktywnych ofert uzytkownika
+     *
+     * @param Request $request request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View widok zawierający listę aktywnych ofert użytkownika
+     */
     public function getActiveList(Request $request)
     {
         $markets = Market::all();
@@ -66,6 +78,12 @@ class OffersController extends Controller
         return view('offers.index', compact('markets', 'offers'));
     }
 
+    /**
+     * Metoda zwracająca listę nieaktywnych ofert uzytkownika
+     *
+     * @param Request $request request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View widok zawierający listę nieaktywnych ofert użytkownika
+     */
     public function getHistoryList(Request $request)
     {
         $markets = Market::all();
@@ -75,7 +93,7 @@ class OffersController extends Controller
         if ($market) {
             $offers->where('market_id', $market);
         }
-        $offers = $offers->get();
+        $offers = $offers->paginate(50);
 
 
         return view('offers.history', compact('markets', 'offers'));

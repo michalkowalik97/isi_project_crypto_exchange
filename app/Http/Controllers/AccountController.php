@@ -10,20 +10,32 @@ use Illuminate\Support\Facades\Hash;
 class AccountController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Strona główna ustawień konta.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View widok strony głównej ustawień konta.
+     *
      */
     public function index()
     {
         return view('account.index');
     }
 
+    /**
+     * Metoda zwracająca formularz edycji hasła.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View Widok z formularzem edycji hasła.
+     */
     public function editPassword()
     {
         return view('account.password');
     }
 
+    /**
+     * Metoda służąca do zapisania zmienionego hasła
+     *
+     * @param Request $request request zawierający dane wpisane przez użytkownika
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector przekierowanie wstacz lyb do strony głównej ustawień użytkownika
+     */
     public function updatePassword(Request $request)
     {
         $request->validate([

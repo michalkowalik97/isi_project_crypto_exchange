@@ -17,9 +17,9 @@ use Log;
 class ExchangeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Strona główna giełdy.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View widok strony głównej giełdy.
      */
     public function index($selected = "BTC-PLN")
     {
@@ -37,12 +37,22 @@ class ExchangeController extends Controller
         return view('exchange.index', compact('markets', 'selected', 'orderbook', 'disabled', 'wallets'));
     }
 
-
+    /**
+     * Metoda pozwalająca na wybranie rynku na giełdzie.
+     *
+     * @param Request $request request zawierający kod wybranego rynku
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector przekierowanie do giełdy z wybranym rynkiem
+     */
     public function selectMarket(Request $request)
     {
         return redirect('/exchange/' . $request->market);
     }
 
+
+    /**
+     * Metoda sprawdzająca dostępność rynków i aktualizująca informacje w bazie
+     * @return bool informacja czy udało się zaktualizować informacje
+     */
     public function updateAvailableMarkets()
     {
         $skipCurrencies = ["USD", "EUR"];
@@ -83,6 +93,13 @@ class ExchangeController extends Controller
         return false;
     }
 
+    /**
+     * Metoda służąca do dodawania ofert kupna na giełdzie
+     *
+     * @param Request $request request zawierający dane złożonej oferty
+     * @param $market rynek którego dotyczy oferta
+     * @return \Illuminate\Http\JsonResponse odpowiedź w formacie JSON zawierająca informację czy udało się złożyć ofertę
+     */
     public function buy(Request $request, $market)
     {
         $ca = (float)str_ireplace(',', '.', $request->ca);
@@ -127,6 +144,13 @@ class ExchangeController extends Controller
         return response()->json(['success' => true, 'message' => 'Oferta złożona pomyślnie.']);
     }
 
+    /**
+     * Metoda służąca do dodawania ofert sprzedaży na giełdzie
+     *
+     * @param Request $request request zawierający dane złożonej oferty
+     * @param $market rynek którego dotyczy oferta
+     * @return \Illuminate\Http\JsonResponse odpowiedź w formacie JSON zawierająca informację czy udało się złożyć ofertę
+     */
     public function sell(Request $request, $market)
     {
         $ca = (float)str_ireplace(',', '.', $request->ca);
@@ -171,6 +195,14 @@ class ExchangeController extends Controller
         return response()->json(['success' => true, 'message' => 'Oferta złożona pomyślnie.']);
     }
 
+    /**
+     * Metoda pozwalająca na pobranie listy aktywnych ofert na danym rynku
+     *
+     * @param $market kod rynku dla którego mają być pobrane oferty
+     * @param bool $visible informacja czy mają być wyświetlone wszystkie oferty czy tylko kilka początkowych
+     * @return \Illuminate\Http\JsonResponse odpowiedź w formacie JSON zawierająca aktualne dane
+     * @throws \Throwable wyjątek
+     */
     public function getOrderbook($market, $visible = false)
     {
         $selected = Market::where('market_code', $market)->first();
@@ -190,12 +222,13 @@ class ExchangeController extends Controller
         return response()->json(['success' => true, 'data' => $view, 'balance' => $balance]);
     }
 
-
     /**
-     * @param $selected
-     * @return bool|\Illuminate\Support\Collection|mixed|string|void
+     * Metoda pobierająca aktualną listę ofert z giełdy dla wskazanego rynku
+     *
+     * @param Market $selected model z wybranym rynkiem
+     * @return bool|\Illuminate\Support\Collection|mixed|string|void lista ofert pobrana z giełdy
      */
-    private function getOrderbookFromApi($selected)
+    private function getOrderbookFromApi(Market $selected)
     {
         $api = new PublicRest();
         try {
@@ -207,6 +240,12 @@ class ExchangeController extends Controller
         return $orderbook;
     }
 
+    /**
+     * Metoda łącząca oferty z bazy danych z ofertami pobranymi z API
+     * @param $offers oferty pobrane z bazy danych
+     * @param $orderbook lista ofert pobrana z API
+     * @return \Illuminate\Support\Collection połączona lista ofert
+     */
     private function addDbOffersToOrderbook($offers, $orderbook)
     {
         if (!isset($orderbook->sell) && !isset($orderbook->buy)) {
@@ -252,8 +291,10 @@ class ExchangeController extends Controller
     }
 
     /**
-     * @param $selected
-     * @return bool|\Illuminate\Support\Collection|mixed|string|void
+     * Metoda służąca do pobrania pełnej listy ofert z uwzględnieniem ofert z bazy
+     *
+     * @param $selected rynek dla którego ma być pobrana lista ofert
+     * @return bool|\Illuminate\Support\Collection|mixed|string|void lista ofert
      */
     private function getParsedOrderbook($selected)
     {
@@ -263,9 +304,11 @@ class ExchangeController extends Controller
         return $orderbook;
     }
 
+    /**
+     * Metoda służąca do sprawdzania i oznaczania czy jakaś oferta z bazy może zostać zrealizowana
+     */
     public function checkOffers()
     {
-
         $offers = Offer::where('completed', false)->with('market')->get();
         if (count($offers) > 0) {
             $offers = $offers->groupBy('market.market_code');
@@ -279,7 +322,8 @@ class ExchangeController extends Controller
                             if (floatval($offer->rate) >= floatval($apiOffer->ra)) {
                                 if (floatval($offer->amount) <= floatval($apiOffer->ca)) {
                                     Log::info('---------------------------');
-                                    Log::info('BUY: offer rate1: '. floatval($offer->rate).' matched api offer rate: '.floatval($apiOffer->ra));
+                                    Log::info('BUY: offer rate: '. floatval($offer->rate).' matched api offer rate: '.floatval($apiOffer->ra));
+                                    Log::info('BUY: offer amount: '. floatval($offer->rate).' maountapi offer rate: '.floatval($apiOffer->ca));
 
                                     $this->realiseOfferBuy($offer, $apiOffer);
                                     break;
@@ -292,7 +336,8 @@ class ExchangeController extends Controller
                             if (floatval($offer->rate) <= floatval($apiOffer->ra)) {
                                 if (floatval($offer->amount) <= floatval($apiOffer->ca)) {
                                     Log::info('---------------------------');
-                                    Log::info('SELL: offer rate1: '.$offer->rate.' matched api offer rate: '.$apiOffer->ra);
+                                    Log::info('SELL: offer rate: '.$offer->rate.' matched api offer rate: '.$apiOffer->ra);
+                                    Log::info('SELL: offer amount: '.$offer->amount.' matched api offer maount: '.$apiOffer->ca);
 
                                     $this->realiseOfferSell($offer, $apiOffer);
                                     break;
@@ -307,6 +352,11 @@ class ExchangeController extends Controller
         }
     }
 
+    /**
+     * Metoda służąca do realizacji oferty kupna
+     * @param $offer oferta która ma zostać zrealizowana
+     * @param $apiOffer oferta z giełdy która została dopasowana do oferty z bazy
+     */
     private function realiseOfferBuy($offer, $apiOffer)
     {
         if (isset($apiOffer->id)) {
@@ -322,6 +372,11 @@ class ExchangeController extends Controller
         }
     }
 
+    /**
+     * Metoda służąca do realizacji oferty sprzedaży
+     * @param $offer oferta która ma zostać zrealizowana
+     * @param $apiOffer oferta z giełdy która została dopasowana do oferty z bazy
+     */
     private function realiseOfferSell($offer, $apiOffer)
     {
         if (isset($apiOffer->id)) {
@@ -337,6 +392,12 @@ class ExchangeController extends Controller
         }
     }
 
+    /**
+     * Metoda służąca do zamknięcia oferty kupna i aktualizacji stanu portfeli
+     *
+     * @param $offer oferta która ma zostać zrealizowana
+     * @param $rate kurs transakcji
+     */
     private function closeOfferAndAddCashBuy($offer,$rate)
     {
         Log::info  ('BUY: oferta: '.$offer->toJson());
@@ -358,6 +419,12 @@ class ExchangeController extends Controller
 
     }
 
+    /**
+     * Metoda służąca do zamknięcia oferty sprzedaży i aktualizacji stanu portfeli
+     *
+     * @param $offer oferta która ma zostać zrealizowana
+     * @param $rate kurs transakcji
+     */
     private function closeOfferAndAddCashSell($offer, $rate)
     {
         Log::info  ('SELL: oferta: '.$offer->toJson());
@@ -379,6 +446,10 @@ class ExchangeController extends Controller
         $this->newTransaction($offer);
     }
 
+    /**
+     * Metoda zapisująca transakcję w bazie
+     * @param Offer $offer oferta dla której została zrealizowana transakcja
+     */
     private function newTransaction(Offer $offer)
     {
         $transaction = new Transaction();

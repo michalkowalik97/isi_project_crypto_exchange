@@ -11,4 +11,9 @@ class Market extends Model
         'second_currency',
         'time',
         'active'];
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
 }

@@ -2,38 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Market;
+use App\Offer;
 use App\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WalletController extends Controller
 {
 
     /**
-     * Display the specified resource.
+     * Metoda wyświetlająca szczegóły dla wybranego portfela
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id id portfela
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View widok ze szczegółami
      */
     public function show($id)
     {
         $wallet = Wallet::find($id);
-        return view('wallet.show', compact('wallet'));
+        $markets = Market::where('first_currency',$wallet->currency)->orWhere('second_currency',$wallet->currency)->get();
+        $offers=[];
+        if (count($markets) > 0){
+        $offers = Offer::where('user_id',Auth::user()->id)->whereIn('market_id',$markets->pluck('id')->toArray())->withTrashed()->with('market')->get();
+        }
+        return view('wallet.show', compact('wallet','offers'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Metoda zwracająca widok z szybkimi płatnościami
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id id portfela
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View widok
      */
-
-
     public function paypal($id)
     {
 
         return view('wallet.paypal', compact('id'));
     }
 
+    /**
+     * Metoda zapisująca dane płątności
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function paypalStore(Request $request)
     {
         $wallet = Wallet::find($request->wallet);

@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Strona główna widoczna po zalogowaniu.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View widok strony głównej widocznej po zalogowaniu.
      */
     public function index()
     {
