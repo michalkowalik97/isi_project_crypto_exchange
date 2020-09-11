@@ -48,6 +48,7 @@
                             <th>Kurs transakcji</th>
                             <th>Ilość</th>
                             <th>Typ oferty</th>
+                            <th>Status</th>
                             <th>Data złożenia</th>
 
                         </tr>
@@ -56,15 +57,16 @@
                                 <td>{{++$key}}</td>
                                 <td>{{$offer->market->market_code }}</td>
                                 <td>{{($offer->rate + 0)}}</td>
-                                <td>{{($offer->realise_rate + 0)}}</td>
+                                <td>{{($offer->realise_rate) ? $offer->realise_rate + 0 : $offer->rate +0}}</td>
                                 <td>{!! $offer->displayAmount()!!}</td>
                                 <td>{{$offer->getTypeTranslation()}}</td>
+                                <td>@if($offer->trashed()) Anulowana @elseif($offer->completed )Zrealizowana @endif </td>
                                 <td>{{$offer->created_at->format('d.m.Y H:i')}}</td>
 
                             </tr>
                         @endforeach
                     </table>
-                    {{$offers->links()}}
+                    {{--{{$offers->links()}}--}}
                 @endif
             </div>
         </div>

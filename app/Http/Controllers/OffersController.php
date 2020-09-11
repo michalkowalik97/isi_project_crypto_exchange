@@ -70,11 +70,12 @@ class OffersController extends Controller
     {
         $markets = Market::all();
         $market = $request->get('market');
-        $offers = Offer::where(['completed' => true, 'user_id' => Auth::user()->id])->with('market');
+        $offers = Offer::withTrashed();
+        $offers = $offers->where(['completed' => true, 'user_id' => Auth::user()->id])->with('market');
         if ($market) {
             $offers->where('market_id', $market);
         }
-        $offers = $offers->paginate(50);
+        $offers = $offers->get();
 
 
         return view('offers.history', compact('markets', 'offers'));

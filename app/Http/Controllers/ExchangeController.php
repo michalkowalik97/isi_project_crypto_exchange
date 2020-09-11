@@ -64,7 +64,18 @@ class ExchangeController extends Controller
 
             DB::table('markets')->update(['active' => false]);
             foreach ($query as $q) {
-                DB::table('markets')->updateOrInsert($q);
+                $db = Market::where([
+                    "market_code" =>$q["market_code"],
+                    "first_currency" =>$q["first_currency"],
+                    "second_currency" =>$q["second_currency"],
+                ])->first();
+                if (!$db){
+                    continue;
+                }
+                $db->time = $q['time'];
+                $db->active = $q['active'];
+                $db->save();
+               // DB::table('markets')->updateOrInsert($q);
             }
 
             return true;
@@ -141,7 +152,7 @@ class ExchangeController extends Controller
             $offer->amount = $ca;
             $offer->rate = $ra;
             $offer->completed = false;
-            $offer->type = 'buy';
+            $offer->type = 'sell';
             $offer->active = true;
             $offer->user_id = Auth::user()->id;
             $offer->market_id = $market->id;
@@ -265,9 +276,11 @@ class ExchangeController extends Controller
 
                     if ($offer->type == 'buy') {
                         foreach ($orderbook->sell as $apiOffer) {
-                            if (floatval($offer->rate) <= floatval($apiOffer->ra)) {
+                            if (floatval($offer->rate) >= floatval($apiOffer->ra)) {
                                 if (floatval($offer->amount) <= floatval($apiOffer->ca)) {
                                     Log::info('---------------------------');
+                                    Log::info('BUY: offer rate1: '. floatval($offer->rate).' matched api offer rate: '.floatval($apiOffer->ra));
+
                                     $this->realiseOfferBuy($offer, $apiOffer);
                                     break;
                                     Log::info('---------------------------');
@@ -276,9 +289,11 @@ class ExchangeController extends Controller
                         }
                     } elseif ($offer->type == 'sell') {
                         foreach ($orderbook->buy as $apiOffer) {
-                            if (floatval($offer->rate) >= floatval($apiOffer->ra)) {
+                            if (floatval($offer->rate) <= floatval($apiOffer->ra)) {
                                 if (floatval($offer->amount) <= floatval($apiOffer->ca)) {
                                     Log::info('---------------------------');
+                                    Log::info('SELL: offer rate1: '.$offer->rate.' matched api offer rate: '.$apiOffer->ra);
+
                                     $this->realiseOfferSell($offer, $apiOffer);
                                     break;
 
@@ -347,15 +362,16 @@ class ExchangeController extends Controller
     {
         Log::info  ('SELL: oferta: '.$offer->toJson());
         Log::info  ('SELL: kurs: '.$rate);
-        $firstWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->second_currency])->first();
-        $secondWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->first_currency])->first();
-        $firstWallet->all_founds = $firstWallet->all_founds + $offer->amount;
-        $firstWallet->available_founds = $firstWallet->available_founds + $offer->amount;
+        $firstWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->first_currency])->first();
+        $secondWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->second_currency])->first();
+        $firstWallet->all_founds = $firstWallet->all_founds - $offer->amount;
+        $firstWallet->locked_founds = $firstWallet->all_founds - $offer->amount;
+        //$firstWallet->available_founds = $firstWallet->available_founds + $offer->amount;
         $firstWallet->save();
         $sum = $offer->amount * $rate;
-        $secondWallet->all_founds = ($secondWallet->all_founds - $sum);
-        $secondWallet->available_founds = ($secondWallet->available_founds + (($offer->amount * $offer->rate)-$sum));
-        $secondWallet->locked_founds = ($secondWallet->locked_founds - ($offer->amount * $offer->rate));
+        $secondWallet->all_founds = ($secondWallet->all_founds + $sum);
+        $secondWallet->available_founds = ($secondWallet->available_founds + $sum /*(($offer->amount * $offer->rate)-$sum)*/);
+        //$secondWallet->locked_founds = ($secondWallet->locked_founds - ($offer->amount * $offer->rate));
         $secondWallet->save();
         $offer->completed = true;
         $offer->realise_rate=$rate;
