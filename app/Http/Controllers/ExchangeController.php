@@ -74,7 +74,7 @@ class ExchangeController extends Controller
 
             DB::table('markets')->update(['active' => false]);
             foreach ($query as $q) {
-                $db = Market::where([
+               /* $db = Market::where([
                     "market_code" =>$q["market_code"],
                     "first_currency" =>$q["first_currency"],
                     "second_currency" =>$q["second_currency"],
@@ -84,8 +84,8 @@ class ExchangeController extends Controller
                 }
                 $db->time = $q['time'];
                 $db->active = $q['active'];
-                $db->save();
-               // DB::table('markets')->updateOrInsert($q);
+                $db->save();*/
+                DB::table('markets')->updateOrInsert($q);
             }
 
             return true;
@@ -432,7 +432,7 @@ class ExchangeController extends Controller
         $firstWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->first_currency])->first();
         $secondWallet = Wallet::where(['user_id' => $offer->user_id, 'currency' => $offer->market->second_currency])->first();
         $firstWallet->all_founds = $firstWallet->all_founds - $offer->amount;
-        $firstWallet->locked_founds = $firstWallet->all_founds - $offer->amount;
+        $firstWallet->locked_founds /*= $firstWallet->all_founds*/ -= $offer->amount;
         //$firstWallet->available_founds = $firstWallet->available_founds + $offer->amount;
         $firstWallet->save();
         $sum = $offer->amount * $rate;
