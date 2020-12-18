@@ -9,4 +9,8 @@
         <div class="py-3 border-bottom">Portfele</div>
     </a>
 
+    <a href="/bot" class="">
+        <div class="py-3 border-bottom">Automatyczny handel</div>
+    </a>
+
 </div>

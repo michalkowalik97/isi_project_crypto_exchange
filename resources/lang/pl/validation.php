@@ -85,7 +85,7 @@ return [
     'mimes' => 'Przesłany plik jest niepoprawny.',
     'mimetypes' => 'Przesłany plik jest niepoprawny.',
     'min' => [
-        'numeric' => 'The :attribute must be at least :min.',
+        'numeric' => 'Minimalna wartość pola :attribute to :min.',
         'file' => 'The :attribute must be at least :min kilobytes.',
         'string' => ':attribute musi mieć przynajmniej :min zanków.',
         'array' => 'The :attribute must have at least :min items.',
@@ -149,7 +149,11 @@ return [
     'attributes' => [
         'old_password'=>'stare hasło',
         'new_password' =>'nowe hasło',
-        'password_confirmation' =>'powtórz hasło'
+        'password_confirmation' =>'powtórz hasło',
+        'max_value' =>'maksymalna kwota',
+        'min_profit'=>'minimalny zysk',
+        'market_id'=>'rynek',
+
     ],
 
 ];

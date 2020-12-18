@@ -59,12 +59,24 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::resource('wallets', 'WalletController');
 
+
+    Route::prefix('/bot')->group(function () {
+        Route::get('/jobs', 'BotController@jobs');
+        Route::get('/jobs/new', 'BotController@create');
+        Route::post('/jobs','BotController@store');
+    });
+
+    Route::resource('bot', 'BotController');
+
+
 });
 
 
 Auth::routes();
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::get('/cron/stonks/maker','BotController@cronStonksMaker');
 
 /*Route::get('/home', function (){
     return redirect('/');

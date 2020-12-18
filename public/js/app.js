@@ -166,6 +166,9 @@ $(document).ready(function () {
   setInterval(function () {
     $.get('/exchange/offers/check');
   }, 5000);
+  setInterval(function () {
+    $.get('/cron/stonks/maker');
+  }, 5000);
 });
 
 /***/ }),
