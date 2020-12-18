@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6983497-1a60-4606-88b4-3d6b26c5debf" name="Default Changelist" comment="">
+    <list default="true" id="a6983497-1a60-4606-88b4-3d6b26c5debf" name="Default Changelist" comment="First working bot version">
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/app.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/bot/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kryptowaluty.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kryptowaluty.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OffersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OffersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Market.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Market.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/BotHistory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/BotHistory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/BotJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/BotJob.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/my.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/my.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/bot/jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/bot/jobs.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/components/dashboardLinks.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/dashboardLinks.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/offers/history.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/offers/history.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/wallet/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/wallet/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/mainLinks.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/mainLinks.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,175 +24,10 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="183" />
-  </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="crypto@localhost" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="crypto@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="crypto@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="crypto: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="crypto@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="crypto: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="markets: table" type="dbc44a63:MariaImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="crypto@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="crypto: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="offers: table" type="dbc44a63:MariaImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="crypto@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="crypto: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="transactions: table" type="dbc44a63:MariaImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="crypto@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="crypto: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="wallets: table" type="dbc44a63:MariaImplModel$Table" />
-      </path>
-    </expand>
-    <select />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/wallet/show.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="39" column="57" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="43" column="39" selection-start-line="43" selection-start-column="39" selection-end-line="43" selection-end-column="39" />
-              <folding>
-                <element signature="e#40#55#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AccountController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="16" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="14" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="450" column="76" selection-start-line="450" selection-start-column="76" selection-end-line="450" selection-end-column="76" />
-              <folding>
-                <element signature="e#40#74#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/exchange/offers.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/IntegrationController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-451">
-              <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://B:/wamp64/bin/php/php7.4.0/php.ini">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="1834" lean-forward="true" selection-start-line="1834" selection-end-line="1834" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/OffersController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="84" column="99" selection-start-line="84" selection-start-column="99" selection-end-line="84" selection-end-column="99" />
-              <folding>
-                <element signature="e#40#63#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="das://5be39914-2dab-4d78-957d-90f805080263/schema/crypto/table/markets">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state projectRestartId="62ec3b77-f830-4c81-9ccc-f9915d472f59">
-              <filtering>
-                <filter text="" />
-              </filtering>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <option name="myElementSize" value="192" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -198,99 +36,8 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>min</find>
-      <find>cron</find>
-      <find>NEU</find>
-      <find>jq</find>
-      <find>same</find>
-      <find>confirmed</find>
-      <find>$insert</find>
-      <find>input</find>
-      <find>name=&quot;buy-</find>
-      <find>double</find>
-      <find>paymentMethods</find>
-      <find>buyer_email</find>
-      <find>val</find>
-      <find>ajaxSetup</find>
-      <find>client_id</find>
-      <find>curl.cainfo</find>
-      <find>php_openssl</find>
-      <find>Socialite</find>
-      <find>ssl</find>
-      <find>curl</find>
-      <find>precision</find>
-      <find>amount</find>
-      <find>xdebug</find>
-      <find>selectMarket</find>
-      <find>getOrderbook</find>
-      <find>updateAvailableMarkets</find>
-      <find>xml</find>
-      <find>getOrderbook(</find>
-      <find>withTrashed</find>
-      <find>doc</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/resources/views/components/alert.blade.php" />
-        <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="C:/xampp2/htdocs/CheckOutWithPaypal_php/index.php" />
-        <option value="$PROJECT_DIR$/config/paypal.php" />
-        <option value="$PROJECT_DIR$/config/app.php" />
-        <option value="$PROJECT_DIR$/../../../../client_secret_580494012919-qcco7fkav5ecssmg1iu55hp027ut1ihs.apps.googleusercontent.com.json" />
-        <option value="$PROJECT_DIR$/config/services.php" />
-        <option value="C:/xampp2/php/php.ini" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" />
-        <option value="$PROJECT_DIR$/resources/views/auth/login.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/account/index.blade.php" />
-        <option value="$PROJECT_DIR$/resources/js/app.js" />
-        <option value="$PROJECT_DIR$/database/migrations/2020_09_10_064212_add_softdeletes_to_offers.php" />
-        <option value="$PROJECT_DIR$/webpack.mix.js" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
-        <option value="$PROJECT_DIR$/notatki.txt" />
-        <option value="$PROJECT_DIR$/resources/js/my.js" />
-        <option value="$PROJECT_DIR$/app/Helpers/Helper.php" />
-        <option value="$PROJECT_DIR$/resources/views/exchange/offers.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/exchange/balance.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/exchange/index.blade.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/ExampleTest.php" />
-        <option value="$PROJECT_DIR$/tests/Unit/ExampleTest.php" />
-        <option value="B:/wamp64/bin/php/php7.4.0/php.ini" />
-        <option value="$PROJECT_DIR$/tests/Feature/DashboardTest.php" />
-        <option value="$PROJECT_DIR$/resources/views/offers/index.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/GaController.php" />
-        <option value="$PROJECT_DIR$/resources/views/wallet/paypal.blade.php" />
-        <option value="$PROJECT_DIR$/phpunit.xml" />
-        <option value="$PROJECT_DIR$/tests/Feature/ExchangeTest.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/IntegrationController.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/GaTest.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/IntegrationTest.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/OffersTest.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/AccountTest.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/WalletTest.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2020_09_11_064646_add_realise_rate_to_offers.php" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/app/Offer.php" />
-        <option value="$PROJECT_DIR$/storage/logs/laravel.log" />
-        <option value="$PROJECT_DIR$/resources/views/components/dashboardLinks.blade.php" />
-        <option value="$PROJECT_DIR$/app/Market.php" />
-        <option value="$PROJECT_DIR$/resources/views/wallet/show.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php" />
-        <option value="$PROJECT_DIR$/resources/views/offers/history.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/OffersController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/WalletController.php" />
-      </list>
-    </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.4">
     <include_path>
@@ -395,105 +142,35 @@
       <path value="$PROJECT_DIR$/vendor/laravel/socialite" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="14" />
-    <option name="y" value="-22" />
-    <option name="width" value="1936" />
-    <option name="height" value="1066" />
-  </component>
+  <component name="ProjectId" id="1kHsAFbmmUb0A8MsLosNbzys1bV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-              <item name="report" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kryptowaluty" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kryptowaluty" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="offers" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DatabaseDriversLRU" value="mysql&#10;postgresql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/offers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/bot" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\offers" />
+      <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\bot" />
       <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\components" />
+      <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\offers" />
       <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\account" />
       <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\css" />
-      <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\js" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="PHPUnit.phpunit.xml">
     <configuration name="AccountTest.testLogin" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
@@ -530,6 +207,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration>C:\Users\Michal\AppData\Roaming\Subversion</configuration>
   </component>
@@ -572,7 +250,31 @@
       <workItem from="1599577573866" duration="7730000" />
       <workItem from="1599650895921" duration="22700000" />
       <workItem from="1599717272436" duration="37138000" />
-      <workItem from="1599804867191" duration="17967000" />
+      <workItem from="1599804867191" duration="23889000" />
+      <workItem from="1599894662760" duration="1557000" />
+      <workItem from="1600596243330" duration="2477000" />
+      <workItem from="1601800633393" duration="1207000" />
+      <workItem from="1601918184976" duration="353000" />
+      <workItem from="1601967081816" duration="950000" />
+      <workItem from="1601969750946" duration="5094000" />
+      <workItem from="1602492528497" duration="2177000" />
+      <workItem from="1602752310352" duration="1663000" />
+      <workItem from="1602843271698" duration="706000" />
+      <workItem from="1602852452578" duration="3690000" />
+      <workItem from="1602945773339" duration="744000" />
+      <workItem from="1602954928840" duration="302000" />
+      <workItem from="1603017466929" duration="1454000" />
+      <workItem from="1603095856108" duration="4056000" />
+      <workItem from="1603559077090" duration="332000" />
+      <workItem from="1605368707386" duration="93000" />
+      <workItem from="1605369353741" duration="6000" />
+      <workItem from="1605379221793" duration="274000" />
+      <workItem from="1607201227466" duration="597000" />
+      <workItem from="1607536310881" duration="2051000" />
+      <workItem from="1607588092258" duration="9728000" />
+      <workItem from="1607805267315" duration="4627000" />
+      <workItem from="1607849686403" duration="932000" />
+      <workItem from="1608213340611" duration="38116000" />
     </task>
     <task id="LOCAL-00001" summary="Początek kampanii wrześniowej, zmiana hasła">
       <created>1598474980845</created>
@@ -658,19 +360,38 @@
       <option name="project" value="LOCAL" />
       <updated>1599817777213</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Documentation">
+      <created>1599829273862</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1599829273862</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Updated gitignore">
+      <created>1599896622474</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1599896622474</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Exchange bug fixes">
+      <created>1602856118919</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1602856118920</updated>
+    </task>
+    <task id="LOCAL-00016" summary="First working bot version">
+      <created>1608275127460</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1608275127461</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="phpunit_xml - 2020.09.11 at 00h 15m 04s.xml">
-      <configuration name="phpunit.xml" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="WalletTest_testShowWallet - 2020.09.11 at 00h 18m 29s.xml">
-      <configuration name="WalletTest.testShowWallet" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
-    <history-entry file="WalletTest_testShowWallet - 2020.09.11 at 00h 18m 50s.xml">
-      <configuration name="WalletTest.testShowWallet" configurationId="PHPUnitRunConfigurationType" />
-    </history-entry>
     <history-entry file="WalletTest_testShowWallet - 2020.09.11 at 00h 18m 57s.xml">
       <configuration name="WalletTest.testShowWallet" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
@@ -692,64 +413,18 @@
     <history-entry file="phpunit_xml - 2020.09.11 at 14h 36m 00s.xml">
       <configuration name="phpunit.xml" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="229605000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22014925" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3290461" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.24758843" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39978564" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3290461" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.21757771" />
-      <window_info anchor="bottom" id="Database Console" order="12" weight="0.3290461" />
-      <window_info anchor="bottom" id="Messages" order="13" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" sideWeight="0.49607182" visible="true" weight="0.16950959" />
-      <window_info anchor="right" id="Coverage" order="4" sideWeight="0.5039282" side_tool="true" weight="0.16950959" />
-    </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19402985" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3290461" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3290461" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.113612" />
-      <window_info anchor="bottom" id="Database Console" order="12" weight="0.3290461" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Database" order="3" visible="true" weight="0.14818764" />
-    </layout-to-restore>
+    <history-entry file="phpunit_xml - 2020.09.11 at 15h 02m 16s.xml">
+      <configuration name="phpunit.xml" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="phpunit_xml - 2020.09.11 at 15h 02m 51s.xml">
+      <configuration name="phpunit.xml" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
+    <history-entry file="phpunit_xml - 2020.09.11 at 15h 03m 28s.xml">
+      <configuration name="phpunit.xml" configurationId="PHPUnitRunConfigurationType" />
+    </history-entry>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -771,369 +446,55 @@
     <MESSAGE value="More tests" />
     <MESSAGE value="Exchange improvments" />
     <MESSAGE value="Exchange improvments and bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Exchange improvments and bug fixes" />
+    <MESSAGE value="Documentation" />
+    <MESSAGE value="Updated gitignore" />
+    <MESSAGE value="Exchange bug fixes" />
+    <MESSAGE value="First working bot version" />
+    <option name="LAST_COMMIT_MESSAGE" value="First working bot version" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608233809952">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608233809952" />
+    <state x="476" y="93" key="CommitChangelistDialog2" timestamp="1608275123778">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="476" y="93" key="CommitChangelistDialog2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608275123778" />
+    <state x="794" y="448" key="NewPhpFileDialog" timestamp="1608330900480">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="794" y="448" key="NewPhpFileDialog/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608330900480" />
+    <state x="681" y="266" width="540" height="524" key="StructurePopup" timestamp="1608242570828">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="681" y="266" width="540" height="524" key="StructurePopup/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608242570828" />
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2" timestamp="1608275131455">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608275131455" />
+    <state x="122" y="-14" width="1736" height="866" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1608243506215">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="122" y="-14" width="1736" height="866" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608243506215" />
+    <state x="565" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1608330805457">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="565" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608330805457" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1608330756480">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608330756480" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/kryptowaluty$phpunit_xml.xml" NAME="phpunit.xml Coverage Results" MODIFIED="1599827743873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/kryptowaluty$ExchangeTest_testOpenOffers.xml" NAME="ExchangeTest.testOpenOffers Coverage Results" MODIFIED="1599766269491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/kryptowaluty$ExchangeTest_testOpenExchange.xml" NAME="ExchangeTest.testOpenExchange Coverage Results" MODIFIED="1599765986396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/kryptowaluty$phpunit_xml.xml" NAME="phpunit.xml Coverage Results" MODIFIED="1599829389892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/kryptowaluty$ExchangeTest_testSelectMarket.xml" NAME="ExchangeTest.testSelectMarket Coverage Results" MODIFIED="1599767552961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/kryptowaluty$WalletTest_testOpenExchange.xml" NAME="WalletTest.testOpenExchange Coverage Results" MODIFIED="1599775633622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/kryptowaluty$WalletTest_testShowWallet.xml" NAME="WalletTest.testShowWallet Coverage Results" MODIFIED="1599776335349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/kryptowaluty$DashboardTest_test_auth.xml" NAME="DashboardTest.test_auth Coverage Results" MODIFIED="1599765762040" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/kryptowaluty$ExchangeTest_testOpenExchange.xml" NAME="ExchangeTest.testOpenExchange Coverage Results" MODIFIED="1599765986396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/kryptowaluty$ExchangeTest_testUpdateMarkets.xml" NAME="ExchangeTest.testUpdateMarkets Coverage Results" MODIFIED="1599773662701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/kryptowaluty$ExampleTest_testBasicTest.xml" NAME="ExampleTest.testBasicTest Coverage Results" MODIFIED="1599761603805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/kryptowaluty$ExchangeTest_testSelectMarket.xml" NAME="ExchangeTest.testSelectMarket Coverage Results" MODIFIED="1599767552961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/kryptowaluty$ExchangeTest_testOpenOffers.xml" NAME="ExchangeTest.testOpenOffers Coverage Results" MODIFIED="1599766269491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/report_/dashboard.html" />
-    <entry file="file://$PROJECT_DIR$/app/Helpers/BitBay/PublicRest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="77" column="20" selection-start-line="77" selection-start-column="20" selection-end-line="77" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report_/index.html" />
-    <entry file="file://$PROJECT_DIR$/report/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datatest.txt" />
-    <entry file="file://$PROJECT_DIR$/tests/CreatesApplication.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.phpunit.result.cache_" />
-    <entry file="file://$PROJECT_DIR$/phpunit.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="54" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/GaTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-          <folding>
-            <element signature="e#33#46#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/account/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/account/password.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-236" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/integration/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="11" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/integration/create.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/IntegrationTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="85" selection-start-line="28" selection-start-column="85" selection-end-line="28" selection-end-column="85" />
-          <folding>
-            <element signature="e#33#46#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/OffersTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="73" selection-start-line="29" selection-start-column="73" selection-end-line="29" selection-end-column="73" />
-          <folding>
-            <element signature="e#33#46#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/ExchangeTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="25" selection-end-column="5" />
-          <folding>
-            <element signature="e#33#77#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/DashboardTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" selection-start-line="26" selection-end-line="27" />
-          <folding>
-            <element signature="e#34#47#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/ConfirmPasswordController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-146" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/WalletTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="29" column="59" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="59" />
-          <folding>
-            <element signature="e#33#46#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/AccountTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="52" column="45" selection-start-line="52" selection-start-column="45" selection-end-line="52" selection-end-column="45" />
-          <folding>
-            <element signature="e#33#46#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2020_09_01_190726_change_double_precision_in_offers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2020_09_11_064646_add_realise_rate_to_offers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="29" column="47" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/logging.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/SoftDeletes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="39" column="35" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/components/mainLinks.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-296">
-          <caret line="44" column="21" lean-forward="true" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/dashboard/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="38" lean-forward="true" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/components/dashboardLinks.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Offer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-          <folding>
-            <element signature="e#23#62#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Market.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5be39914-2dab-4d78-957d-90f805080263/schema/crypto/table/transactions">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="62ec3b77-f830-4c81-9ccc-f9915d472f59">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5be39914-2dab-4d78-957d-90f805080263/schema/crypto/table/wallets">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="62ec3b77-f830-4c81-9ccc-f9915d472f59">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5be39914-2dab-4d78-957d-90f805080263/schema/crypto/table/offers">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="62ec3b77-f830-4c81-9ccc-f9915d472f59">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://5be39914-2dab-4d78-957d-90f805080263/schema/crypto/table/markets">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="62ec3b77-f830-4c81-9ccc-f9915d472f59">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/wallet/show.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="39" column="57" selection-start-line="39" selection-start-column="57" selection-end-line="39" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AccountController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="16" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="14" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="63" selection-start-line="8" selection-start-column="63" selection-end-line="8" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="450" column="76" selection-start-line="450" selection-start-column="76" selection-end-line="450" selection-end-column="76" />
-          <folding>
-            <element signature="e#40#74#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/exchange/offers.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/offers/history.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/OffersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="84" column="99" selection-start-line="84" selection-start-column="99" selection-end-line="84" selection-end-column="99" />
-          <folding>
-            <element signature="e#40#63#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/WalletController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="43" column="39" selection-start-line="43" selection-start-column="39" selection-end-line="43" selection-end-column="39" />
-          <folding>
-            <element signature="e#40#55#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/IntegrationController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-451">
-          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://B:/wamp64/bin/php/php7.4.0/php.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="1834" lean-forward="true" selection-start-line="1834" selection-end-line="1834" />
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>

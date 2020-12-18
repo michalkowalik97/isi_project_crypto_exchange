@@ -4,7 +4,7 @@
 
     "Dashboard"=>'/',
     "Giełda"=>'/exchange',
-    "Bot"=>'/bot',
+    "Bot"=>'/bot/jobs',
     /*""=>'#',*/
      ];
 @endphp

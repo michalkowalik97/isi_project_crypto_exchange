@@ -72,7 +72,14 @@ class BotController extends Controller
      */
     public function show($id)
     {
-        //
+        $job = BotJob::with('offer','history.offer')->find($id);
+
+        if (!$job){
+            return redirect()->back()->with(['message'=>trans('app.standard_error')]);
+        }
+        //TODO: Dodać wyliczanie statystyk
+
+        return view('bot.show',compact('job'));
     }
 
     /**
@@ -109,9 +116,28 @@ class BotController extends Controller
         //
     }
 
+    public function toggleActive($id)
+    {
+        $job = BotJob::find($id);
+        if (!$job){
+            return redirect()->back()->with(['message'=>trans('app.standard_error')]);
+        }
+        $status = !$job->active;
+        $job->active = $status;
+        $job->save();
+
+        if ($status){
+            $messasge = 'Zadanie włączone pomyślnie.';
+        }else {
+            $messasge = 'Zadanie wyłączone pomyślnie.';
+        }
+        return redirect()->back()->with(['message'=>$messasge]);
+    }
+
     public function cronStonksMaker()
     {
         $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();
+        //TODO: przy dodaniu więcej niż 1 zadania fiatWallet znajduje tylko do jednego
 
         if (count($jobs) <= 0) {
             return null;
@@ -189,7 +215,11 @@ class BotController extends Controller
         if ($sum > $botJob->fiatWallet->available_founds) {
             return null;// response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
-
+        if ($botJob->offer){
+            if($ra >= $botJob->offer->realise_rate){
+                return null;
+            }
+        }
         try {
             DB::beginTransaction();
             $offer = new Offer();

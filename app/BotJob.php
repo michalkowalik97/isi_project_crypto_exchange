@@ -29,6 +29,10 @@ class BotJob extends Model
             User::class,
             'id'
         )->where('currency','PLN');
+    }
 
+    public function history()
+    {
+        return $this->hasMany(BotHistory::class)->orderByDesc('created_at');
     }
 }

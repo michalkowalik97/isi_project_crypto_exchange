@@ -34,19 +34,25 @@
                                 <th>Rynek</th>
                                 <th>Maksymalna kwota inwestycji</th>
                                 <th>Minimalny zysk</th>
+                                <th>Status</th>
                                 <th>Akcje</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($jobs as $key => $job)
-                            <tr>
-                                <td>{{++$key}}</td>
-                                <td>{{$job->market->market_code}}</td>
-                                <td>{{number_format($job->max_value,2,',','')}} PLN</td>
-                                <td>{{number_format($job->min_profit,2,',','')}} PLN</td>
-                                <td>Akcje</td>
-                            </tr>
-                                @endforeach
+                                <tr>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$job->market->market_code}}</td>
+                                    <td>{{number_format($job->max_value,2,',','')}} PLN</td>
+                                    <td>{{number_format($job->min_profit,2,',','')}} PLN</td>
+                                    <td>{!! ($job->active) ? 'Aktywne' : 'Nieaktywne' !!}</td>
+                                    <td>
+                                        <a href="/bot/jobs/{{$job->id}}" class="btn btn-secondary">Szczegóły</a>
+                                        <a href="/bot/jobs/{{$job->id}}/toggle/active" class="btn btn-info confirm"
+                                           >{!! ($job->active) ? 'Wyłącz' : 'Włącz' !!}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     @else
