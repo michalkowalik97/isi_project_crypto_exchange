@@ -168,7 +168,7 @@ $(document).ready(function () {
   }, 5000);
   setInterval(function () {
     $.get('/cron/stonks/maker');
-  }, 300000);
+  }, 60000 * 3);
 });
 
 /***/ }),

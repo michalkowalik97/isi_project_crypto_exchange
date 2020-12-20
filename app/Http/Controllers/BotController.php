@@ -72,14 +72,26 @@ class BotController extends Controller
      */
     public function show($id)
     {
-        $job = BotJob::with('offer','history.offer')->find($id);
+        $job = BotJob::with('offer', 'history.offer', 'market')->find($id);
 
-        if (!$job){
-            return redirect()->back()->with(['message'=>trans('app.standard_error')]);
+        if (!$job) {
+            return redirect()->back()->with(['message' => trans('app.standard_error')]);
         }
-        //TODO: Dodać wyliczanie statystyk
+        $profit=0;
+        if ($job->history && count($job->history) > 0) {
+            $bought = 0;
+            $sold = 0;
+            foreach ($job->history as $history) {
+                if ($history->offer->type == 'buy') {
+                    $bought = $history->offer->amount * $history->offer->realise_rate;
+                } elseif ($history->offer->type == 'sell') {
+                    $sold = $history->offer->amount * $history->offer->realise_rate;
+                }
+            }
+            $profit = $sold - $bought;
+        }
 
-        return view('bot.show',compact('job'));
+        return view('bot.show', compact('job','profit'));
     }
 
     /**
@@ -119,25 +131,26 @@ class BotController extends Controller
     public function toggleActive($id)
     {
         $job = BotJob::find($id);
-        if (!$job){
-            return redirect()->back()->with(['message'=>trans('app.standard_error')]);
+        if (!$job) {
+            return redirect()->back()->with(['message' => trans('app.standard_error')]);
         }
         $status = !$job->active;
         $job->active = $status;
         $job->save();
 
-        if ($status){
+        if ($status) {
             $messasge = 'Zadanie włączone pomyślnie.';
-        }else {
+        } else {
             $messasge = 'Zadanie wyłączone pomyślnie.';
         }
-        return redirect()->back()->with(['message'=>$messasge]);
+        return redirect()->back()->with(['message' => $messasge]);
     }
 
     public function cronStonksMaker()
     {
-        $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();
+        $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();//
         //TODO: przy dodaniu więcej niż 1 zadania fiatWallet znajduje tylko do jednego
+        //dd($jobs->get());
 
         if (count($jobs) <= 0) {
             return null;
@@ -157,8 +170,8 @@ class BotController extends Controller
                     if ($job->offer->completed == false) {
                         continue;
                     } else {
-                        $history = new BotHistory(['bot_job_id'=>$job->id,'offer_id'=>$job->offer->id,'user_id'=>$job->id]);
-                        $history->save();
+                        $history = BotHistory::firstOrCreate(['bot_job_id' => $job->id, 'offer_id' => $job->offer->id, 'user_id' => $job->user_id]);
+                        //$history->save();
                         $this->newOfferBuy($job);
                         //new_offer() > check aviliable founds > create offer_buy
                     }
@@ -166,8 +179,8 @@ class BotController extends Controller
                     if ($job->offer->completed == false) {
                         continue;
                     } else {
-                        $history = new BotHistory(['bot_job_id'=>$job->id,'offer_id'=>$job->offer->id,'user_id'=>$job->id]);
-                        $history->save();
+                        $history = BotHistory::firstOrCreate(['bot_job_id' => $job->id, 'offer_id' => $job->offer->id, 'user_id' => $job->user_id]);
+                        //$history->save();
                         $this->newOfferSell($job);
                         //new_offer() > check aviliable founds > create offer_sell
                     }
@@ -179,7 +192,7 @@ class BotController extends Controller
             }
 
         }
-      //  dd($jobs);
+        //  dd($jobs);
     }
 
 
@@ -215,8 +228,8 @@ class BotController extends Controller
         if ($sum > $botJob->fiatWallet->available_founds) {
             return null;// response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
-        if ($botJob->offer){
-            if($ra >= $botJob->offer->realise_rate){
+        if ($botJob->offer) {
+            if ($ra >= $botJob->offer->realise_rate) {
                 return null;
             }
         }
@@ -255,7 +268,8 @@ class BotController extends Controller
      * @return \Illuminate\Http\JsonResponse odpowiedź w formacie JSON zawierająca informację czy udało się złożyć ofertę
      */
     public function newOfferSell(BotJob $botJob)
-    {        $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->first_currency])->first();
+    {
+        $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->first_currency])->first();
 
         if (!$wallet) {
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
@@ -332,5 +346,15 @@ class BotController extends Controller
         $ra = $minProfitAmount / $botJob->offer->amount;
         $ca = $botJob->offer->amount;
         return [$ra, $ca];
+    }
+
+    private function loadFiatWallets($jobs)
+    {
+        foreach ($jobs as $job) {
+            if ($job->fiatWallet == null) {
+                $wallet = Wallet::where(['user_id' => $job->user_id, 'currency' => 'PLN'])->first();
+                $job->fiatWallet = $wallet;
+            }
+        }
     }
 }

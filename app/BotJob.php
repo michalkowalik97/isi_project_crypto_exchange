@@ -27,7 +27,9 @@ class BotJob extends Model
         return $this->hasOneThrough(
             Wallet::class,
             User::class,
-            'id'
+            'id',
+            'user_id',
+            'user_id'
         )->where('currency','PLN');
     }
 

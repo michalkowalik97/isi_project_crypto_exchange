@@ -15,7 +15,29 @@
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, kliknij w baner aby skonfigurować integrację z
     giełdą.','href'=>'/account/settings/integration/create'])@endcomponent
             @endif
-
+            <div class="row">
+                <div class="col-3">
+                    <table class="table-condensed table">
+                        <tr>
+                            <td>Rynek: </td>
+                            <td><b>{{$job->market->market_code}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Maksymalna kwota inwestycji: </td>
+                            <td><b>{{$job->max_value}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Minimalny zysk: </td>
+                            <td><b>{{$job->min_profit}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Status: </td>
+                            <td><b>{!! ($job->active) ? 'Aktywne' : 'Nieaktywne' !!}</b></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-2"> <h4>Bilans: <b>{{number_format($profit,2,',',' ')}} zł</b> </h4></div>
+            </div>
             @if($job->history && count($job->history) > 0)
                 <div class="row">
                     <h3>Historia transakcji</h3>
@@ -31,7 +53,7 @@
                                 <th>Status</th>
                                 <th>Data złożenia</th>
                             </tr>
-                                    @php($i=1)
+                            @php($i=1)
                             @foreach($job->history as $history)
                                 <tr>
                                     <td>{{$i++}}</td>
@@ -40,7 +62,8 @@
                                     <td>{{($history->offer->realise_rate) ? $history->offer->realise_rate + 0 : $history->offer->rate +0}}</td>
                                     <td>{!! $history->offer->displayAmount()!!}</td>
                                     <td>{{$history->offer->getTypeTranslation()}}</td>
-                                    <td>@if($history->offer->trashed()) Anulowana @elseif($history->offer->completed )Zrealizowana @endif </td>
+                                    <td>@if($history->offer->trashed()) Anulowana @elseif($history->offer->completed )
+                                            Zrealizowana @endif </td>
                                     <td>{{$history->offer->created_at->format('d.m.Y H:i')}}</td>
 
                                 </tr>
@@ -48,6 +71,8 @@
                         </table>
                     </div>
                 </div>
+            @else
+                <h3>Brak transakcji</h3>
             @endif
         </div>
     </div>

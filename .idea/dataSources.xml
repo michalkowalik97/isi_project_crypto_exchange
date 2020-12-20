@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="crypto@localhost" check-outdated="true" uuid="a7d2d7ce-9fc3-47ab-b272-74485c2eea6d">
+    <data-source source="LOCAL" name="crypto@localhost" uuid="a7d2d7ce-9fc3-47ab-b272-74485c2eea6d">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <schema-control>MANUAL</schema-control>
