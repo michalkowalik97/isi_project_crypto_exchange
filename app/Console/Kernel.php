@@ -2,11 +2,15 @@
 
 namespace App\Console;
 
+use App\Http\Controllers\BotController;
+use App\Http\Controllers\ExchangeController;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Log;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -27,17 +31,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
-/*        $schedule->call(function () {
-            //$cytat = Artisan::call("inspire");
-       DB::table('tab1')->insert(['rand'=>'teaaaaaaast']);
-
-        })
-            ->everyMinute()
-      ;*/
-
-
-
+        $schedule->call(ExchangeController::class.'@checkOffers')->everyMinute();
+        $schedule->call(BotController::class.'@cronStonksMaker')->everyMinute();
+        $schedule->call(function (){
+            Log::info('schedule works');
+        });
     }
 
     /**

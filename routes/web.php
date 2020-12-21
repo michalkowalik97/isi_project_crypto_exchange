@@ -46,7 +46,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/offer/{market}/buy', 'ExchangeController@buy');
         Route::post('/offer/{market}/sell', 'ExchangeController@sell');
 
-        Route::get('/offers/check','ExchangeController@checkOffers');
 
         Route::get('/offers/active', 'OffersController@getActiveList');
         Route::get('/offers/history', 'OffersController@getHistoryList');
@@ -80,6 +79,7 @@ Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/cron/stonks/maker','BotController@cronStonksMaker');
+Route::get('/offers/check','ExchangeController@checkOffers');
 
 /*Route::get('/home', function (){
     return redirect('/');
