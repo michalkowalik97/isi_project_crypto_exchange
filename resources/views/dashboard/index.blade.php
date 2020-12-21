@@ -20,7 +20,7 @@
             <div class="row">
                 @if($wallets && count($wallets) > 0)
                     @foreach($wallets as $wallet)
-                        <div class="col-3 m-1 border">
+                        <div class="col-md-3 col-sm-12 m-1 border">
                             <b><a href="wallets/{{$wallet->id}}"
                                   class="stretched-link text-decoration-none">{{$wallet->name}}</a></b>
                             <hr>

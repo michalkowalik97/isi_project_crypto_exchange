@@ -63,9 +63,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/jobs', 'BotController@jobs');
         Route::get('/jobs/new', 'BotController@create');
         Route::get('/jobs/{id}','BotController@show');
-        Route::post('/jobs','BotController@store');
+        Route::get('/jobs/{id}/edit','BotController@edit');
         Route::get('/jobs/{id}/toggle/active','BotController@toggleActive');
 
+        Route::put('/jobs/{id}','BotController@update');
+        Route::post('/jobs','BotController@store');
     });
 
     Route::resource('bot', 'BotController');
@@ -79,7 +81,7 @@ Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/cron/stonks/maker','BotController@cronStonksMaker');
-Route::get('/offers/check','ExchangeController@checkOffers');
+Route::get('/exchange/offers/check','ExchangeController@checkOffers');
 
 /*Route::get('/home', function (){
     return redirect('/');

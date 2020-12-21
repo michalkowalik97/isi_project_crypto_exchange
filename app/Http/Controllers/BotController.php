@@ -77,7 +77,7 @@ class BotController extends Controller
         if (!$job) {
             return redirect()->back()->with(['message' => trans('app.standard_error')]);
         }
-        $profit=0;
+        $profit = 0;
         if ($job->history && count($job->history) > 0) {
             $bought = 0;
             $sold = 0;
@@ -91,7 +91,7 @@ class BotController extends Controller
             $profit = $sold - $bought;
         }
 
-        return view('bot.show', compact('job','profit'));
+        return view('bot.show', compact('job', 'profit'));
     }
 
     /**
@@ -102,7 +102,10 @@ class BotController extends Controller
      */
     public function edit($id)
     {
-        //
+        $markets = Market::where(['active' => true, 'second_currency' => "PLN"])->get();
+        $job = BotJob::find($id);
+
+        return view('bot.edit', compact('job', 'markets'));
     }
 
     /**
@@ -114,7 +117,18 @@ class BotController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'max_value' => 'required|numeric|min:1',
+            'min_profit' => 'required|numeric',
+            'market_id' => 'required|numeric',
+        ]);
+
+        $job = BotJob::find($id);
+        $job->fill($request->only('max_value', 'min_profit', 'market_id'));
+
+        $job->save();
+
+        return redirect('/bot/jobs')->with(['message' => 'Zapisano pomyślnie.']);
     }
 
     /**

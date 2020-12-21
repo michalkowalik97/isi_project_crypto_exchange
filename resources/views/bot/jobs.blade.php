@@ -48,6 +48,7 @@
                                     <td>{!! ($job->active) ? 'Aktywne' : 'Nieaktywne' !!}</td>
                                     <td>
                                         <a href="/bot/jobs/{{$job->id}}" class="btn btn-secondary">Szczegóły</a>
+                                        <a href="/bot/jobs/{{$job->id}}/edit" class="btn btn-success">Edytuj</a>
                                         <a href="/bot/jobs/{{$job->id}}/toggle/active" class="btn btn-info confirm"
                                            >{!! ($job->active) ? 'Wyłącz' : 'Włącz' !!}</a>
                                     </td>

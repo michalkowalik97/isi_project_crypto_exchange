@@ -40,11 +40,8 @@ class cronBot extends Command
     public function handle()
     {
         app(BotController::class)->cronStonksMaker();
-        Log::info('--- check bot jobs');
 
         sleep(28);
         app(BotController::class)->cronStonksMaker();
-        Log::info('--- check bot jobs');
-
     }
 }

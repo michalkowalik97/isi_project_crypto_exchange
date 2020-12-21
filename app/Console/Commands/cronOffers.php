@@ -40,7 +40,6 @@ class cronOffers extends Command
     {
         for ($i=0; $i< 12;$i++) {
             app(ExchangeController::class)->checkOffers();
-            Log::info('--- check offers');
             sleep(4);
         }
     }

@@ -15,7 +15,7 @@
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, kliknij w baner aby skonfigurować integrację z
     giełdą.','href'=>'/account/settings/integration/create'])@endcomponent
             @endif
-            <div class="row">
+            <div class="row justify-content-between">
                 <div class="col-3">
                     <table class="table-condensed table">
                         <tr>
@@ -37,6 +37,9 @@
                     </table>
                 </div>
                 <div class="col-2"> <h4>Bilans: <b>{{number_format($profit,2,',',' ')}} zł</b> </h4></div>
+                <div class="col-2">    <a href="/bot/jobs/{{$job->id}}/edit" class="btn btn-success">Edytuj</a>
+                    <a href="/bot/jobs/{{$job->id}}/toggle/active" class="btn btn-info confirm"
+                    >{!! ($job->active) ? 'Wyłącz' : 'Włącz' !!}</a></div>
             </div>
             @if($job->history && count($job->history) > 0)
                 <div class="row">
