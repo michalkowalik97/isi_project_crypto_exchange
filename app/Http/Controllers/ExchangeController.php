@@ -58,7 +58,7 @@ class ExchangeController extends Controller
         $skipCurrencies = ["USD", "EUR"];
 
         $markets = (new PublicRest())->ticker();
-        $markets = json_decode($markets);
+        $markets = $markets;
         if (strtolower($markets->status) == 'ok') {
             $markets = collect($markets->items);
 
