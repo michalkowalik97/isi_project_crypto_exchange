@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\BotController;
 use Illuminate\Console\Command;
+use Log;
 
 class cronBot extends Command
 {
@@ -39,7 +40,11 @@ class cronBot extends Command
     public function handle()
     {
         app(BotController::class)->cronStonksMaker();
+        Log::info('--- check bot jobs');
+
         sleep(28);
         app(BotController::class)->cronStonksMaker();
+        Log::info('--- check bot jobs');
+
     }
 }

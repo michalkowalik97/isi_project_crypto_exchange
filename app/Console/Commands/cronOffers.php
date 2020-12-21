@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\ExchangeController;
 use Illuminate\Console\Command;
-
+use Log;
 class cronOffers extends Command
 {
     /**
@@ -40,6 +40,7 @@ class cronOffers extends Command
     {
         for ($i=0; $i< 12;$i++) {
             app(ExchangeController::class)->checkOffers();
+            Log::info('--- check offers');
             sleep(4);
         }
     }
