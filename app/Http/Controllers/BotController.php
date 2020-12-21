@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\BotHistory;
 use App\BotJob;
 use App\Helpers\BitBay\PublicRest;
@@ -81,11 +82,16 @@ class BotController extends Controller
         if ($job->history && count($job->history) > 0) {
             $bought = 0;
             $sold = 0;
-            foreach ($job->history as $history) {
+            foreach ($job->history as $key => $history) {
+                if ($key == 0) {
+                    if ($history->offer->type == 'buy') {
+                        continue;
+                    }
+                }
                 if ($history->offer->type == 'buy') {
-                    $bought = $history->offer->amount * $history->offer->realise_rate;
+                    $bought += $history->offer->amount * $history->offer->realise_rate;
                 } elseif ($history->offer->type == 'sell') {
-                    $sold = $history->offer->amount * $history->offer->realise_rate;
+                    $sold += $history->offer->amount * $history->offer->realise_rate;
                 }
             }
             $profit = $sold - $bought;
@@ -162,9 +168,8 @@ class BotController extends Controller
 
     public function cronStonksMaker()
     {
-        $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();//
-        //TODO: przy dodaniu więcej niż 1 zadania fiatWallet znajduje tylko do jednego
-        //dd($jobs->get());
+        Log::info('BOT check started');
+        $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();
 
         if (count($jobs) <= 0) {
             return null;
@@ -173,7 +178,6 @@ class BotController extends Controller
             if (!$job->fiatWallet) {
                 continue;
             }
-
 
             if (!$job->market) {
                 continue;
@@ -185,28 +189,23 @@ class BotController extends Controller
                         continue;
                     } else {
                         $history = BotHistory::firstOrCreate(['bot_job_id' => $job->id, 'offer_id' => $job->offer->id, 'user_id' => $job->user_id]);
-                        //$history->save();
                         $this->newOfferBuy($job);
-                        //new_offer() > check aviliable founds > create offer_buy
                     }
                 } elseif ($job->offer->type == 'buy') {
                     if ($job->offer->completed == false) {
                         continue;
                     } else {
                         $history = BotHistory::firstOrCreate(['bot_job_id' => $job->id, 'offer_id' => $job->offer->id, 'user_id' => $job->user_id]);
-                        //$history->save();
                         $this->newOfferSell($job);
-                        //new_offer() > check aviliable founds > create offer_sell
+
                     }
                 }
             } else {
                 $this->newOfferBuy($job);
-
-                //new offer buy
             }
 
         }
-        //  dd($jobs);
+        Log::info('BOT check finished');
     }
 
 
@@ -359,16 +358,7 @@ class BotController extends Controller
         $minProfitAmount += $botJob->min_profit;
         $ra = $minProfitAmount / $botJob->offer->amount;
         $ca = $botJob->offer->amount;
-        return [$ra, $ca];
+        return [round($ra, 2, PHP_ROUND_HALF_UP), $ca];
     }
 
-    private function loadFiatWallets($jobs)
-    {
-        foreach ($jobs as $job) {
-            if ($job->fiatWallet == null) {
-                $wallet = Wallet::where(['user_id' => $job->user_id, 'currency' => 'PLN'])->first();
-                $job->fiatWallet = $wallet;
-            }
-        }
-    }
 }
