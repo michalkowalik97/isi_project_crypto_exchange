@@ -31,11 +31,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(ExchangeController::class.'@checkOffers')->everyMinute();
-        $schedule->call(BotController::class.'@cronStonksMaker')->everyMinute();
-        $schedule->call(function (){
-            Log::info('schedule works');
-        });
+        //$schedule->call(ExchangeController::class.'@checkOffers')->everyMinute();
+        //$schedule->call(BotController::class.'@cronStonksMaker')->everyMinute();
+        $schedule->command('offers:check')->everyMinute()->withoutOverlapping();
+        $schedule->command('bot:check')->everyMinute()->withoutOverlapping();
     }
 
     /**

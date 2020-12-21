@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6983497-1a60-4606-88b4-3d6b26c5debf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/cronBot.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/cronOffers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +266,7 @@
       <workItem from="1607805267315" duration="4627000" />
       <workItem from="1607849686403" duration="932000" />
       <workItem from="1608213340611" duration="74461000" />
-      <workItem from="1608470637602" duration="41224000" />
+      <workItem from="1608470637602" duration="42617000" />
     </task>
     <task id="LOCAL-00001" summary="Początek kampanii wrześniowej, zmiana hasła">
       <created>1598474980845</created>
@@ -407,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608562538901</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Added cron jobs">
+      <created>1608574579964</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1608574579964</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -473,21 +481,23 @@
     <MESSAGE value="Bug fixes, small improvments and added simple stats" />
     <MESSAGE value="update market fix" />
     <MESSAGE value="disabled api routes" />
-    <option name="LAST_COMMIT_MESSAGE" value="disabled api routes" />
+    <MESSAGE value="Added cron jobs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added cron jobs" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608482086825">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1608482086825" />
-    <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608233809952">
+    <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608576721253">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1608576721253" />
     <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608233809952" />
-    <state x="476" y="93" key="CommitChangelistDialog2" timestamp="1608562537236">
+    <state x="476" y="93" key="CommitChangelistDialog2" timestamp="1608574578120">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="476" y="93" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1608562537236" />
+    <state x="476" y="93" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1608574578120" />
     <state x="476" y="93" key="CommitChangelistDialog2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608333209914" />
     <state x="794" y="448" key="NewPhpFileDialog" timestamp="1608330900480">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -497,10 +507,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="681" y="266" width="540" height="524" key="StructurePopup/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608242570828" />
-    <state x="552" y="257" key="Vcs.Push.Dialog.v2" timestamp="1608562540493">
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2" timestamp="1608574582694">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1608562540493" />
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1608574582694" />
     <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608275131455" />
     <state x="122" y="-14" width="1736" height="866" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1608243506215">
       <screen x="0" y="0" width="1920" height="1050" />
