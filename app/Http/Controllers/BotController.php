@@ -208,7 +208,7 @@ class BotController extends Controller
         if ($botJob->fiatWallet->available_founds < 1) {
             return null;
         }
-        $wallet = Wallet::where(['user_id' => Auth::user()->id, 'currency' => $botJob->market->second_currency])->first();
+        $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->second_currency])->first();
 
         if (!$wallet) {
             return null;//response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
