@@ -91,6 +91,6 @@ $(document).ready(function () {
 
     setInterval(function () {
         $.get('/cron/stonks/maker');
-    }, (60000 * 3));
+    }, (30000 ));
 
 });

@@ -241,11 +241,11 @@ class BotController extends Controller
         if ($sum > $botJob->fiatWallet->available_founds) {
             return null;// response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
-        if ($botJob->offer) {
+       /* if ($botJob->offer) {
             if ($ra >= $botJob->offer->realise_rate) {
                 return null;
             }
-        }
+        }*/
         try {
             DB::beginTransaction();
             $offer = new Offer();
@@ -330,7 +330,7 @@ class BotController extends Controller
         if ($minOffer == null) {
             return [null, null];
         }
-        $ra = $ticker->ticker->highestBid;
+        $ra = $ticker->ticker->lowestAsk;
         $ca = $max_amount / $ra;
 
         if ($ca >= $minOffer) {
