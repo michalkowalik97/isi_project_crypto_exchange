@@ -50,11 +50,13 @@
                             <th>Typ oferty</th>
                             <th>Status</th>
                             <th>Data złożenia</th>
+                            <th>Data realizacji</th>
 
                         </tr>
+                        @php($i = \App\Helpers\Helper::getFirstRecordNumber(50))
                         @foreach($offers as $key => $offer)
                             <tr>
-                                <td>{{++$key}}</td>
+                                <td>{{$i++}}</td>
                                 <td>{{$offer->market->market_code }}</td>
                                 <td>{{($offer->rate + 0)}}</td>
                                 <td>{{($offer->realise_rate) ? $offer->realise_rate + 0 : $offer->rate +0}}</td>
@@ -62,6 +64,7 @@
                                 <td>{{$offer->getTypeTranslation()}}</td>
                                 <td>@if($offer->trashed()) Anulowana @elseif($offer->completed )Zrealizowana @endif </td>
                                 <td>{{$offer->created_at->format('d.m.Y H:i')}}</td>
+                                <td>{{$offer->updated_at->format('d.m.Y H:i')}}</td>
 
                             </tr>
                         @endforeach

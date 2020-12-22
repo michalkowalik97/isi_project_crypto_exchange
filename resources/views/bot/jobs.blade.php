@@ -19,9 +19,10 @@
 
             <div class="row">
 
-                <div class="col-12 m-1">
+                <div class="col-6 m-1">
                     <a href="/bot/jobs/new" class="btn btn-info">Dodaj</a>
                 </div>
+                <div class="col-2"> <h4>Bilans: <b>{{number_format($profit,2,',',' ')}} zł</b> </h4></div>
 
             </div>
             <div class="row mt-5">

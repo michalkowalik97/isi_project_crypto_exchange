@@ -27,9 +27,16 @@ class BotController extends Controller
 
     public function jobs()
     {
-        $jobs = BotJob::where('user_id', auth()->id())->with('market')->get();
+        $jobs = BotJob::where('user_id', auth()->id())->with('market','offer', 'history.offer', )->get();
 
-        return view('bot.jobs', compact('jobs'));
+        $profit = 0;
+        if ($jobs && count($jobs)>0){
+            foreach ($jobs as $job){
+                $profit+=$this->calculateBotJobProfit($job);
+            }
+        }
+
+        return view('bot.jobs', compact('jobs','profit'));
     }
 
     /**
@@ -78,24 +85,7 @@ class BotController extends Controller
         if (!$job) {
             return redirect()->back()->with(['message' => trans('app.standard_error')]);
         }
-        $profit = 0;
-        if ($job->history && count($job->history) > 0) {
-            $bought = 0;
-            $sold = 0;
-            foreach ($job->history as $key => $history) {
-                if ($key == 0) {
-                    if ($history->offer->type == 'buy') {
-                        continue;
-                    }
-                }
-                if ($history->offer->type == 'buy') {
-                    $bought += $history->offer->amount * $history->offer->realise_rate;
-                } elseif ($history->offer->type == 'sell') {
-                    $sold += $history->offer->amount * $history->offer->realise_rate;
-                }
-            }
-            $profit = $sold - $bought;
-        }
+        $profit = $this->calculateBotJobProfit($job);
 
         return view('bot.show', compact('job', 'profit'));
     }
@@ -241,13 +231,18 @@ class BotController extends Controller
         if ($sum > $botJob->fiatWallet->available_founds) {
             return null;// response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
-       /* if ($botJob->offer) {
-            if ($ra >= $botJob->offer->realise_rate) {
-                return null;
-            }
-        }*/
+        /* if ($botJob->offer) {
+             if ($ra >= $botJob->offer->realise_rate) {
+                 return null;
+             }
+         }*/
         try {
             DB::beginTransaction();
+            $lockedFounds = $sum;
+            $wallet->locked_founds += $lockedFounds;
+            $wallet->available_founds = ($wallet->available_founds - $sum);
+            $wallet->save();
+
             $offer = new Offer();
             $offer->amount = $ca;
             $offer->rate = $ra;
@@ -256,11 +251,9 @@ class BotController extends Controller
             $offer->active = true;
             $offer->user_id = $botJob->user_id;// Auth::user()->id;
             $offer->market_id = $botJob->market->id;
+            $offer->locked_founds = $lockedFounds;
+            $offer->wallet_id = $wallet->id;
             $offer->save();
-
-            $wallet->locked_founds = ($wallet->locked_founds + $sum);
-            $wallet->available_founds = ($wallet->available_founds - $sum);
-            $wallet->save();
 
             $botJob->offer_id = $offer->id;
             $botJob->save();
@@ -297,6 +290,11 @@ class BotController extends Controller
 
         try {
             DB::beginTransaction();
+            $lockedFounds = $ca;
+            $wallet->locked_founds = $lockedFounds;
+            $wallet->available_founds = ($wallet->available_founds - $ca);
+            $wallet->save();
+
             $offer = new Offer();
             $offer->amount = $ca;
             $offer->rate = $ra;
@@ -305,11 +303,9 @@ class BotController extends Controller
             $offer->active = true;
             $offer->user_id = $botJob->user_id; //Auth::user()->id;
             $offer->market_id = $botJob->market->id;
+            $offer->locked_founds = $lockedFounds;
+            $offer->wallet_id = $wallet->id;
             $offer->save();
-
-            $wallet->locked_founds = ($wallet->locked_founds + $ca);
-            $wallet->available_founds = ($wallet->available_founds - $ca);
-            $wallet->save();
 
             $botJob->offer_id = $offer->id;
             $botJob->save();
@@ -359,6 +355,33 @@ class BotController extends Controller
         $ra = $minProfitAmount / $botJob->offer->amount;
         $ca = $botJob->offer->amount;
         return [round($ra, 2, PHP_ROUND_HALF_UP), $ca];
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Collection $job
+     * @return float|int
+     */
+    private function calculateBotJobProfit( $job)
+    {
+        $profit = 0;
+        if ($job->history && count($job->history) > 0) {
+            $bought = 0;
+            $sold = 0;
+            foreach ($job->history as $key => $history) {
+                if ($key == 0) {
+                    if ($history->offer->type == 'buy') {
+                        continue;
+                    }
+                }
+                if ($history->offer->type == 'buy') {
+                    $bought += $history->offer->amount * $history->offer->realise_rate;
+                } elseif ($history->offer->type == 'sell') {
+                    $sold += $history->offer->amount * $history->offer->realise_rate;
+                }
+            }
+            $profit = $sold - $bought;
+        }
+        return $profit;
     }
 
 }

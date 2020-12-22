@@ -18,6 +18,10 @@ class Helper
             }
         }
         return $value;
+    }
 
+    public static function getFirstRecordNumber($limit=50)
+    {
+       return ( request()->get('page') == null) ? 1 :  (((request()->get('page') -1) * 50) +1 );
     }
 }

@@ -121,6 +121,12 @@ class ExchangeController extends Controller
 
         try {
             DB::beginTransaction();
+
+            $lockedFounds = $sum;
+            $wallet->locked_founds += $lockedFounds;
+            $wallet->available_founds = ($wallet->available_founds - $sum);
+            $wallet->save();
+
             $offer = new Offer();
             $offer->amount = $ca;
             $offer->rate = $ra;
@@ -129,11 +135,9 @@ class ExchangeController extends Controller
             $offer->active = true;
             $offer->user_id = Auth::user()->id;
             $offer->market_id = $market->id;
+            $offer->locked_founds=$lockedFounds;
+            $offer->wallet_id = $wallet->id;
             $offer->save();
-
-            $wallet->locked_founds = ($wallet->locked_founds + $sum);
-            $wallet->available_founds = ($wallet->available_founds - $sum);
-            $wallet->save();
 
             DB::commit();
         } catch (\Exception $e) {
@@ -172,6 +176,11 @@ class ExchangeController extends Controller
 
         try {
             DB::beginTransaction();
+            $lockedFounds = $ca;
+            $wallet->locked_founds += $lockedFounds;
+            $wallet->available_founds = ($wallet->available_founds - $ca);
+            $wallet->save();
+
             $offer = new Offer();
             $offer->amount = $ca;
             $offer->rate = $ra;
@@ -180,11 +189,9 @@ class ExchangeController extends Controller
             $offer->active = true;
             $offer->user_id = Auth::user()->id;
             $offer->market_id = $market->id;
+            $offer->locked_founds=$lockedFounds;
+            $offer->wallet_id = $wallet->id;
             $offer->save();
-
-            $wallet->locked_founds = ($wallet->locked_founds + $ca);
-            $wallet->available_founds = ($wallet->available_founds - $ca);
-            $wallet->save();
 
             DB::commit();
         } catch (\Exception $e) {
@@ -309,7 +316,7 @@ class ExchangeController extends Controller
      */
     public function checkOffers()
     {
-        $offers = Offer::where('completed', false)->with('market')->get();
+        $offers = Offer::where('completed', false)->with('market','wallet')->get();
         if (count($offers) > 0) {
             $offers = $offers->groupBy('market.market_code');
             foreach ($offers as $key => $market) {
@@ -360,7 +367,7 @@ class ExchangeController extends Controller
     private function realiseOfferBuy($offer, $apiOffer)
     {
         if (isset($apiOffer->id)) {
-            $sellOffer = Offer::findOrFail($apiOffer->id);
+            $sellOffer = Offer::with('wallet')->findOrFail($apiOffer->id);
             Log::info  ('BUY: oferta z bazy');
             if ($sellOffer->user_id != $offer->user_id) {
                 $this->closeOfferAndAddCashSell($sellOffer,$offer->rate);
@@ -380,7 +387,7 @@ class ExchangeController extends Controller
     private function realiseOfferSell($offer, $apiOffer)
     {
         if (isset($apiOffer->id)) {
-            $buyOffer = Offer::findOrFail($apiOffer->id);
+            $buyOffer = Offer::with('wallet')->findOrFail($apiOffer->id);
             Log::info  ('SELL: oferta z bazy');
             if ($buyOffer->user_id != $offer->user_id) {
                 $this->closeOfferAndAddCashBuy($buyOffer, $offer->rate);
@@ -410,9 +417,10 @@ class ExchangeController extends Controller
         $sum = $offer->amount * $rate;
         $secondWallet->all_founds = ($secondWallet->all_founds - $sum);
         $secondWallet->available_founds = ($secondWallet->available_founds + (($offer->amount * $offer->rate)-$sum));
-        $secondWallet->locked_founds = ($secondWallet->locked_founds - ($offer->amount * $offer->rate));
+        $secondWallet->locked_founds -= $offer->locked_founds;// ($secondWallet->locked_founds - ($offer->amount * $offer->rate));
         $secondWallet->save();
         $offer->completed = true;
+        $offer->active = false;
         $offer->realise_rate=$rate;
         $offer->save();
         $this->newTransaction($offer);
@@ -441,6 +449,7 @@ class ExchangeController extends Controller
         //$secondWallet->locked_founds = ($secondWallet->locked_founds - ($offer->amount * $offer->rate));
         $secondWallet->save();
         $offer->completed = true;
+        $offer->active = false;
         $offer->realise_rate=$rate;
         $offer->save();
         $this->newTransaction($offer);

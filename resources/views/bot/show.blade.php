@@ -55,6 +55,7 @@
                                 <th>Typ oferty</th>
                                 <th>Status</th>
                                 <th>Data złożenia</th>
+                                <th>Data realizacji</th>
                             </tr>
                             @php($i=1)
                             @foreach($job->history as $history)
@@ -68,6 +69,7 @@
                                     <td>@if($history->offer->trashed()) Anulowana @elseif($history->offer->completed )
                                             Zrealizowana @endif </td>
                                     <td>{{$history->offer->created_at->format('d.m.Y H:i')}}</td>
+                                    <td>{{$history->offer->updated_at->format('d.m.Y H:i')}}</td>
 
                                 </tr>
                             @endforeach

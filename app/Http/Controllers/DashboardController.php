@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Offer;
 use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,4 +20,8 @@ class DashboardController extends Controller
         return view('dashboard.index',compact('wallets'));
     }
 
+    public function test()
+    {
+        dd(Offer::with('wallet')->find(38));
+    }
 }

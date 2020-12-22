@@ -36,4 +36,9 @@ class Offer extends Model
 
     }
 
+    public function wallet()
+    {
+        return $this->belongsTo(Wallet::class);
+    }
+
 }

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6983497-1a60-4606-88b4-3d6b26c5debf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/bot/edit.blade.php" afterDir="false" />
+    <list default="true" id="a6983497-1a60-4606-88b4-3d6b26c5debf" name="Default Changelist" comment="Added bot job edit option">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_22_113413_add_locked_founds_to_offers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/cronBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/cronBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/cronOffers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/cronOffers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/Helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Helper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Offer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Offer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/bot/jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/bot/jobs.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/bot/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/bot/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/offers/history.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/offers/history.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/offers/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/offers/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -271,7 +274,8 @@
       <workItem from="1607805267315" duration="4627000" />
       <workItem from="1607849686403" duration="932000" />
       <workItem from="1608213340611" duration="74461000" />
-      <workItem from="1608470637602" duration="48416000" />
+      <workItem from="1608470637602" duration="53443000" />
+      <workItem from="1608624311497" duration="27011000" />
     </task>
     <task id="LOCAL-00001" summary="Początek kampanii wrześniowej, zmiana hasła">
       <created>1598474980845</created>
@@ -448,7 +452,35 @@
       <option name="project" value="LOCAL" />
       <updated>1608578226365</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Added bot job edit option">
+      <created>1608585123997</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1608585123997</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Google login fix">
+      <created>1608587672081</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1608587672081</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Fixed statistics in bot job details">
+      <created>1608589780735</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1608589780735</updated>
+    </task>
+    <task id="LOCAL-00029" summary="New bot strategy ready for testing">
+      <created>1608630290986</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1608630290986</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -497,7 +529,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Początek kampanii wrześniowej, zmiana hasła" />
     <MESSAGE value="submitting bids on the exchange" />
     <MESSAGE value="Added view with user offers and history offers" />
     <MESSAGE value="Paypal" />
@@ -519,7 +550,11 @@
     <MESSAGE value="Added logs to commands" />
     <MESSAGE value="Fixed user_id in cron bot check function" />
     <MESSAGE value="Events fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Events fix" />
+    <MESSAGE value="Added bot job edit option" />
+    <MESSAGE value="Google login fix" />
+    <MESSAGE value="Fixed statistics in bot job details" />
+    <MESSAGE value="New bot strategy ready for testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="New bot strategy ready for testing" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608482086825">
@@ -531,10 +566,14 @@
     </state>
     <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1608576721253" />
     <state x="690" y="279" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608233809952" />
-    <state x="476" y="93" key="CommitChangelistDialog2" timestamp="1608578224643">
+    <state x="779" y="231" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#method1" timestamp="1608658075717">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="476" y="93" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1608578224643" />
+    <state x="779" y="231" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#method1/0.0.1920.1050@0.0.1920.1050" timestamp="1608658075717" />
+    <state x="476" y="93" key="CommitChangelistDialog2" timestamp="1608630288749">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="476" y="93" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1608630288749" />
     <state x="476" y="93" key="CommitChangelistDialog2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608333209914" />
     <state x="794" y="448" key="NewPhpFileDialog" timestamp="1608330900480">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -544,10 +583,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="681" y="266" width="540" height="524" key="StructurePopup/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608242570828" />
-    <state x="552" y="257" key="Vcs.Push.Dialog.v2" timestamp="1608578228174">
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2" timestamp="1608630294491">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1608578228174" />
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1608630294491" />
     <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608275131455" />
     <state x="122" y="-14" width="1736" height="866" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1608243506215">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -557,10 +596,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="565" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608330805457" />
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1608584045846">
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1608633763425">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1608584045846" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1608633763425" />
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608330756480" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">

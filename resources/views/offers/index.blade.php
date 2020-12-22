@@ -29,7 +29,8 @@
                     <option value="">Wszystkie</option>
                     @foreach($markets as $market)
 
-                        <option value="{{$market->id}}" {!! ($market->id == Request::get('market')) ?  'selected' : '' !!} >{{$market->market_code}}</option>
+                        <option
+                            value="{{$market->id}}" {!! ($market->id == Request::get('market')) ?  'selected' : '' !!} >{{$market->market_code}}</option>
                     @endforeach
                 </select>
             </form>
@@ -50,15 +51,18 @@
                             <th>Data złożenia</th>
                             <th>Akcje</th>
                         </tr>
+
+                        @php($i = \App\Helpers\Helper::getFirstRecordNumber(50))
                         @foreach($offers as $key => $offer)
                             <tr>
-                                <td>{{++$key}}</td>
+                                <td>{{$i++}}</td>
                                 <td>{{$offer->market->market_code }}</td>
                                 <td>{{($offer->rate + 0)}}</td>
                                 <td>{!! $offer->displayAmount()!!}</td>
                                 <td>{{$offer->getTypeTranslation()}}</td>
                                 <td>{{$offer->created_at->format('d.m.Y H:i')}}</td>
-                                <td><a href="/exchange/offers/cancel/{{$offer->id}}" class="btn btn-danger confirm" data-txt="Czy na pewno chcesz anulować ofertę?">Anuluj</a></td>
+                                <td><a href="/exchange/offers/cancel/{{$offer->id}}" class="btn btn-danger confirm"
+                                       data-txt="Czy na pewno chcesz anulować ofertę?">Anuluj</a></td>
                             </tr>
                         @endforeach
                     </table>

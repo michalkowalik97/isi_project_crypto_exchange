@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('bot', 'BotController');
 
-
+    Route::get('/test','DashboardController@test');
 });
 
 
