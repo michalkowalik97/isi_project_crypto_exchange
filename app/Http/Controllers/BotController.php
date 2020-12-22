@@ -27,7 +27,7 @@ class BotController extends Controller
 
     public function jobs()
     {
-        $jobs = BotJob::where('user_id', auth()->id())->with('market','offer', 'history.offer', )->get();
+        $jobs = BotJob::where('user_id', auth()->id())->with('market','offer', 'history.offer' )->get();
 
         $profit = 0;
         if ($jobs && count($jobs)>0){
