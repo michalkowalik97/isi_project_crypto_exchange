@@ -83,7 +83,7 @@ $(document).ready(function () {
     exchange('buy');
     exchange('sell');
 
-
+if($('input[name=app_env]').val() =='local') {
     ///exchange/offers/check
     setInterval(function () {
         $.get('/exchange/offers/check');
@@ -91,6 +91,6 @@ $(document).ready(function () {
 
     setInterval(function () {
         $.get('/cron/stonks/maker');
-    }, (30000 ));
-
+    }, (30000));
+}
 });

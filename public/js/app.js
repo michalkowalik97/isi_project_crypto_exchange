@@ -161,14 +161,17 @@ $(document).ready(function () {
   }); //exchange fields
 
   exchange('buy');
-  exchange('sell'); ///exchange/offers/check
+  exchange('sell');
 
-  setInterval(function () {
-    $.get('/exchange/offers/check');
-  }, 5000);
-  setInterval(function () {
-    $.get('/cron/stonks/maker');
-  }, 30000);
+  if ($('input[name=app_env]').val() == 'local') {
+    ///exchange/offers/check
+    setInterval(function () {
+      $.get('/exchange/offers/check');
+    }, 5000);
+    setInterval(function () {
+      $.get('/cron/stonks/maker');
+    }, 30000);
+  }
 });
 
 /***/ }),

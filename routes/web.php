@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('/bot')->group(function () {
         Route::get('/jobs', 'BotController@jobs');
+        Route::get('/stats','BotController@stats');
         Route::get('/jobs/new', 'BotController@create');
         Route::get('/jobs/{id}','BotController@show');
         Route::get('/jobs/{id}/edit','BotController@edit');

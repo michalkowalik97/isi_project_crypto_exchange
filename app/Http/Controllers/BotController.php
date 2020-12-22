@@ -27,16 +27,16 @@ class BotController extends Controller
 
     public function jobs()
     {
-        $jobs = BotJob::where('user_id', auth()->id())->with('market','offer', 'history.offer' )->get();
+        $jobs = BotJob::where('user_id', auth()->id())->with('market', 'offer', 'history.offer')->get();
 
         $profit = 0;
-        if ($jobs && count($jobs)>0){
-            foreach ($jobs as $job){
-                $profit+=$this->calculateBotJobProfit($job);
+        if ($jobs && count($jobs) > 0) {
+            foreach ($jobs as $job) {
+                $profit += $this->calculateBotJobProfit($job);
             }
         }
 
-        return view('bot.jobs', compact('jobs','profit'));
+        return view('bot.jobs', compact('jobs', 'profit'));
     }
 
     /**
@@ -88,6 +88,30 @@ class BotController extends Controller
         $profit = $this->calculateBotJobProfit($job);
 
         return view('bot.show', compact('job', 'profit'));
+    }
+
+    public function stats()
+    {
+        $jobs = BotJob::where('user_id', auth()->id())->with('offer', 'history.offer', 'market')->get();
+        $markets = [];
+        $jobStonks=[];
+        // podział na dni
+
+        if ($jobs && count($jobs) > 0) {
+            foreach ($jobs as $job) {
+                if (!isset($markets[$job->market->market_code])){
+                    $markets[$job->market->market_code]=0;
+                }
+                $jobStonks[$job->id]=0;
+
+                $jobProfit=$this->calculateBotJobProfit($job);
+
+                $markets[$job->market->market_code] += $jobProfit;
+                $jobStonks[$job->id]=$jobProfit;
+            }
+        }
+
+        return view('bot.stats',compact('markets','jobStonks'));
     }
 
     /**
@@ -158,7 +182,6 @@ class BotController extends Controller
 
     public function cronStonksMaker()
     {
-        Log::info('BOT check started');
         $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();
 
         if (count($jobs) <= 0) {
@@ -195,7 +218,6 @@ class BotController extends Controller
             }
 
         }
-        Log::info('BOT check finished');
     }
 
 
@@ -361,7 +383,7 @@ class BotController extends Controller
      * @param \Illuminate\Database\Eloquent\Collection $job
      * @return float|int
      */
-    private function calculateBotJobProfit( $job)
+    private function calculateBotJobProfit($job)
     {
         $profit = 0;
         if ($job->history && count($job->history) > 0) {

@@ -22,6 +22,7 @@ class DashboardController extends Controller
 
     public function test()
     {
+        dd( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]");
         dd(Offer::with('wallet')->find(38));
     }
 }

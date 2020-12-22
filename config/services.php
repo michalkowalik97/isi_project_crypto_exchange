@@ -33,6 +33,6 @@ return [
     'google' => [
         'client_id' => '580494012919-qcco7fkav5ecssmg1iu55hp027ut1ihs.apps.googleusercontent.com',
         'client_secret' => 'CC2u8bRSlSZSUNrZuOPEU5Un',
-        'redirect' => 'http://localhost:8000/callback',
+        'redirect' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]".'/callback',
     ],
 ];

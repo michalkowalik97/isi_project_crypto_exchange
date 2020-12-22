@@ -26,6 +26,7 @@
     @yield('headscripts')
 </head>
 <body>
+<input type="hidden" name="app_env" value="{{env("APP_ENV")}}">
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">

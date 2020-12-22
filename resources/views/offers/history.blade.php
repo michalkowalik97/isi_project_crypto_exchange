@@ -40,7 +40,7 @@
                 @if(count($offers) <=0)
                     @component('components.alertInfo',['message'=>'Nie znaleziono żadnej oferty.'])@endcomponent
                 @else
-                    <table class="table">
+                    <table class="table table-responsive-sm">
                         <tr>
                             <th>L.p.</th>
                             <th>Rynek</th>

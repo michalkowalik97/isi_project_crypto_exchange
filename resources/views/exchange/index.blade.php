@@ -23,8 +23,8 @@
 
         <div class="row py-5">
             <div class="col-6">
-                <a href="/exchange/offers/active" class="mx-2 btn btn-success">Moje oferty</a>
-                <a href="/exchange/offers/history" class="mx-2 btn btn-success">Historia</a>
+                <a href="/exchange/offers/active" class="mx-2 btn btn-success m-sm-2">Moje oferty</a>
+                <a href="/exchange/offers/history" class="mx-2 btn btn-success m-sm-1">Historia</a>
 
             </div>
             <div class="col-5" id="balance-wrapper">

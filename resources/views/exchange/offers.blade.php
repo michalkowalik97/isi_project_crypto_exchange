@@ -6,7 +6,7 @@ $visible=false;
 <div class="row my-5" id="offers-list">
     <div class="col-6 border-right">
         <h6>Oferty kupna</h6>
-        <table class="table table-hover ">
+        <table class="table table-hover table-responsive-sm">
             <tr>
                 <td>Kurs</td>
                 <td>Ilość</td>
@@ -25,7 +25,7 @@ $visible=false;
     <div class="col-6">
         <h6>Oferty sprzedaży</h6>
 
-        <table class="table table-hover ">
+        <table class="table table-hover table-responsive-sm">
             <tr>
                 <td>Kurs</td>
                 <td>Ilość</td>

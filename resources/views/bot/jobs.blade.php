@@ -28,7 +28,7 @@
             <div class="row mt-5">
                 <div class="col-12">
                     @if(count($jobs)>0)
-                        <table class="table table-condensed">
+                        <table class="table table-condensed table-responsive-sm">
                             <thead>
                             <tr>
                                 <th>L.p.</th>
