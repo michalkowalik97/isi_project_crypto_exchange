@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6983497-1a60-4606-88b4-3d6b26c5debf" name="Default Changelist" comment="Added bot job edit option">
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_22_113413_add_locked_founds_to_offers.php" afterDir="false" />
+    <list default="true" id="a6983497-1a60-4606-88b4-3d6b26c5debf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/Helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Helper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExchangeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Offer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Offer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/bot/jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/bot/jobs.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/bot/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/bot/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/offers/history.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/offers/history.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/offers/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/offers/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,10 +154,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\bot" />
+      <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\public\assets\images" />
       <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\components" />
       <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\offers" />
       <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\views\account" />
-      <recent name="B:\Users\Michal\Desktop\STUDIA\Semestr VI\Inżynieria systemów informatycznych\kryptowaluty\resources\css" />
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.phpunit.xml">
@@ -275,7 +264,8 @@
       <workItem from="1607849686403" duration="932000" />
       <workItem from="1608213340611" duration="74461000" />
       <workItem from="1608470637602" duration="53443000" />
-      <workItem from="1608624311497" duration="27011000" />
+      <workItem from="1608624311497" duration="37069000" />
+      <workItem from="1608712126392" duration="18579000" />
     </task>
     <task id="LOCAL-00001" summary="Początek kampanii wrześniowej, zmiana hasła">
       <created>1598474980845</created>
@@ -480,7 +470,49 @@
       <option name="project" value="LOCAL" />
       <updated>1608630290986</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Bug fixes, and small improvments">
+      <created>1608658265358</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1608658265358</updated>
+    </task>
+    <task id="LOCAL-00031" summary="BotController.php fix">
+      <created>1608658538095</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1608658538095</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Fixed login with Google">
+      <created>1608669592444</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1608669592444</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Added new statistics, logs and small improvments">
+      <created>1608760011539</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1608760011539</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Logs fix">
+      <created>1608760285520</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1608760285520</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Logs fix again">
+      <created>1608760732412</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1608760732412</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -529,12 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="submitting bids on the exchange" />
-    <MESSAGE value="Added view with user offers and history offers" />
-    <MESSAGE value="Paypal" />
-    <MESSAGE value="Login with google" />
-    <MESSAGE value="Tests" />
-    <MESSAGE value="More tests" />
     <MESSAGE value="Exchange improvments" />
     <MESSAGE value="Exchange improvments and bug fixes" />
     <MESSAGE value="Documentation" />
@@ -554,7 +580,13 @@
     <MESSAGE value="Google login fix" />
     <MESSAGE value="Fixed statistics in bot job details" />
     <MESSAGE value="New bot strategy ready for testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="New bot strategy ready for testing" />
+    <MESSAGE value="Bug fixes, and small improvments" />
+    <MESSAGE value="BotController.php fix" />
+    <MESSAGE value="Fixed login with Google" />
+    <MESSAGE value="Added new statistics, logs and small improvments" />
+    <MESSAGE value="Logs fix" />
+    <MESSAGE value="Logs fix again" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logs fix again" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608482086825">
@@ -570,10 +602,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="779" y="231" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#method1/0.0.1920.1050@0.0.1920.1050" timestamp="1608658075717" />
-    <state x="476" y="93" key="CommitChangelistDialog2" timestamp="1608630288749">
+    <state x="379" y="107" key="CommitChangelistDialog2" timestamp="1608760728806">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="476" y="93" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1608630288749" />
+    <state x="379" y="107" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1608760728806" />
     <state x="476" y="93" key="CommitChangelistDialog2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608333209914" />
     <state x="794" y="448" key="NewPhpFileDialog" timestamp="1608330900480">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -583,12 +615,12 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="681" y="266" width="540" height="524" key="StructurePopup/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608242570828" />
-    <state x="552" y="257" key="Vcs.Push.Dialog.v2" timestamp="1608630294491">
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2" timestamp="1608760734430">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1608630294491" />
+    <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1608760734430" />
     <state x="552" y="257" key="Vcs.Push.Dialog.v2/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608275131455" />
-    <state x="122" y="-14" width="1736" height="866" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1608243506215">
+    <state x="122" y="-14" width="1736" height="866" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1608670251931">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="122" y="-14" width="1736" height="866" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608243506215" />
@@ -596,10 +628,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="565" y="135" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608330805457" />
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1608633763425">
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1608757346631">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1608633763425" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1608757346631" />
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.1080.1920.1050/0.0.1920.1050@0.0.1920.1050" timestamp="1608330756480" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">

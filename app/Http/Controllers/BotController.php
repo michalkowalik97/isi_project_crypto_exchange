@@ -320,7 +320,7 @@ class BotController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception, job id = '.$botJob->id. 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
 
             return null; //response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -340,7 +340,7 @@ class BotController extends Controller
         $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->first_currency])->first();
 
         if (!$wallet) {
-            Log::info('...---... Wallet not foud, job id = ',$botJob->id);
+            Log::info('...---... Wallet not foud, job id = '.$botJob->id);
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
 
@@ -348,7 +348,7 @@ class BotController extends Controller
 
         //$sum = $ca * $ra;
         if ($ca > $wallet->available_founds) {
-            Log::info('...---... No available founds, job id = ',$botJob->id);
+            Log::info('...---... No available founds, job id = '.$botJob->id);
             return null;//response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
 
@@ -377,7 +377,7 @@ class BotController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception, job id = '.$botJob->id. 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
 
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
