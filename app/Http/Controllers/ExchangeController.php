@@ -144,7 +144,7 @@ class ExchangeController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception,  message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
 
             return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -200,7 +200,7 @@ class ExchangeController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception,  message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
 
             return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -249,7 +249,7 @@ class ExchangeController extends Controller
             $orderbook = json_decode($orderbook);
         } catch (\Exception $e) {
             Log::info('...---... Failed to get orderbook from api');
-            Log::info('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception,  message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
             $orderbook = collect(['buy' => [], 'sell' => []]);
         }
         return $orderbook;

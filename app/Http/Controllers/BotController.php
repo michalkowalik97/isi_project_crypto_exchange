@@ -140,7 +140,7 @@ class BotController extends Controller
             }
         }
 
-        return view('bot.stats', compact('markets', 'jobStonks',/*'dailyJobsProfits'*/));
+        return view('bot.stats', compact('markets', 'jobStonks'/*'dailyJobsProfits'*/));
     }
 
     /**
@@ -320,7 +320,7 @@ class BotController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
 
             return null; //response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -377,7 +377,7 @@ class BotController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
 
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
