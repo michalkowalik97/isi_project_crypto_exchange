@@ -107,13 +107,13 @@ class ExchangeController extends Controller
 
         $market = Market::where('market_code', $market)->first();
         if (!$market) {
-            Log::error('...---... ExchangeController->buy: market not found, market: '.json_encode($market));
+            Log::info('...---... ExchangeController->buy: market not found, market: '.json_encode($market));
             return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
         $wallet = Wallet::where(['user_id' => Auth::user()->id, 'currency' => $market->second_currency])->first();
 
         if (!$wallet) {
-            Log::error('...---...  ExchangeController->buy: wallet not found, market: '.json_encode($market));
+            Log::info('...---...  ExchangeController->buy: wallet not found, market: '.json_encode($market));
             return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
         $sum = $ca * $ra;
@@ -144,7 +144,7 @@ class ExchangeController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
 
             return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -200,7 +200,7 @@ class ExchangeController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
 
             return response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -248,8 +248,8 @@ class ExchangeController extends Controller
             $orderbook = $api->getOrderbook($selected->market_code);
             $orderbook = json_decode($orderbook);
         } catch (\Exception $e) {
-            Log::error('...---... Failed to get orderbook from api');
-            Log::error('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---... Failed to get orderbook from api');
+            Log::info('...---...  exception,  message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
             $orderbook = collect(['buy' => [], 'sell' => []]);
         }
         return $orderbook;
