@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Log;
 use App\BotHistory;
 use App\BotJob;
@@ -90,28 +91,56 @@ class BotController extends Controller
         return view('bot.show', compact('job', 'profit'));
     }
 
-    public function stats()
+    public function stats(Request $request)
     {
-        $jobs = BotJob::where('user_id', auth()->id())->with('offer', 'history.offer', 'market')->get();
+        $from = $to = null;
+        if ($request->from != null) {
+            $from = new Carbon($request->from);
+            $from = $from->startOfDay();
+        }
+        if ($request->to != null) {
+            $to = new Carbon($request->to);
+            $to = $to->endOfDay();
+        }
+
+        $jobs = BotJob::where('user_id', auth()->id())->with('offer', 'history.offer', 'market');
+        if ($from || $to) {
+            $jobs->whereHas('history', function ($query) use ($from, $to) {
+                if ($from) {
+                    $query->where('created_at', '>=', $from->format('Y-m-d H:i:s'));
+                }
+                if ($to) {
+                    $query->where('created_at', '<=', $to->format('Y-m-d H:i:s'));
+                }
+            })->get();
+        }
+
+        $jobs = $jobs->get();
+
+
         $markets = [];
-        $jobStonks=[];
+        $jobStonks = [];
+        $dailyJobProfits = [];
         // podział na dni
 
         if ($jobs && count($jobs) > 0) {
             foreach ($jobs as $job) {
-                if (!isset($markets[$job->market->market_code])){
-                    $markets[$job->market->market_code]=0;
+                if (!isset($markets[$job->market->market_code])) {
+                    $markets[$job->market->market_code] = 0;
                 }
-                $jobStonks[$job->id]=0;
+                $jobStonks[$job->id] = 0;
 
-                $jobProfit=$this->calculateBotJobProfit($job);
+                $jobProfit = $this->calculateBotJobProfit($job);
+
+
+                //$dailyJobProfits = $this->calculateDailyProfit($job, $dailyJobProfits);
 
                 $markets[$job->market->market_code] += $jobProfit;
-                $jobStonks[$job->id]=$jobProfit;
+                $jobStonks[$job->id] = ['job' => $job, 'profit' => $jobProfit];
             }
         }
 
-        return view('bot.stats',compact('markets','jobStonks'));
+        return view('bot.stats', compact('markets', 'jobStonks',/*'dailyJobsProfits'*/));
     }
 
     /**
@@ -185,6 +214,7 @@ class BotController extends Controller
         $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();
 
         if (count($jobs) <= 0) {
+            Log::error('...---... Jobs not found in db');
             return null;
         }
         foreach ($jobs as $job) {
@@ -231,11 +261,13 @@ class BotController extends Controller
     public function newOfferBuy(BotJob $botJob)
     {
         if ($botJob->fiatWallet->available_founds < 1) {
+            Log::error('...---... no avilable founds, job id = '.$botJob->id);
             return null;
         }
         $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->second_currency])->first();
 
         if (!$wallet) {
+            Log::error('...---... wallet not foud, job id = '.$botJob->id);
             return null;//response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
 
@@ -245,12 +277,18 @@ class BotController extends Controller
             //highestBid / max_value
             list($ra, $ca) = $this->getBuyParametersFromTicker($botJob, $ticker);
             if ($ra == null || $ca == null) {
+                Log::error('...---... getBuyParametersFromTicker fail, job id = '.$botJob->id);
                 return null;
             }
+        }else{
+            Log::error('...---... Get Ticker fail, job id = '.$botJob->id);
+            return null;
         }
 
         $sum = $ca * $ra;
         if ($sum > $botJob->fiatWallet->available_founds) {
+            Log::error('...---... no avilable founds second check, job id = '.$botJob->id);
+
             return null;// response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
         /* if ($botJob->offer) {
@@ -282,6 +320,8 @@ class BotController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+
             return null; //response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
         return true;
@@ -300,6 +340,7 @@ class BotController extends Controller
         $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->first_currency])->first();
 
         if (!$wallet) {
+            Log::error('...---... Wallet not foud, job id = ',$botJob->id);
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
 
@@ -307,6 +348,7 @@ class BotController extends Controller
 
         //$sum = $ca * $ra;
         if ($ca > $wallet->available_founds) {
+            Log::error('...---... No available founds, job id = ',$botJob->id);
             return null;//response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
 
@@ -335,6 +377,8 @@ class BotController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('...---...  exception, job id = '.$botJob->id, 'message: '.$e->getMessage(), ' in line: '.$e->getLine(),' stacktrace: '.$e->getTraceAsString());
+
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
 
@@ -404,6 +448,29 @@ class BotController extends Controller
             $profit = $sold - $bought;
         }
         return $profit;
+    }
+
+    private function calculateDailyProfit($job, array $dailyProfits)
+    {
+        if ($job->history && count($job->history) > 0) {
+            foreach ($job->history as $key => $history) {
+                if (!isset($dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/])) {
+                    if ($history->offer->type == 'buy') {
+                        continue;
+                    }
+                }
+                if (!isset($dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/])) {
+                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/]=0;
+                }
+                if ($history->offer->type == 'buy') {
+                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/] -= $history->offer->amount * $history->offer->realise_rate;
+                } elseif ($history->offer->type == 'sell') {
+                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/] += $history->offer->amount * $history->offer->realise_rate;
+                }
+            }
+        }
+
+        return $dailyProfits;
     }
 
 }

@@ -31,8 +31,8 @@ return [
     ],
 
     'google' => [
-        'client_id' => '580494012919-qcco7fkav5ecssmg1iu55hp027ut1ihs.apps.googleusercontent.com',
-        'client_secret' => 'CC2u8bRSlSZSUNrZuOPEU5Un',
-        'redirect' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]".'/callback',
+        'client_id' => (env('APP_ENV') == 'local') ? '580494012919-qcco7fkav5ecssmg1iu55hp027ut1ihs.apps.googleusercontent.com' : '580494012919-24lpeba9knpn3596sr6n734ki09bl2jn.apps.googleusercontent.com',
+        'client_secret' => (env('APP_ENV') == 'local') ? 'CC2u8bRSlSZSUNrZuOPEU5Un' : 'Dv4SMAl8m-JkqqXC-NkG43rQ',
+        'redirect' => (env('APP_ENV') == 'local') ? 'http://localhost:8000/callback' : 'http://inz.stomks.tk/callback',
     ],
 ];

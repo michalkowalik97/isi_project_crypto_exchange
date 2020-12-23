@@ -22,4 +22,7 @@
     cursor: pointer;
 }
 
-
+.groups-separator{
+    height: 1px;
+    border-top: 2px solid black;
+}

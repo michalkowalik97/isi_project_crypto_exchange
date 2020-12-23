@@ -254,7 +254,10 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
     cursor: pointer;
 }
 
-
+.groups-separator{
+    height: 1px;
+    border-top: 2px solid black;
+}
 
 /*!
  * Font Awesome Free 5.13.0 by @fontawesome - https://fontawesome.com
