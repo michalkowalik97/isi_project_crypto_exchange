@@ -14,7 +14,7 @@ class AddLockedFoundsToOffers extends Migration
     public function up()
     {
         Schema::table('offers', function (Blueprint $table) {
-            $table->double('locked_founds',10,10)->default(0.0);
+            $table->double('locked_founds',20,10)->default(0.0);
             $table->bigInteger('wallet_id')->nullable();
         });
     }

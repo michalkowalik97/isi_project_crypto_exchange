@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\BotHistory;
+use App\BotJob;
 use App\Offer;
 use App\Wallet;
 use Illuminate\Console\Command;
@@ -20,7 +22,7 @@ class refreshExchange extends Command
      *
      * @var string
      */
-    protected $description = 'Clear offers and wallets';
+    protected $description = 'Clear offers, set wallets values to 1000, and restart bot jobs.';
 
     /**
      * Create a new command instance.
@@ -42,7 +44,9 @@ class refreshExchange extends Command
 
         $wallets = Wallet::all();
         $offers = Offer::all();
-        $bar = $this->output->createProgressBar((count($wallets) + count($offers)));
+        $botJobs = BotJob::all();
+        $botHistory = BotHistory::all();
+        $bar = $this->output->createProgressBar((count($wallets) + count($offers) + count($botJobs) + count($botHistory) ));
 
         $bar->start();
 
@@ -56,6 +60,17 @@ class refreshExchange extends Command
 
         foreach ($offers as $offer) {
             $offer->forceDelete();
+            $bar->advance();
+        }
+
+        foreach ($botJobs as $job){
+            $job->offer_id=null;
+            $job->save();
+            $bar->advance();
+        }
+
+        foreach ($botHistory as $history){
+            $history->forceDelete();
             $bar->advance();
         }
 

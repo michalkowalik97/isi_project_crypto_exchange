@@ -355,7 +355,7 @@ class BotController extends Controller
         try {
             DB::beginTransaction();
             $lockedFounds = $ca;
-            $wallet->locked_founds = $lockedFounds;
+            $wallet->locked_founds += $lockedFounds;
             $wallet->available_founds = ($wallet->available_founds - $ca);
             $wallet->save();
 

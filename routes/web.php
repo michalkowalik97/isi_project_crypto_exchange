@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/', 'DashboardController');
-
+    Route::get('/logs','LogsController@index');
+    Route::get('/logs/download/{filename}','LogsController@download');
 
     //account
     Route::prefix('/account/settings')->group(function () {
