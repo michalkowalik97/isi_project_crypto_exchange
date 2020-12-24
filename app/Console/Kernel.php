@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->call(ExchangeController::class.'@checkOffers')->everyMinute();
         //$schedule->call(BotController::class.'@cronStonksMaker')->everyMinute();
-        $schedule->command('offers:check')->everyMinute()->withoutOverlapping();
+        $schedule->command('offers:check')->everyMinute();//->withoutOverlapping();
         $schedule->command('bot:check')->everyMinute()->withoutOverlapping();
     }
 
