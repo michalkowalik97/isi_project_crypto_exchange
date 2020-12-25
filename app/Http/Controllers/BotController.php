@@ -28,7 +28,7 @@ class BotController extends Controller
 
     public function jobs()
     {
-        $jobs = BotJob::where('user_id', auth()->id())->with('market', 'offer', 'history.offer')->get();
+        $jobs = BotJob::where('user_id', auth()->id())->with('market', 'offer', 'history.offer')->orderBy('id')->get();
 
         $profit = 0;
         if ($jobs && count($jobs) > 0) {
@@ -211,7 +211,7 @@ class BotController extends Controller
 
     public function cronStonksMaker()
     {
-        $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'fiatWallet', 'market')->get();
+        $jobs = BotJob::where('active', true)->with(/*'user',*/ 'offer', 'previousOffer', 'fiatWallet', 'market')->get();
 
         if (count($jobs) <= 0) {
             Log::info('...---... Jobs not found in db');
@@ -231,14 +231,24 @@ class BotController extends Controller
                     if ($job->offer->completed == false) {
                         continue;
                     } else {
-                        $history = BotHistory::firstOrCreate(['bot_job_id' => $job->id, 'offer_id' => $job->offer->id, 'user_id' => $job->user_id]);
+                        $history = BotHistory::firstOrCreate(
+                            ['bot_job_id' => $job->id,
+                                'offer_id' => $job->offer->id,
+                                'user_id' => $job->user_id,
+                                'profit' => $this->calculateLastTransactionProfit($job),
+                            ]);
                         $this->newOfferBuy($job);
                     }
                 } elseif ($job->offer->type == 'buy') {
                     if ($job->offer->completed == false) {
                         continue;
                     } else {
-                        $history = BotHistory::firstOrCreate(['bot_job_id' => $job->id, 'offer_id' => $job->offer->id, 'user_id' => $job->user_id]);
+                        $history = BotHistory::firstOrCreate(
+                            ['bot_job_id' => $job->id,
+                                'offer_id' => $job->offer->id,
+                                'user_id' => $job->user_id,
+                                'profit' => $this->calculateLastTransactionProfit($job),
+                            ]);
                         $this->newOfferSell($job);
 
                     }
@@ -261,13 +271,13 @@ class BotController extends Controller
     public function newOfferBuy(BotJob $botJob)
     {
         if ($botJob->fiatWallet->available_founds < 1) {
-            Log::info('...---... no avilable founds, job id = '.$botJob->id);
+            Log::info('...---... no avilable founds, job id = ' . $botJob->id);
             return null;
         }
         $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->second_currency])->first();
 
         if (!$wallet) {
-            Log::info('...---... wallet not foud, job id = '.$botJob->id);
+            Log::info('...---... wallet not foud, job id = ' . $botJob->id);
             return null;//response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
 
@@ -277,17 +287,17 @@ class BotController extends Controller
             //highestBid / max_value
             list($ra, $ca) = $this->getBuyParametersFromTicker($botJob, $ticker);
             if ($ra == null || $ca == null) {
-                Log::info('...---... getBuyParametersFromTicker fail, job id = '.$botJob->id);
+                Log::info('...---... getBuyParametersFromTicker fail, job id = ' . $botJob->id);
                 return null;
             }
-        }else{
-            Log::info('...---... Get Ticker fail, job id = '.$botJob->id);
+        } else {
+            Log::info('...---... Get Ticker fail, job id = ' . $botJob->id);
             return null;
         }
 
         $sum = $ca * $ra;
         if ($sum > $botJob->fiatWallet->available_founds) {
-            Log::info('...---... no avilable founds second check, job id = '.$botJob->id);
+            Log::info('...---... no avilable founds second check, job id = ' . $botJob->id);
 
             return null;// response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
@@ -315,12 +325,13 @@ class BotController extends Controller
             $offer->wallet_id = $wallet->id;
             $offer->save();
 
+            $botJob->previous_offer_id =$botJob->offer_id;
             $botJob->offer_id = $offer->id;
             $botJob->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception, job id = '.$botJob->id. 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception, job id = ' . $botJob->id . 'message: ' . $e->getMessage() . ' in line: ' . $e->getLine() . ' stacktrace: ' . $e->getTraceAsString());
 
             return null; //response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -340,7 +351,7 @@ class BotController extends Controller
         $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->first_currency])->first();
 
         if (!$wallet) {
-            Log::info('...---... Wallet not foud, job id = '.$botJob->id);
+            Log::info('...---... Wallet not foud, job id = ' . $botJob->id);
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
 
@@ -348,7 +359,7 @@ class BotController extends Controller
 
         //$sum = $ca * $ra;
         if ($ca > $wallet->available_founds) {
-            Log::info('...---... No available founds, job id = '.$botJob->id);
+            Log::info('...---... No available founds, job id = ' . $botJob->id);
             return null;//response()->json(['success' => false, 'message' => 'Brak wystarczających środków do złożenia oferty.']);
         }
 
@@ -371,13 +382,14 @@ class BotController extends Controller
             $offer->wallet_id = $wallet->id;
             $offer->save();
 
+            $botJob->previous_offer_id =$botJob->offer_id;
             $botJob->offer_id = $offer->id;
             $botJob->save();
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::info('...---...  exception, job id = '.$botJob->id. 'message: '.$e->getMessage(). ' in line: '.$e->getLine().' stacktrace: '.$e->getTraceAsString());
+            Log::info('...---...  exception, job id = ' . $botJob->id . 'message: ' . $e->getMessage() . ' in line: ' . $e->getLine() . ' stacktrace: ' . $e->getTraceAsString());
 
             return null;// response()->json(['success' => false, 'message' => 'Wystąpił błąd, spróbuj jeszcze raz.']);
         }
@@ -460,7 +472,7 @@ class BotController extends Controller
                     }
                 }
                 if (!isset($dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/])) {
-                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/]=0;
+                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/] = 0;
                 }
                 if ($history->offer->type == 'buy') {
                     $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/] -= $history->offer->amount * $history->offer->realise_rate;
@@ -471,6 +483,22 @@ class BotController extends Controller
         }
 
         return $dailyProfits;
+    }
+
+    private function calculateLastTransactionProfit(BotJob $job)
+    {
+        if ($job->offer_id == null ) {
+            return 0;
+        }
+        if ($job->previous_offer_id == null) {
+            return 0;
+        }
+        if ($job->offer->type=='sell' && $job->previousOffer->type =='buy'){
+            $sell = $job->offer->realise_rate * $job->offer->amount;
+            $buy =  $job->previousOffer->realise_rate * $job->previousOffer->amount;
+            return number_format(($sell - $buy),2,'.','');
+        }
+        return 0;
     }
 
 }
