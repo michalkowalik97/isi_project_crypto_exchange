@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer wallet_id
  * @property Market market
  * @property Wallet wallet
+ * @property OfferPart parts
  */
 class Offer extends Model
 {
@@ -39,6 +40,11 @@ class Offer extends Model
     public function wallet()
     {
         return $this->belongsTo(Wallet::class);
+    }
+
+    public function parts()
+    {
+        return $this->hasMany(OfferPart::class);
     }
 
     public function getTypeTranslation()
@@ -60,7 +66,6 @@ class Offer extends Model
             }
         }
         return $this->amount;
-
     }
 
 

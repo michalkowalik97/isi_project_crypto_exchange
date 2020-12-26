@@ -22,7 +22,18 @@ class DashboardController extends Controller
 
     public function test()
     {
-        dd( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]");
-        dd(Offer::with('wallet')->find(38));
+        //amount= 0.1891771739
+      $offer = Offer::findOrFail(147);
+      //$offer->load('parts');
+      dd(count($offer->parts));
+      dump($offer);
+      $this->modifyOffer($offer);
+      $offer = $offer->fresh();
+      dd($offer);
+    }
+
+    private function modifyOffer(Offer $offer){
+        $offer->amount=1;
+        $offer->save();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\BotHistory;
 use App\BotJob;
 use App\Offer;
+use App\OfferPart;
 use App\Wallet;
 use Illuminate\Console\Command;
 
@@ -42,11 +43,12 @@ class refreshExchange extends Command
     public function handle()
     {
 
-        $wallets = Wallet::all();
-        $offers = Offer::all();
-        $botJobs = BotJob::all();
-        $botHistory = BotHistory::all();
-        $bar = $this->output->createProgressBar((count($wallets) + count($offers) + count($botJobs) + count($botHistory) ));
+        $wallets = Wallet::withTrashed()->get();
+        $offers = Offer::withTrashed()->get();
+        $botJobs = BotJob::withTrashed()->get();
+        $botHistory = BotHistory::withTrashed()->get();
+        $offerParts = OfferPart::withTrashed()->get();
+        $bar = $this->output->createProgressBar((count($wallets) + count($offers) + count($botJobs) + count($botHistory) + count($offerParts) ));
 
         $bar->start();
 
@@ -60,6 +62,10 @@ class refreshExchange extends Command
 
         foreach ($offers as $offer) {
             $offer->forceDelete();
+            $bar->advance();
+        }
+        foreach ($offerParts as $part) {
+            $part->forceDelete();
             $bar->advance();
         }
 
