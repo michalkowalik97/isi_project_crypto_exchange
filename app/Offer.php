@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer id
  * @property integer external_id
  * @property float amount
+ * @property float initial_amount
  * @property float rate
  * @property boolean completed
  * @property string type
@@ -59,13 +60,13 @@ class Offer extends Model
 
     public function displayAmount()
     {
-        $decimas = explode('.', $this->amount);
+        $decimas = explode('.', $this->initial_amount);
         if (isset($decimas[1])) {
             if (intval($decimas[1]) == 0) {
                 return $decimas[0];
             }
         }
-        return $this->amount;
+        return $this->initial_amount;
     }
 
 

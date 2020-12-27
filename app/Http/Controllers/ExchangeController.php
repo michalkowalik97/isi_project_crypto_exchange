@@ -133,6 +133,7 @@ class ExchangeController extends Controller
 
             $offer = new Offer();
             $offer->amount = $ca;
+            $offer->initial_amount = $ca;
             $offer->rate = $ra;
             $offer->completed = false;
             $offer->type = 'buy';
@@ -189,6 +190,7 @@ class ExchangeController extends Controller
 
             $offer = new Offer();
             $offer->amount = $ca;
+            $offer->initial_amount = $ca;
             $offer->rate = $ra;
             $offer->completed = false;
             $offer->type = 'sell';
@@ -286,14 +288,14 @@ class ExchangeController extends Controller
                 }
             }
         }
-        if (($orderbook->sell[0])) {
+        if (isset($orderbook->sell[0])) {
             $sell = Arr::sort($orderbook->sell, function ($value) {
                 return $value->ra;
             });
         } else {
             $sell = [];
         }
-        if (($orderbook->buy[0])) {
+        if (isset($orderbook->buy[0])) {
             $buy = array_reverse(Arr::sort($orderbook->buy, function ($value) {
                 return $value->ra;
             }));

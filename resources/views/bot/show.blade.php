@@ -60,7 +60,7 @@
                             @php($i=1)
                             @foreach($job->history as $history)
                                 <tr>
-                                    <td>{{$i++}}</td>
+                                    <td>{{$i++}} #{{$history->offer->id}}</td>
                                     <td>{{$history->offer->market->market_code }}</td>
                                     <td>{{($history->offer->rate + 0)}}</td>
                                     <td>{{($history->offer->realise_rate) ? $history->offer->realise_rate + 0 : $history->offer->rate +0}}</td>

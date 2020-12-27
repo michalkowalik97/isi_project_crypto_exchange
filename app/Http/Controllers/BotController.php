@@ -315,6 +315,7 @@ class BotController extends Controller
 
             $offer = new Offer();
             $offer->amount = $ca;
+            $offer->initial_amount = $ca;
             $offer->rate = $ra;
             $offer->completed = false;
             $offer->type = 'buy';
@@ -372,6 +373,7 @@ class BotController extends Controller
 
             $offer = new Offer();
             $offer->amount = $ca;
+            $offer->initial_amount = $ca;
             $offer->rate = $ra;
             $offer->completed = false;
             $offer->type = 'sell';
@@ -428,10 +430,10 @@ class BotController extends Controller
 
     private function getSellParameters(BotJob $botJob)
     {
-        $minProfitAmount = ($botJob->offer->realise_rate == null) ? $botJob->offer->rate * $botJob->offer->amount : $botJob->offer->realise_rate * $botJob->offer->amount;
+        $minProfitAmount = ($botJob->offer->realise_rate == null) ? $botJob->offer->rate * $botJob->offer->initial_amount : $botJob->offer->realise_rate * $botJob->offer->initial_amount;
         $minProfitAmount += $botJob->min_profit;
-        $ra = $minProfitAmount / $botJob->offer->amount;
-        $ca = $botJob->offer->amount;
+        $ra = $minProfitAmount / $botJob->offer->initial_amount;
+        $ca = $botJob->offer->initial_amount;
         return [round($ra, 2, PHP_ROUND_HALF_UP), $ca];
     }
 
@@ -439,14 +441,14 @@ class BotController extends Controller
      * @param \Illuminate\Database\Eloquent\Collection $job
      * @return float|int
      */
-    private function calculateBotJobProfit($job)
+    private function calculateBotJobProfit(BotJob $job)
     {
         $profit = 0;
         if ($job->history && count($job->history) > 0) {
             $bought = 0;
             $sold = 0;
             foreach ($job->history as $key => $history) {
-                if ($key == 0) {
+          /*      if ($key == 0) {
                     if ($history->offer->type == 'buy') {
                         continue;
                     }
@@ -455,9 +457,10 @@ class BotController extends Controller
                     $bought += $history->offer->amount * $history->offer->realise_rate;
                 } elseif ($history->offer->type == 'sell') {
                     $sold += $history->offer->amount * $history->offer->realise_rate;
-                }
+                }*/
+                $profit += $history->profit;
             }
-            $profit = $sold - $bought;
+         //   $profit = $sold - $bought;
         }
         return $profit;
     }
@@ -494,8 +497,8 @@ class BotController extends Controller
             return 0;
         }
         if ($job->offer->type=='sell' && $job->previousOffer->type =='buy'){
-            $sell = $job->offer->realise_rate * $job->offer->amount;
-            $buy =  $job->previousOffer->realise_rate * $job->previousOffer->amount;
+            $sell = $job->offer->realise_rate * $job->offer->initial_amount;
+            $buy =  $job->previousOffer->realise_rate * $job->previousOffer->initial_amount;
             return number_format(($sell - $buy),2,'.','');
         }
         return 0;

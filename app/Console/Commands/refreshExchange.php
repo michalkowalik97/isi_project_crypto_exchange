@@ -43,11 +43,11 @@ class refreshExchange extends Command
     public function handle()
     {
 
-        $wallets = Wallet::withTrashed()->get();
         $offers = Offer::withTrashed()->get();
-        $botJobs = BotJob::withTrashed()->get();
-        $botHistory = BotHistory::withTrashed()->get();
-        $offerParts = OfferPart::withTrashed()->get();
+        $wallets = Wallet::all();
+        $botJobs = BotJob::all();
+        $botHistory = BotHistory::all();
+        $offerParts = OfferPart::all();
         $bar = $this->output->createProgressBar((count($wallets) + count($offers) + count($botJobs) + count($botHistory) + count($offerParts) ));
 
         $bar->start();
