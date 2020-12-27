@@ -270,6 +270,7 @@ class BotController extends Controller
      */
     public function newOfferBuy(BotJob $botJob)
     {
+        $botJob->refresh();
         if ($botJob->fiatWallet->available_founds < 1) {
             Log::info('...---... no avilable founds, job id = ' . $botJob->id);
             return null;
@@ -349,6 +350,7 @@ class BotController extends Controller
      */
     public function newOfferSell(BotJob $botJob)
     {
+        $botJob->refresh();
         $wallet = Wallet::where(['user_id' => $botJob->user_id, 'currency' => $botJob->market->first_currency])->first();
 
         if (!$wallet) {
