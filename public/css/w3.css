@@ -259,6 +259,10 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
     border-top: 2px solid black;
 }
 
+.tr-border-bottom-bold td{
+    border-bottom: 3px solid black;
+}
+
 /*!
  * Font Awesome Free 5.13.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)

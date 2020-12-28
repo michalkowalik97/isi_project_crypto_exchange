@@ -50,6 +50,9 @@
 
             <div class="row">
                 <div class="col-12 m-1 ">
+                    <h4>Zyski na poszczególnych rynkach</h4>
+                </div>
+                <div class="col-12 m-1 ">
                     @if(count($markets)> 0)
                         <div id="markets_bar"></div>
                     @else
@@ -89,15 +92,123 @@
 
             </div>
             <div class="groups-separator"></div>
+
             <div class="row">
                 <div class="col-12 m-1">
-                    @if(count($jobStonks)<= 0)
+                    <h4>Zysk z podziałem na dni</h4>
+                </div>
+
+                <div class="col-12 m-1 ">
+                    @if(count($dailyJobProfits)> 0)
+                        <div id="days_line"></div>
+                    @else
                         <div class="alert alert-info">Nie znaleziono żadnych wyników.</div>
                     @endif
                 </div>
+                <div class="col-12">
+                    @if(count($dailyJobProfits)> 0)
+                        <table class="table table-condensed table-responsive-sm days_line mt-5"
+                               id="days_line_table">
+                            <tr>
+                                <th>Lp.</th>
+                                <th class="data-title" data-value="Data">Data</th>
+                                <th class="data-title" data-value="Zysk">Zysk</th>
+                            </tr>
+                            @php($i=1)
+                            @php($sum=0)
+                            @foreach($dailyJobProfits as $key => $dailyProfit)
+                                <tr class="data-row">
+                                    <td>{{$i++}}</td>
+                                    <td class="data-title" data-value="{{$key}}">{{$key}}</td>
+                                    <td class="data-value"
+                                        data-value="{{number_format($dailyProfit,2,'.',' ')}}">{{number_format($dailyProfit,2,',',' ')}}
+                                        zł
+                                    </td>
+                                </tr>
+                                @php($sum+=$dailyProfit)
+                            @endforeach
+                            <tr>
+
+                                <td colspan="2"><b>SUMA</b></td>
+                                <td><b>{{number_format($sum,2,',',' ')}} zł</b></td>
+                            </tr>
+                        </table>
+                    @endif
+                </div>
+            </div>
+
+            <div class="groups-separator"></div>
+
+            <div class="row">
+                <div class="col-12 m-1">
+                    <h4>Dzienny zysk z podziałem na rynki</h4>
+                </div>
+
+                <div class="col-12 m-1 ">
+                    @if(count($dailyJobProfits)> 0)
+                        <div id="days_market_line"></div>
+                    @else
+                        <div class="alert alert-info">Nie znaleziono żadnych wyników.</div>
+                    @endif
+                </div>
+                <div class="col-12">
+                    @if(count($dailyJobProfitsByMarket)> 0)
+                        <table class="table table-condensed table-responsive-sm days_line mt-5"
+                               id="days_market_line_table">
+                            <tr>
+                                <th>Lp.</th>
+                                <th class="data-title" data-value="Data">Data</th>
+                                <th class="data-title" data-value="Rynek">Rynek</th>
+                                <th class="data-title" data-value="Zysk">Zysk</th>
+                            </tr>
+                            @php($i=1)
+                            @php($sum=0)
+                            @foreach($dailyJobProfitsByMarket as $date => $marketsProfit)
+                                @foreach($marketsProfit as $market =>$profit)
+                                    <tr class="data-row
+                                        @if(array_key_last($marketsProfit)== $market && array_key_last($dailyJobProfitsByMarket)!= $date)
+                                        tr-border-bottom-bold
+@endif
+
+                                    @if(array_key_first($dailyJobProfitsByMarket) == $date)
+                                        labels-tr
+@endif
+                                        ">
+                                        <td>{{$i++}}</td>
+                                        <td class="data-title" data-value="{{$date}}">{{$date}}</td>
+                                        <td class=" label-td" data-value="{{$market}}">{{$market}}</td>
+                                        <td class="data-value"
+                                            data-title="{{$date}}"
+                                            data-value="{{number_format($profit,2,'.',' ')}}">{{number_format($profit,2,',',' ')}}
+                                            zł
+                                        </td>
+                                    </tr>
+                                    @php($sum+=$profit)
+                                @endforeach
+                            @endforeach
+                            <tr>
+
+                                <td colspan="3"><b>SUMA</b></td>
+                                <td><b>{{number_format($sum,2,',',' ')}} zł</b></td>
+                            </tr>
+                        </table>
+                    @endif
+                </div>
+            </div>
+
+            <div class="groups-separator"></div>
+
+            <div class="row">
+                <div class="col-12 m-1">
+                    <h4>Zyski poszczególnych zadań bota</h4>
+                </div>
+                @if(count($jobStonks)<= 0)
+                    <div class="col-12 m-1">
+                        <div class="alert alert-info">Nie znaleziono żadnych wyników.</div>
+                    </div>
+                @endif
                 <div class="col-12 ">
                     @if(count($jobStonks)> 0)
-                        <h4>Zyski poszczególnych zadań bota</h4>
                         <table class="table table-condensed table-responsive-sm markets_bar mt-5"
                                id="jobs_bar_table">
                             <tr>
@@ -134,7 +245,7 @@
                 </div>
             </div>
 
-                <div class="groups-separator"></div>
+            <div class="groups-separator"></div>
 
 
         </div>
@@ -164,6 +275,53 @@
                     data.push(rowData);
                 }
             }
+            return data;
+        }
+
+        function getDataForMultipleChart(tableId) {
+            let table = document.getElementById(tableId);
+
+            let data = [];
+            let labels = ['X'];
+            for (var i = 0, row; row = table.rows[i]; i++) {
+                if (row.classList.contains('labels-tr')) {
+                    for (var j = 0, col; col = row.cells[j]; j++) {
+                        if (col.classList.contains('label-td')) {
+                            labels.push(col.getAttribute('data-value'));
+                        }
+                    }
+                }
+            }
+            data.push(labels);
+
+
+            for ( i = 0; row = table.rows[i]; i++) {
+                let rowData = [];
+                for ( j = 0; col = row.cells[j]; j++) {
+
+                    if (col.classList.contains('data-value')) {
+                        let found = false;
+                        let title = col.getAttribute('data-title');
+                        data.forEach(function (item, index) {
+                            if (item[0] == title) {
+                                item.push(parseFloat(col.getAttribute('data-value')));
+                                found = true;
+                            }
+                        });
+                        if (found === false) {
+
+                            data.push(
+                                [
+                                    col.getAttribute('data-title'),
+                                (parseFloat(col.getAttribute('data-value')))
+                                ]);
+                        }
+                    }
+                }
+            /*    if (rowData.length > 0) {
+                    data.push(rowData);
+                }*/
+            }
 
             return data;
         }
@@ -174,7 +332,9 @@
             }
 
             let marketsBarData = google.visualization.arrayToDataTable(getDataFromDataTable('markets_bar_table'));
-
+            let daysLineData = google.visualization.arrayToDataTable(getDataFromDataTable('days_line_table'));
+            let daysLineMarketData = google.visualization.arrayToDataTable(getDataForMultipleChart('days_market_line_table'));
+        //    console.log(daysLineMarketData);
             let options = {
                 title: 'Zyski na poszczególnych rynkach ',
                 chartArea: {width: '75%'},
@@ -189,6 +349,15 @@
 
             let marketsBarchart = new google.visualization.BarChart(document.getElementById('markets_bar'));
             marketsBarchart.draw(marketsBarData, options);
+
+            let daysLine = new google.visualization.LineChart(document.getElementById('days_line'));
+            options.title = 'Zysk z podziałem na dni';
+            options.vAxis.title = 'Zysk';
+            options.hAxis.title = 'Dzień';
+            daysLine.draw(daysLineData, options);
+
+            let daysMarketLine = new google.visualization.ColumnChart(document.getElementById('days_market_line'));
+            daysMarketLine.draw(daysLineMarketData, options);
 
         }
     </script>

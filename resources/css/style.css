@@ -26,3 +26,7 @@
     height: 1px;
     border-top: 2px solid black;
 }
+
+.tr-border-bottom-bold td{
+    border-bottom: 3px solid black;
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Log;
 use App\BotHistory;
 use App\BotJob;
@@ -121,6 +122,7 @@ class BotController extends Controller
         $markets = [];
         $jobStonks = [];
         $dailyJobProfits = [];
+        $dailyJobProfitsByMarket = [];
         // podział na dni
 
         if ($jobs && count($jobs) > 0) {
@@ -132,15 +134,18 @@ class BotController extends Controller
 
                 $jobProfit = $this->calculateBotJobProfit($job);
 
-
-                //$dailyJobProfits = $this->calculateDailyProfit($job, $dailyJobProfits);
+                $dailyJobProfitsByMarket = $this->calculateDailyProfitByMarket($job, $dailyJobProfitsByMarket);
 
                 $markets[$job->market->market_code] += $jobProfit;
                 $jobStonks[$job->id] = ['job' => $job, 'profit' => $jobProfit];
             }
         }
+        $dailyJobProfitsByMarket = array_reverse($dailyJobProfitsByMarket);
 
-        return view('bot.stats', compact('markets', 'jobStonks'/*'dailyJobsProfits'*/));
+        $dailyJobProfits = $this->calculateDailyProfit($dailyJobProfitsByMarket);
+        $dailyJobProfitsByMarket = $this->addMarketsWithoutProfitToDays($dailyJobProfitsByMarket);
+//       / dd($dailyJobProfitsByMarket,$dailyJobProfits);
+        return view('bot.stats', compact('markets', 'jobStonks', 'dailyJobProfitsByMarket', 'dailyJobProfits'));
     }
 
     /**
@@ -327,7 +332,7 @@ class BotController extends Controller
             $offer->wallet_id = $wallet->id;
             $offer->save();
 
-            $botJob->previous_offer_id =$botJob->offer_id;
+            $botJob->previous_offer_id = $botJob->offer_id;
             $botJob->offer_id = $offer->id;
             $botJob->save();
             DB::commit();
@@ -386,7 +391,7 @@ class BotController extends Controller
             $offer->wallet_id = $wallet->id;
             $offer->save();
 
-            $botJob->previous_offer_id =$botJob->offer_id;
+            $botJob->previous_offer_id = $botJob->offer_id;
             $botJob->offer_id = $offer->id;
             $botJob->save();
 
@@ -450,60 +455,91 @@ class BotController extends Controller
             $bought = 0;
             $sold = 0;
             foreach ($job->history as $key => $history) {
-          /*      if ($key == 0) {
-                    if ($history->offer->type == 'buy') {
-                        continue;
-                    }
-                }
-                if ($history->offer->type == 'buy') {
-                    $bought += $history->offer->amount * $history->offer->realise_rate;
-                } elseif ($history->offer->type == 'sell') {
-                    $sold += $history->offer->amount * $history->offer->realise_rate;
-                }*/
+                /*      if ($key == 0) {
+                          if ($history->offer->type == 'buy') {
+                              continue;
+                          }
+                      }
+                      if ($history->offer->type == 'buy') {
+                          $bought += $history->offer->amount * $history->offer->realise_rate;
+                      } elseif ($history->offer->type == 'sell') {
+                          $sold += $history->offer->amount * $history->offer->realise_rate;
+                      }*/
                 $profit += $history->profit;
             }
-         //   $profit = $sold - $bought;
+            //   $profit = $sold - $bought;
         }
         return $profit;
     }
 
-    private function calculateDailyProfit($job, array $dailyProfits)
+    private function calculateDailyProfitByMarket(BotJob $job, array $dailyProfits)
     {
         if ($job->history && count($job->history) > 0) {
             foreach ($job->history as $key => $history) {
-                if (!isset($dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/])) {
-                    if ($history->offer->type == 'buy') {
-                        continue;
-                    }
+
+                if (!isset($dailyProfits[$history->created_at->format('d-m-Y')][$job->market->market_code])) {
+                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->market->market_code] = 0;
                 }
-                if (!isset($dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/])) {
-                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/] = 0;
-                }
-                if ($history->offer->type == 'buy') {
-                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/] -= $history->offer->amount * $history->offer->realise_rate;
-                } elseif ($history->offer->type == 'sell') {
-                    $dailyProfits[$history->created_at->format('d-m-Y')][$job->id/*market->market_code*/] += $history->offer->amount * $history->offer->realise_rate;
-                }
+                $dailyProfits[$history->created_at->format('d-m-Y')][$job->market->market_code] += $history->profit;
             }
         }
 
         return $dailyProfits;
     }
 
+    private function calculateDailyProfit(array $dailyJobProfitsByMarket)
+    {
+        if (count($dailyJobProfitsByMarket) <= 0) {
+            return [];
+        }
+        $result = [];
+        foreach ($dailyJobProfitsByMarket as $date => $dailyProfit) {
+            if (!isset($result[$date])) {
+                $result[$date] = 0;
+            }
+            foreach ($dailyProfit as $market => $dailyMarketProfit) {
+                $result[$date] += $dailyMarketProfit;
+            }
+        }
+        return $result;
+    }
+
     private function calculateLastTransactionProfit(BotJob $job)
     {
-        if ($job->offer_id == null ) {
+        if ($job->offer_id == null) {
             return 0;
         }
         if ($job->previous_offer_id == null) {
             return 0;
         }
-        if ($job->offer->type=='sell' && $job->previousOffer->type =='buy'){
+        if ($job->offer->type == 'sell' && $job->previousOffer->type == 'buy') {
             $sell = $job->offer->realise_rate * $job->offer->initial_amount;
-            $buy =  $job->previousOffer->realise_rate * $job->previousOffer->initial_amount;
-            return number_format(($sell - $buy),2,'.','');
+            $buy = $job->previousOffer->realise_rate * $job->previousOffer->initial_amount;
+            return number_format(($sell - $buy), 2, '.', '');
         }
         return 0;
     }
+
+    private function addMarketsWithoutProfitToDays(array $dailyJobProfitsByMarket)
+    {
+        $markets = [];
+        $date = null;
+        foreach ($dailyJobProfitsByMarket as $dailyProfit) {
+            if (count($dailyProfit) > count($markets)) {
+                $markets = array_keys($dailyProfit);
+            }
+        }
+        foreach ($dailyJobProfitsByMarket as &$dailyProfit) {
+            foreach ($markets as $marketCode) {
+                if (!isset($dailyProfit[$marketCode])) {
+                    $dailyProfit[$marketCode] = 0;
+                }
+            }
+            ksort($dailyProfit);
+        }
+
+        return $dailyJobProfitsByMarket;
+    }
+
 
 }
