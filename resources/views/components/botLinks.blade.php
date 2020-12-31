@@ -1,16 +1,20 @@
-<div class="col-2 mr-3 ">
 
+<div {{-- class="col-2 mr-3 "--}}  id="mySidenav" class="sidenav">
 
+    <a href="javascript:void(0)" class="closebtn" id="close-nav-btn" >&times;</a>
     <a href="/bot/jobs" class="">
-        <div class="py-3 border-bottom">Aktywne zadania</div>
+        Zadania bota
+        {{--<div class="py-3 border-bottom">Zadania bota</div>--}}
     </a>
 
     <a href="/bot/stats" class="">
-        <div class="py-3 border-bottom">Statystyki</div>
+        Statystyki
+        {{--<div class="py-3 border-bottom">Statystyki</div>--}}
     </a>
 
     <a href="/bot/history" class="">
-        <div class="py-3 border-bottom">Historia (?)</div>
+        Historia (?)
+        {{--<div class="py-3 border-bottom">Historia (?)</div>--}}
     </a>
 
 

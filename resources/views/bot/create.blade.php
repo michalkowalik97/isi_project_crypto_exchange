@@ -14,18 +14,19 @@
 @endsection
 
 @section('content')
-    <div class="row pl-4 flex-row">
-        @include('components.botLinks')
-        <div class="col-9 border-left ">
 
+    <div class="flex-row">
+        @include('components.botLinks')
+        <div class="col-12 ">
+            <span class="open-nav-on-start"></span>
             @if(!(\Illuminate\Support\Facades\Auth::user()->public_token ))
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, kliknij w baner aby skonfigurować integrację z
     giełdą.','href'=>'/account/settings/integration/create'])@endcomponent
             @endif
 
 
-            <div class="row ml-5">
-                <div class="col-4">
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-sm-12">
                     <form action="/bot/jobs" method="post">
                         @csrf
                         <div class="form-group">
@@ -81,3 +82,5 @@
         </div>
     </div>
 @endsection
+
+

@@ -7,9 +7,11 @@
 @endsection
 
 @section('content')
-    <div class="row pl-4 flex-row">
+    <span class="open-nav-on-start"></span>
+
+    <div class="<!--row pl-4--> <!--flex-row--> justify-content-end d-flex">
         @include('components.dashboardLinks')
-        <div class="col-9 border-left ">
+        <div class="col-9 ">
 
             @if(!(\Illuminate\Support\Facades\Auth::user()->public_token ))
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, kliknij w baner aby skonfigurować integrację z

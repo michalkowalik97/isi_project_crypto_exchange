@@ -13,7 +13,11 @@
 @endsection
 
 @section('content')
+    <span class="open-nav-on-start"></span>
+
     <div class="container">
+        @include('components.exchangeLinks')
+
         <div class="row">
             @if($disabled)
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, nie możesz dokonywać transakcji, kliknij w baner aby skonfigurować integrację z
@@ -22,11 +26,11 @@
         </div>
 
         <div class="row py-5">
-            <div class="col-6">
+     {{--       <div class="col-6">
                 <a href="/exchange/offers/active" class="mx-2 btn btn-success m-sm-2">Moje oferty</a>
                 <a href="/exchange/offers/history" class="mx-2 btn btn-success m-sm-1">Historia</a>
 
-            </div>
+            </div>--}}
             <div class="col-5" id="balance-wrapper">
                 @include('exchange.balance')
             </div>

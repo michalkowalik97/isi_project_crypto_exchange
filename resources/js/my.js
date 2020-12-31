@@ -19,19 +19,27 @@ function exchange(select) {
 
     });
 
-/*    $('.fa-lock').on('click', function () {
-        $(this).removeClass('fa-lock');
-        $(this).addClass('fa-lock-open');
-    });
+    /*    $('.fa-lock').on('click', function () {
+            $(this).removeClass('fa-lock');
+            $(this).addClass('fa-lock-open');
+        });
 
-    $('.fa-lock-open').on('click', function () {
-        $(this).removeClass('fa-lock-open');
-        $(this).addClass('fa-lock');
-    });*/
+        $('.fa-lock-open').on('click', function () {
+            $(this).removeClass('fa-lock-open');
+            $(this).addClass('fa-lock');
+        });*/
 }
 
+window.openNav =  function() {
+    document.getElementById("mySidenav").style.width = "250px";
+};
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
 
 $(document).ready(function () {
+
     $(".confirm").click(function (e) {
         var txt = $(this).data("txt");
         txt = (txt == undefined) ? "Operacja wymaga potwierdzenia" : txt;
@@ -66,11 +74,11 @@ $(document).ready(function () {
     }
 
     $('.toggleHiddenRow').on("click", function () {
-        if ($('#offers-wrapper').hasClass('all-offers-visible')){
+        if ($('#offers-wrapper').hasClass('all-offers-visible')) {
             $('.toggleHiddenRow').toggleClass('hidden');
             $('.more-results').addClass('hidden');
             $('#offers-wrapper').removeClass('all-offers-visible');
-        } else{
+        } else {
             $('.toggleHiddenRow').toggleClass('hidden');
             $('.more-results').removeClass('hidden');
             $('#offers-wrapper').addClass('all-offers-visible');
@@ -83,14 +91,36 @@ $(document).ready(function () {
     exchange('buy');
     exchange('sell');
 
-if($('input[name=app_env]').val() =='local') {
-    ///exchange/offers/check
-    setInterval(function () {
-        $.get('/exchange/offers/check');
-    }, 5000);
+    if ($('input[name=app_env]').val() == 'local') {
+        ///exchange/offers/check
+        setInterval(function () {
+            $.get('/exchange/offers/check');
+        }, 5000);
 
-    setInterval(function () {
-        $.get('/cron/stonks/maker');
-    }, (30000));
-}
+        setInterval(function () {
+            $.get('/cron/stonks/maker');
+        }, (30000));
+    }
+    $('#open-nav-btn').on('click', function (){
+        openNav();
+    });
+    $('#close-nav-btn').on('click',function (){
+        closeNav();
+    });
+
+    if ($('.open-nav-on-start').length >0){
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+            // true for mobile device
+            //    alert("mobile device");
+        }else{
+            // false for not mobile device
+            // alert("not mobile device");
+            openNav();
+        }
+    }
+
+    if ($('.hide-nav-btn').length >0){
+        document.getElementById('open-nav-btn').style.display='none';
+
+    }
 });

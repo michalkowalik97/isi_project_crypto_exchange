@@ -13,14 +13,12 @@
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="row py-5">
-            <div class="col-12">
-                <a href="/exchange/offers/active" class="mx-2 btn btn-success">Moje oferty</a>
-                <a href="/exchange/offers/history" class="mx-2 btn btn-success">Historia</a>
+    <span class="open-nav-on-start"></span>
 
-            </div>
-        </div>
+    <div class="container">
+        @include('components.exchangeLinks')
+
+
         <div class="row">
 
             <form action="" method="get" class="form-autosubmit ml-2">

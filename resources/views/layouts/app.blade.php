@@ -69,7 +69,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/account/settings">
+                                <a class="dropdown-item" href="/account/settings/change/password">
                                     Ustawienia konta
                                 </a>
 
@@ -91,6 +91,7 @@
         </div>
     </nav>
 
+    <span style="font-size:30px;cursor:pointer" id="open-nav-btn">&#9776;Menu</span>
     <main class="py-4">
 
         @if(session("message"))

@@ -7,16 +7,16 @@
 @endsection
 
 @section('content')
-    <div class="row pl-4 flex-row">
+    <div class="flex-row">
         @include('components.botLinks')
-        <div class="col-9 border-left ">
+        <div class="col-12 ">
 
             @if(!(\Illuminate\Support\Facades\Auth::user()->public_token ))
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, kliknij w baner aby skonfigurować integrację z
     giełdą.','href'=>'/account/settings/integration/create'])@endcomponent
             @endif
             <div class="row justify-content-between">
-                <div class="col-3">
+                <div class="col-md-3 col-sm-12">
                     <table class="table-condensed table">
                         <tr>
                             <td>Rynek: </td>
@@ -36,16 +36,16 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-2"> <h4>Bilans: <b>{{number_format($profit,2,',',' ')}} zł</b> </h4></div>
-                <div class="col-2">    <a href="/bot/jobs/{{$job->id}}/edit" class="btn btn-success">Edytuj</a>
+                <div class="col-md-2 col-sm-12"> <h4>Bilans: <b>{{number_format($profit,2,',',' ')}} zł</b> </h4></div>
+                <div class="col-md-2 col-sm-12">    <a href="/bot/jobs/{{$job->id}}/edit" class="btn btn-success">Edytuj</a>
                     <a href="/bot/jobs/{{$job->id}}/toggle/active" class="btn btn-info confirm"
                     >{!! ($job->active) ? 'Wyłącz' : 'Włącz' !!}</a></div>
             </div>
             @if($job->history && count($job->history) > 0)
-                <div class="row">
-                    <h3>Historia transakcji</h3>
-                    <div class="col-12 m-1 border">
-                        <table class="table">
+                <div class="row px-1">
+                    <h3 >Historia transakcji</h3>
+                    <div class="col-12 my-1 ">
+                        <table class="table table-responsive-sm">
                             <tr>
                                 <th>L.p.</th>
                                 <th>Rynek</th>

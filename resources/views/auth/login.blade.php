@@ -5,6 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    <span class="hide-nav-btn"></span>
+
                     <div class="card-header">{{ __('auth.Login') }}</div>
 
                     <div class="card-body">
@@ -67,11 +69,11 @@
                                         {{ __('auth.Login') }}
                                     </button>
 
-                                    @if (Route::has('password.request'))
+                                  {{--  @if (Route::has('password.request'))
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             {{ __('auth.Forgot Your Password?') }}
                                         </a>
-                                    @endif
+                                    @endif--}}
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center mt-5">

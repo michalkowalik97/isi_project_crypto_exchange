@@ -13,9 +13,9 @@
 @endsection
 
 @section('content')
-    <div class="row pl-4 flex-row">
+    <div class=" <!--pl-4--> <!--row--> flex-row">
         @include('components.botLinks')
-        <div class="col-9 border-left ">
+        <div class="col-12 ">
 
             @if(!(\Illuminate\Support\Facades\Auth::user()->public_token ))
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, kliknij w baner aby skonfigurować integrację z
@@ -27,13 +27,13 @@
                     <form action="" method="get" class="form-inline mb-5">
 
                         <div class="form-group mx-1">
-                            <label>Od</label>
+                            <label>Od &nbsp;</label>
                             <input type="date" name="from" class="form-control"
                                    value="{{old('from',request()->get('from'))}}">
                         </div>
 
                         <div class="form-group mx-1">
-                            <label>Do</label>
+                            <label>Do &nbsp;</label>
                             <input type="date" name="to" class="form-control"
                                    value="{{old('to',request()->get('to'))}}">
                         </div>
@@ -49,10 +49,10 @@
             </div>
 
             <div class="row">
-                <div class="col-12 m-1 ">
+                <div class="col-12  ">
                     <h4>Zyski na poszczególnych rynkach</h4>
                 </div>
-                <div class="col-12 m-1 ">
+                <div class="col-12  ">
                     @if(count($markets)> 0)
                         <div id="markets_bar"></div>
                     @else
@@ -94,11 +94,11 @@
             <div class="groups-separator"></div>
 
             <div class="row">
-                <div class="col-12 m-1">
+                <div class="col-12 ">
                     <h4>Zysk z podziałem na dni</h4>
                 </div>
 
-                <div class="col-12 m-1 ">
+                <div class="col-12  ">
                     @if(count($dailyJobProfits)> 0)
                         <div id="days_line"></div>
                     @else
@@ -140,11 +140,11 @@
             <div class="groups-separator"></div>
 
             <div class="row">
-                <div class="col-12 m-1">
+                <div class="col-12 ">
                     <h4>Dzienny zysk z podziałem na rynki</h4>
                 </div>
 
-                <div class="col-12 m-1 ">
+                <div class="col-12  ">
                     @if(count($dailyJobProfits)> 0)
                         <div id="days_market_line"></div>
                     @else
@@ -199,11 +199,11 @@
             <div class="groups-separator"></div>
 
             <div class="row">
-                <div class="col-12 m-1">
+                <div class="col-12 ">
                     <h4>Zyski poszczególnych zadań bota</h4>
                 </div>
                 @if(count($jobStonks)<= 0)
-                    <div class="col-12 m-1">
+                    <div class="col-12 ">
                         <div class="alert alert-info">Nie znaleziono żadnych wyników.</div>
                     </div>
                 @endif
@@ -244,9 +244,6 @@
                     @endif
                 </div>
             </div>
-
-            <div class="groups-separator"></div>
-
 
         </div>
     </div>

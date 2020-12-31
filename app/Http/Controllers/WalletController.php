@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class WalletController extends Controller
 {
 
+    public function index()
+    {
+        return redirect('/');
+    }
+
     /**
      * Metoda wyświetlająca szczegóły dla wybranego portfela
      *

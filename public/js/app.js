@@ -114,11 +114,18 @@ function exchange(select) {
           $(this).removeClass('fa-lock');
           $(this).addClass('fa-lock-open');
       });
-  
-      $('.fa-lock-open').on('click', function () {
+       $('.fa-lock-open').on('click', function () {
           $(this).removeClass('fa-lock-open');
           $(this).addClass('fa-lock');
       });*/
+}
+
+window.openNav = function () {
+  document.getElementById("mySidenav").style.width = "250px";
+};
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
 }
 
 $(document).ready(function () {
@@ -171,6 +178,27 @@ $(document).ready(function () {
     setInterval(function () {
       $.get('/cron/stonks/maker');
     }, 30000);
+  }
+
+  $('#open-nav-btn').on('click', function () {
+    openNav();
+  });
+  $('#close-nav-btn').on('click', function () {
+    closeNav();
+  });
+
+  if ($('.open-nav-on-start').length > 0) {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {// true for mobile device
+      //    alert("mobile device");
+    } else {
+      // false for not mobile device
+      // alert("not mobile device");
+      openNav();
+    }
+  }
+
+  if ($('.hide-nav-btn').length > 0) {
+    document.getElementById('open-nav-btn').style.display = 'none';
   }
 });
 

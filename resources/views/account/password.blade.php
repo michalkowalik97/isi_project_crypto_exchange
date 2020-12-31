@@ -2,7 +2,7 @@
 
 @section('accountContent')
 
-    <div class="my-5 col-7">
+    <div class="my-5 col-md-7 col-sm-12">
         <h4>Zmiana hasła</h4>
         <form action="/account/settings/change/password" method="POST">
             @csrf

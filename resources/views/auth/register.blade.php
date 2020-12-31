@@ -5,6 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <span class="hide-nav-btn"></span>
+
                 <div class="card-header">{{ __('auth.Register') }}</div>
 
                 <div class="card-body">

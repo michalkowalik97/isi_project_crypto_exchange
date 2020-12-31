@@ -113,7 +113,7 @@ class BotController extends Controller
                 if ($to) {
                     $query->where('created_at', '<=', $to->format('Y-m-d H:i:s'));
                 }
-            })->get();
+            })->orderByDesc('created_at')->get();
         }
 
         $jobs = $jobs->get();
@@ -501,6 +501,7 @@ class BotController extends Controller
                 $result[$date] += $dailyMarketProfit;
             }
         }
+        ksort($result);
         return $result;
     }
 
@@ -537,7 +538,7 @@ class BotController extends Controller
             }
             ksort($dailyProfit);
         }
-
+ksort($dailyJobProfitsByMarket);
         return $dailyJobProfitsByMarket;
     }
 

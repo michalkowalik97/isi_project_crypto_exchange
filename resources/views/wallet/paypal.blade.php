@@ -9,11 +9,12 @@
 
 
 @section('content')
-    <div class="row pl-4 flex-row">
+    <span class="open-nav-on-start"></span>
+    <div class="<!--row pl-4--> flex-row d-flex justify-content-end">
         @include('components.dashboardLinks')
-        <div class="col-9 border-left ">
+        <div class="col-10 ">
             <form action="">
-                <div class="form-group col-4">
+                <div class="form-group col-sm-12 col-md-4">
                     @csrf
                     <label for="">Podaj kwotę doładowania</label>
                     <input type="number" class="form-control" name="value" id="value">
@@ -21,7 +22,7 @@
                 </div>
 
             </form>
-            <div id="paypal-button-container" class="col-4"></div>
+            <div id="paypal-button-container" class="col-sm-12 col-md-4"></div>
         </div>
     </div>
 @endsection
