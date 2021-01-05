@@ -11,7 +11,7 @@
 
     <div class="<!--row pl-4--> <!--flex-row--> justify-content-end d-flex">
         @include('components.dashboardLinks')
-        <div class="col-9 ">
+        <div class="col-md-9 col-sm-12 ">
 
             @if(!(\Illuminate\Support\Facades\Auth::user()->public_token ))
                 @component('components.alertStrechedLink',['message'=>'Twoje konto nie zostało jeszcze połączone z giełdą, kliknij w baner aby skonfigurować integrację z

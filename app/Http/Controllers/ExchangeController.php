@@ -27,7 +27,7 @@ class ExchangeController extends Controller
     {
         $markets = Market::all();
         $currencies = explode('-', $selected);
-
+        $marketCodeChart = str_ireplace('-','',$selected);
         $wallets = Wallet::where('user_id', Auth::user()->id)->whereIn('currency', $currencies)->get();
 
         $selected = $markets->where('market_code', $selected)->first();
@@ -36,7 +36,7 @@ class ExchangeController extends Controller
 
         $disabled = !Auth::user()->public_token;
 
-        return view('exchange.index', compact('markets', 'selected', 'orderbook', 'disabled', 'wallets'));
+        return view('exchange.index', compact('markets', 'selected', 'orderbook', 'disabled', 'wallets','marketCodeChart'));
     }
 
     /**

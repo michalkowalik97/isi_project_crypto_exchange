@@ -14,7 +14,7 @@
                     @method("DELETE")
                     <button class="confirm btn btn-danger" {{--class="w3-button w3-hover-red w3-black w3-small text-decoration-none confirm"--}}
                     data-txt="Usunięcie spowoduje niedostępność niektórych funkcji, czy chcesz kontynuować?"><i
-                                class="fas fa-trash text-white"></i> Usuń</a>
+                                class="fas fa-trash text-white"></i> Usuń
                     </button>
                 </form>
             {{--    <a href="#" class="confirm btn btn-danger"

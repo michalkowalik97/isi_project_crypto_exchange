@@ -49,6 +49,35 @@
             </form>
         </div>
 
+        <div class="row my-3">
+            <div class="col-12" style="height: 500px;">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container" >
+                    <div id="tradingview_cfafb"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://pl.tradingview.com/symbols/BTCPLN/?exchange=BITBAY" rel="noopener" target="_blank"><span class="blue-text">BTCPLN wykres</span></a> od TradingView</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                        new TradingView.widget(
+                            {
+                                "autosize": true,
+                                "symbol": "BITBAY:{{$marketCodeChart}}",
+                                "interval": "1",
+                                "timezone": "Europe/Amsterdam",
+                                "theme": "light",
+                                "style": "2",
+                                "locale": "pl",
+                                "toolbar_bg": "#f1f3f6",
+                                "enable_publishing": false,
+                                "container_id": "tradingview_cfafb"
+                            }
+                        );
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+
+
+        </div>
 
         <div class="row my-3">
             <div class="col-12 mb-3 mb-md-0 col-md-6  border-right ">

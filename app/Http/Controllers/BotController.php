@@ -113,17 +113,15 @@ class BotController extends Controller
                 if ($to) {
                     $query->where('created_at', '<=', $to->format('Y-m-d H:i:s'));
                 }
-            })->orderByDesc('created_at')->get();
+            })->orderBy('created_at')->get();
         }
 
         $jobs = $jobs->get();
-
 
         $markets = [];
         $jobStonks = [];
         $dailyJobProfits = [];
         $dailyJobProfitsByMarket = [];
-        // podział na dni
 
         if ($jobs && count($jobs) > 0) {
             foreach ($jobs as $job) {
@@ -144,7 +142,7 @@ class BotController extends Controller
 
         $dailyJobProfits = $this->calculateDailyProfit($dailyJobProfitsByMarket);
         $dailyJobProfitsByMarket = $this->addMarketsWithoutProfitToDays($dailyJobProfitsByMarket);
-//       / dd($dailyJobProfitsByMarket,$dailyJobProfits);
+
         return view('bot.stats', compact('markets', 'jobStonks', 'dailyJobProfitsByMarket', 'dailyJobProfits'));
     }
 
@@ -501,7 +499,11 @@ class BotController extends Controller
                 $result[$date] += $dailyMarketProfit;
             }
         }
-        ksort($result);
+        uksort($result,function ($dt1,$dt2){
+            $tm1 = strtotime($dt1);
+            $tm2 = strtotime($dt2);
+            return ($tm1 < $tm2) ? -1 : (($tm1 > $tm2) ? 1 : 0);
+        });
         return $result;
     }
 
@@ -538,9 +540,13 @@ class BotController extends Controller
             }
             ksort($dailyProfit);
         }
-ksort($dailyJobProfitsByMarket);
+
+        uksort($dailyJobProfitsByMarket,function ($dt1,$dt2){
+            $tm1 = strtotime($dt1);
+            $tm2 = strtotime($dt2);
+            return ($tm1 < $tm2) ? -1 : (($tm1 > $tm2) ? 1 : 0);
+        });
+
         return $dailyJobProfitsByMarket;
     }
-
-
 }

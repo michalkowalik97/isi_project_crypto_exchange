@@ -12,10 +12,10 @@
         {{--<div class="py-3 border-bottom">Statystyki</div>--}}
     </a>
 
-    <a href="/bot/history" class="">
+  {{--  <a href="/bot/history" class="">
         Historia (?)
-        {{--<div class="py-3 border-bottom">Historia (?)</div>--}}
-    </a>
+        --}}{{--<div class="py-3 border-bottom">Historia (?)</div>--}}{{--
+    </a>--}}
 
 
 </div>
