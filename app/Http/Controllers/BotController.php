@@ -499,7 +499,7 @@ class BotController extends Controller
                 $result[$date] += $dailyMarketProfit;
             }
         }
-        uksort($result,function ($dt1,$dt2){
+        uksort($result, function ($dt1, $dt2) {
             $tm1 = strtotime($dt1);
             $tm2 = strtotime($dt2);
             return ($tm1 < $tm2) ? -1 : (($tm1 > $tm2) ? 1 : 0);
@@ -528,10 +528,11 @@ class BotController extends Controller
         $markets = [];
         $date = null;
         foreach ($dailyJobProfitsByMarket as $dailyProfit) {
-            if (count($dailyProfit) > count($markets)) {
-                $markets = array_keys($dailyProfit);
-            }
+            $markets = array_merge($markets, array_keys($dailyProfit));
+
         }
+        $markets = array_unique($markets);
+
         foreach ($dailyJobProfitsByMarket as &$dailyProfit) {
             foreach ($markets as $marketCode) {
                 if (!isset($dailyProfit[$marketCode])) {
@@ -541,7 +542,7 @@ class BotController extends Controller
             ksort($dailyProfit);
         }
 
-        uksort($dailyJobProfitsByMarket,function ($dt1,$dt2){
+        uksort($dailyJobProfitsByMarket, function ($dt1, $dt2) {
             $tm1 = strtotime($dt1);
             $tm2 = strtotime($dt2);
             return ($tm1 < $tm2) ? -1 : (($tm1 > $tm2) ? 1 : 0);

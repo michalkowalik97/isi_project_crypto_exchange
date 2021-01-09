@@ -79,7 +79,7 @@
                             <div class="d-flex justify-content-center mt-5">
 
                                 <div><a href="/login/google" class="btn btn-info btn-lg"><i class="fab fa-google"></i>
-                                        Zaloguj się z google</a></div>
+                                        Zaloguj się z Google</a></div>
                             </div>
                         </form>
                     </div>
